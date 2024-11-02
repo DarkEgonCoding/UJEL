@@ -6,70 +6,106 @@
             "id": "35f169b6-fc76-4d2c-a82f-0778386116ea",
             "actions": [
                 {
-                    "name": "Movement",
-                    "type": "PassThrough",
-                    "id": "2d3e91aa-320b-4d7c-88b9-319b190b5e66",
-                    "expectedControlType": "Vector2",
-                    "processors": "NormalizeVector2",
-                    "interactions": "Press(behavior=2)",
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "eec785af-b3cd-4762-926f-0220a991d689",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "3a3156fd-e98d-4c46-abd3-76a75c5d179b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "25118203-9cfe-49cc-b0b0-3642891a8588",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "52cb3089-d9cb-4838-8de9-b6f8692aeb1d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "47e167f9-d4e5-4784-9e15-3b29bdfd566b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
-                    "name": "WASD",
-                    "id": "40e5b982-a09e-47e9-9049-d9de7267d7a8",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "b86b4ab6-acb1-4d6e-bbd2-9d3a39478ade",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
+                    "action": "Up",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "6906f954-54b6-4049-9fd5-dc2f23de50b8",
-                    "path": "<Keyboard>/#(W)",
+                    "name": "",
+                    "id": "ed0719c4-170e-4a46-8bec-ec6c9b7f104a",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Down",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "down",
-                    "id": "5a5caf4e-b198-4bbf-9140-fde8e6a8f332",
-                    "path": "<Keyboard>/#(S)",
+                    "name": "",
+                    "id": "2e63e90f-3f47-4d23-ae23-96b1c9ba7053",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Left",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "left",
-                    "id": "8cd4c668-6fbe-47d7-85ee-c7a2322223db",
-                    "path": "<Keyboard>/#(A)",
+                    "name": "",
+                    "id": "4ab3cc42-d135-49df-9be3-28a33e18f275",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Right",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "right",
-                    "id": "b503f11c-b503-43fa-a469-514d473c80fb",
-                    "path": "<Keyboard>/#(D)",
+                    "name": "",
+                    "id": "ed7893af-f8fa-40f0-9783-4d0ab7c4b9e8",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Run",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         }

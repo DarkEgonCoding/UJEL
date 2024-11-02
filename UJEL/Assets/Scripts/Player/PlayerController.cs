@@ -4,18 +4,24 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] public float moveSpeed = 5;
-    [SerializeField] public float runSpeed = 9;
+    [SerializeField] public float OriginalMoveSpeed = 5f;
+    public float moveSpeed;
+    [SerializeField] public float runSpeed = 9f;
     public bool isMoving;
     public PlayerControls controls;
     Vector2 moveDirection;
     private Animator animator;
     [SerializeField] public LayerMask solidObjectsLayer;
-
+    bool UpisPressed;
+    bool DownisPressed;
+    bool LeftisPressed;
+    bool RightisPressed;
+    bool XisPressed;
     private void Awake(){
         controls = new PlayerControls();
     }
@@ -30,17 +36,52 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
         animator = GetComponent<Animator>();
-        controls.Main.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>()); 
-    }
-
-    private void Move(Vector2 direction){
-        moveDirection = direction;
-        animator.SetFloat("moveX", moveDirection.x);
-        animator.SetFloat("moveY", moveDirection.y);
+        
+        //Movement Held
+        controls.Main.Up.performed += ctx => UpisPressed = true;
+        controls.Main.Up.canceled += ctx => UpisPressed = false;
+        controls.Main.Down.performed += ctx => DownisPressed = true;
+        controls.Main.Down.canceled += ctx => DownisPressed = false;
+        controls.Main.Left.performed += ctx => LeftisPressed = true;
+        controls.Main.Left.canceled += ctx => LeftisPressed = false;
+        controls.Main.Right.performed += ctx => RightisPressed = true;
+        controls.Main.Right.canceled += ctx => RightisPressed = false;
+        
+        //Run
+        controls.Main.Run.performed += ctx => XisPressed = true;
+        controls.Main.Run.canceled += ctx => XisPressed = false;
+        moveSpeed = OriginalMoveSpeed;
     }
 
     void Update(){
-        if(!isMoving && moveDirection!=Vector2.zero) StartCoroutine(DoMove(moveDirection));
+        if(!isMoving && UpisPressed){
+            StartCoroutine(DoMove(Vector2.up));
+            animator.SetFloat("moveX", 0);
+            animator.SetFloat("moveY", 1);
+        } 
+        if(!isMoving && DownisPressed){
+            StartCoroutine(DoMove(Vector2.down));
+            animator.SetFloat("moveX", 0);
+            animator.SetFloat("moveY", -1);
+        }
+        if(!isMoving && LeftisPressed){
+            StartCoroutine(DoMove(Vector2.left));
+            animator.SetFloat("moveX", -1);
+            animator.SetFloat("moveY", 0);
+        } 
+        if(!isMoving && RightisPressed){
+            StartCoroutine(DoMove(Vector2.right));
+            animator.SetFloat("moveX", 1);
+            animator.SetFloat("moveY", 0);
+        } 
+        if(XisPressed){
+            moveSpeed = runSpeed;
+            animator.speed = 1.5f;
+        }
+        else {
+            moveSpeed = OriginalMoveSpeed;
+            animator.speed = 1f;
+        }
     }
 
     private bool IsWalkable(Vector3 targetPos){
@@ -66,6 +107,7 @@ public class PlayerController : MonoBehaviour
         }
         
         isMoving = false;
-        animator.SetBool("isMoving", isMoving);
+        if (!UpisPressed && !DownisPressed && !LeftisPressed && !RightisPressed) animator.SetBool("isMoving", false);
+        moveDirection = Vector2.zero;
     }
 }

@@ -28,70 +28,106 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""35f169b6-fc76-4d2c-a82f-0778386116ea"",
             ""actions"": [
                 {
-                    ""name"": ""Movement"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""2d3e91aa-320b-4d7c-88b9-319b190b5e66"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""NormalizeVector2"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""eec785af-b3cd-4762-926f-0220a991d689"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a3156fd-e98d-4c46-abd3-76a75c5d179b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""25118203-9cfe-49cc-b0b0-3642891a8588"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""52cb3089-d9cb-4838-8de9-b6f8692aeb1d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""47e167f9-d4e5-4784-9e15-3b29bdfd566b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""WASD"",
-                    ""id"": ""40e5b982-a09e-47e9-9049-d9de7267d7a8"",
-                    ""path"": ""2DVector"",
+                    ""name"": """",
+                    ""id"": ""b86b4ab6-acb1-4d6e-bbd2-9d3a39478ade"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": true,
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""6906f954-54b6-4049-9fd5-dc2f23de50b8"",
-                    ""path"": ""<Keyboard>/#(W)"",
+                    ""name"": """",
+                    ""id"": ""ed0719c4-170e-4a46-8bec-ec6c9b7f104a"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Down"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""5a5caf4e-b198-4bbf-9140-fde8e6a8f332"",
-                    ""path"": ""<Keyboard>/#(S)"",
+                    ""name"": """",
+                    ""id"": ""2e63e90f-3f47-4d23-ae23-96b1c9ba7053"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Left"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""8cd4c668-6fbe-47d7-85ee-c7a2322223db"",
-                    ""path"": ""<Keyboard>/#(A)"",
+                    ""name"": """",
+                    ""id"": ""4ab3cc42-d135-49df-9be3-28a33e18f275"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Right"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""b503f11c-b503-43fa-a469-514d473c80fb"",
-                    ""path"": ""<Keyboard>/#(D)"",
+                    ""name"": """",
+                    ""id"": ""ed7893af-f8fa-40f0-9783-4d0ab7c4b9e8"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Run"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -100,7 +136,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 }");
         // Main
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
-        m_Main_Movement = m_Main.FindAction("Movement", throwIfNotFound: true);
+        m_Main_Up = m_Main.FindAction("Up", throwIfNotFound: true);
+        m_Main_Down = m_Main.FindAction("Down", throwIfNotFound: true);
+        m_Main_Left = m_Main.FindAction("Left", throwIfNotFound: true);
+        m_Main_Right = m_Main.FindAction("Right", throwIfNotFound: true);
+        m_Main_Run = m_Main.FindAction("Run", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +202,20 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Main
     private readonly InputActionMap m_Main;
     private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
-    private readonly InputAction m_Main_Movement;
+    private readonly InputAction m_Main_Up;
+    private readonly InputAction m_Main_Down;
+    private readonly InputAction m_Main_Left;
+    private readonly InputAction m_Main_Right;
+    private readonly InputAction m_Main_Run;
     public struct MainActions
     {
         private @PlayerControls m_Wrapper;
         public MainActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_Main_Movement;
+        public InputAction @Up => m_Wrapper.m_Main_Up;
+        public InputAction @Down => m_Wrapper.m_Main_Down;
+        public InputAction @Left => m_Wrapper.m_Main_Left;
+        public InputAction @Right => m_Wrapper.m_Main_Right;
+        public InputAction @Run => m_Wrapper.m_Main_Run;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -177,16 +225,40 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MainActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MainActionsCallbackInterfaces.Add(instance);
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
+            @Up.started += instance.OnUp;
+            @Up.performed += instance.OnUp;
+            @Up.canceled += instance.OnUp;
+            @Down.started += instance.OnDown;
+            @Down.performed += instance.OnDown;
+            @Down.canceled += instance.OnDown;
+            @Left.started += instance.OnLeft;
+            @Left.performed += instance.OnLeft;
+            @Left.canceled += instance.OnLeft;
+            @Right.started += instance.OnRight;
+            @Right.performed += instance.OnRight;
+            @Right.canceled += instance.OnRight;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
         {
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
+            @Up.started -= instance.OnUp;
+            @Up.performed -= instance.OnUp;
+            @Up.canceled -= instance.OnUp;
+            @Down.started -= instance.OnDown;
+            @Down.performed -= instance.OnDown;
+            @Down.canceled -= instance.OnDown;
+            @Left.started -= instance.OnLeft;
+            @Left.performed -= instance.OnLeft;
+            @Left.canceled -= instance.OnLeft;
+            @Right.started -= instance.OnRight;
+            @Right.performed -= instance.OnRight;
+            @Right.canceled -= instance.OnRight;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -206,6 +278,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public MainActions @Main => new MainActions(this);
     public interface IMainActions
     {
-        void OnMovement(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
     }
 }
