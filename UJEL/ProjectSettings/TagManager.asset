@@ -15,7 +15,7 @@ TagManager:
   - Long Grass
   - Interactable
   - Ledges
-  - 
+  - Portal
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: Background+1
     uniqueID: 391233565
+    locked: 0
+  - name: Fader
+    uniqueID: 997262767
     locked: 0
