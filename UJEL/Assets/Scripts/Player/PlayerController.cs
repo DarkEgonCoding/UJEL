@@ -7,13 +7,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Scripting.APIUpdating;
 
-public enum GameState { FreeRoam, Battle, Dialog}
+public enum GameState { FreeRoam, Battle, Dialog, Pause}
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] public float OriginalMoveSpeed = 5f;
     public float moveSpeed;
     [SerializeField] public float runSpeed = 9f;
+
+    [SerializeField] public float jumpSpeed = 5f;
     public bool isMoving;
     public PlayerControls controls;
     Vector2 moveDirection;
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public LayerMask solidObjectsLayer;
     [SerializeField] public LayerMask grassLayer;
     [SerializeField] public LayerMask interactableLayer;
+    [SerializeField] public LayerMask ledgeLayer;
     [SerializeField] public float EncounterPercentage = 10f;
     bool UpisPressed;
     bool DownisPressed;
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     bool XisPressed;
     public GameState state;
     public bool inDialog;
+    public bool inJump = false;
     private void Awake(){
         controls = new PlayerControls();
     }
@@ -76,22 +80,22 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update(){
-        if(!isMoving && UpisPressed && !inDialog){
+        if(!isMoving && UpisPressed && !inDialog && !inJump){
             StartCoroutine(DoMove(Vector2.up));
             animator.SetFloat("moveX", 0);
             animator.SetFloat("moveY", 1);
         } 
-        if(!isMoving && DownisPressed && !inDialog){
+        if(!isMoving && DownisPressed && !inDialog && !inJump){
             StartCoroutine(DoMove(Vector2.down));
             animator.SetFloat("moveX", 0);
             animator.SetFloat("moveY", -1);
         }
-        if(!isMoving && LeftisPressed && !inDialog){
+        if(!isMoving && LeftisPressed && !inDialog && !inJump){
             StartCoroutine(DoMove(Vector2.left));
             animator.SetFloat("moveX", -1);
             animator.SetFloat("moveY", 0);
         } 
-        if(!isMoving && RightisPressed && !inDialog){
+        if(!isMoving && RightisPressed && !inDialog && !inJump){
             StartCoroutine(DoMove(Vector2.right));
             animator.SetFloat("moveX", 1);
             animator.SetFloat("moveY", 0);
@@ -107,7 +111,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private bool IsWalkable(Vector3 targetPos){
-        if(Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer | interactableLayer) != null){
+        if(Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer | interactableLayer | ledgeLayer) != null){
             animator.SetBool("isMoving", false);
             return false;
         }
@@ -121,6 +125,16 @@ public class PlayerController : MonoBehaviour
         
         var targetPos = transform.position;
         targetPos += (Vector3)direction;
+
+        var ledge = CheckForLedge(targetPos);
+        if (ledge != null){
+            if (TryToJump(ledge, direction)){
+                isMoving = false;
+                animator.SetBool("isMoving", false);
+                yield break;
+            }
+        }
+
         if(IsWalkable(targetPos)){
             while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon){
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
@@ -159,5 +173,32 @@ public class PlayerController : MonoBehaviour
                 collider.GetComponent<Interactable>()?.Interact();
             }
         }
+    }
+
+// LEDGE JUMP Mechanics
+    Ledge CheckForLedge(Vector3 targetPos){
+        var collider = Physics2D.OverlapCircle(targetPos, 0.3f, ledgeLayer);
+        return collider?.GetComponent<Ledge>();
+    }
+
+    public bool TryToJump(Ledge ledge, Vector2 moveDir){
+        if (moveDir.x == ledge.xDir && moveDir.y == ledge.yDir){
+            StartCoroutine(Jump(ledge));
+            return true;
+        }
+        return false;
+    }
+
+    IEnumerator Jump(Ledge ledge){
+        inJump = true;
+        
+        var jumpDest = transform.position + new Vector3(ledge.xDir, ledge.yDir) * 2;
+        while ((jumpDest - transform.position).sqrMagnitude > Mathf.Epsilon){
+                transform.position = Vector3.MoveTowards(transform.position, jumpDest, jumpSpeed * Time.deltaTime);
+                yield return null;
+            }
+            transform.position = jumpDest;
+
+        inJump = false;
     }
 }
