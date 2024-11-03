@@ -6,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.TextCore.Text;
 
 public enum GameState { FreeRoam, Battle, Dialog, Pause}
 
@@ -14,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float OriginalMoveSpeed = 5f;
     public float moveSpeed;
     [SerializeField] public float runSpeed = 9f;
-
+    public PlayerController player;
     [SerializeField] public float jumpSpeed = 5f;
     public bool isMoving;
     public PlayerControls controls;
@@ -24,15 +25,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public LayerMask grassLayer;
     [SerializeField] public LayerMask interactableLayer;
     [SerializeField] public LayerMask ledgeLayer;
-    [SerializeField] public float EncounterPercentage = 10f;
+    [SerializeField] public LayerMask portalLayer;
+    public LayerMask TriggerableLayers {
+        get => grassLayer | portalLayer;
+    }
     bool UpisPressed;
     bool DownisPressed;
     bool LeftisPressed;
     bool RightisPressed;
     bool XisPressed;
     public GameState state;
+    public GameState stateBeforePause;
     public bool inDialog;
     public bool inJump = false;
+    public bool inEncounter = false;
     private void Awake(){
         controls = new PlayerControls();
     }
@@ -48,6 +54,7 @@ public class PlayerController : MonoBehaviour
     void Start(){
         animator = GetComponent<Animator>();
         state = GameState.FreeRoam;
+        SetPositionAndSnapToTile(transform.position);
 
         DialogManager.Instance.OnShowDialog += () => {
             inDialog = true;
@@ -80,26 +87,28 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update(){
-        if(!isMoving && UpisPressed && !inDialog && !inJump){
-            StartCoroutine(DoMove(Vector2.up));
-            animator.SetFloat("moveX", 0);
-            animator.SetFloat("moveY", 1);
-        } 
-        if(!isMoving && DownisPressed && !inDialog && !inJump){
-            StartCoroutine(DoMove(Vector2.down));
-            animator.SetFloat("moveX", 0);
-            animator.SetFloat("moveY", -1);
+        if(state == GameState.FreeRoam){
+            if(!isMoving && UpisPressed && !inDialog && !inJump && !inEncounter){
+                StartCoroutine(DoMove(Vector2.up));
+                animator.SetFloat("moveX", 0);
+                animator.SetFloat("moveY", 1);
+            } 
+            if(!isMoving && DownisPressed && !inDialog && !inJump && !inEncounter){
+                StartCoroutine(DoMove(Vector2.down));
+                animator.SetFloat("moveX", 0);
+                animator.SetFloat("moveY", -1);
+            }
+            if(!isMoving && LeftisPressed && !inDialog && !inJump && !inEncounter){
+                StartCoroutine(DoMove(Vector2.left));
+                animator.SetFloat("moveX", -1);
+                animator.SetFloat("moveY", 0);
+            } 
+            if(!isMoving && RightisPressed && !inDialog && !inJump && !inEncounter){
+                StartCoroutine(DoMove(Vector2.right));
+                animator.SetFloat("moveX", 1);
+                animator.SetFloat("moveY", 0);
+            } 
         }
-        if(!isMoving && LeftisPressed && !inDialog && !inJump){
-            StartCoroutine(DoMove(Vector2.left));
-            animator.SetFloat("moveX", -1);
-            animator.SetFloat("moveY", 0);
-        } 
-        if(!isMoving && RightisPressed && !inDialog && !inJump){
-            StartCoroutine(DoMove(Vector2.right));
-            animator.SetFloat("moveX", 1);
-            animator.SetFloat("moveY", 0);
-        } 
         if(XisPressed){
             moveSpeed = runSpeed;
             animator.speed = 1.5f;
@@ -143,17 +152,22 @@ public class PlayerController : MonoBehaviour
             transform.position = targetPos;
         }
         
-        CheckForEncounters();
+        OnMoveOver();
 
         isMoving = false;
         if (!UpisPressed && !DownisPressed && !LeftisPressed && !RightisPressed) animator.SetBool("isMoving", false);
         moveDirection = Vector2.zero;
     }
 
-    private void CheckForEncounters(){
-        if (Physics2D.OverlapCircle(transform.position, 0.2f, grassLayer) != null){
-            if (Random.Range(1, 101) <= EncounterPercentage){
-                Debug.Log("Encounter");
+    private void OnMoveOver(){
+        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.2f, TriggerableLayers);
+        
+        foreach (var collider in colliders){
+            var triggerable = collider.GetComponent<IPlayerTriggerable>();
+            if (triggerable != null){
+                animator.SetBool("isMoving", false);
+                triggerable.OnPlayerTriggered(this);
+                break;
             }
         }
     }
@@ -200,5 +214,23 @@ public class PlayerController : MonoBehaviour
             transform.position = jumpDest;
 
         inJump = false;
+    }
+
+    public void SetPositionAndSnapToTile(Vector2 pos){
+        // Example: 2.3 -> Floor -> 2 -> 2.5
+        pos.x = Mathf.Floor(pos.x) + 0.5f;
+        pos.y = Mathf.Floor(pos.y) + 0.5f;
+
+        transform.position = pos;
+    }
+
+    public void PauseGame(bool pause){
+        if (pause){
+            stateBeforePause = state;
+            state = GameState.Pause;
+        }
+        else{
+            state = stateBeforePause;
+        }
     }
 }
