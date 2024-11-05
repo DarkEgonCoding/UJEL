@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BridgeEnter
+  - BridgeExit
   layers:
   - Default
   - TransparentFX
@@ -47,8 +49,14 @@ TagManager:
   - name: Background-1
     uniqueID: 1549518581
     locked: 0
+  - name: Bridge-1
+    uniqueID: 2244295971
+    locked: 0
   - name: Player
     uniqueID: 347479467
+    locked: 0
+  - name: Bridge+1
+    uniqueID: 3383728149
     locked: 0
   - name: Background+1
     uniqueID: 391233565

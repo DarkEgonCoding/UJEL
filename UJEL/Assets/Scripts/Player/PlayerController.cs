@@ -122,7 +122,6 @@ public class PlayerController : MonoBehaviour
             moveSpeed = OriginalMoveSpeed;
             animator.speed = 1f;
         }
-        Debug.Log(isSwimming);
     }
 
     private bool IsWalkable(Vector3 targetPos){
