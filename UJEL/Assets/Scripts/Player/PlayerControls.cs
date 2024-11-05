@@ -80,6 +80,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Bike"",
+                    ""type"": ""Button"",
+                    ""id"": ""6493664c-fd8f-4598-a472-7da4dff8b6cb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -148,6 +157,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8487e457-2c68-407e-9c48-663d9398cb4d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bike"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -162,6 +182,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Main_Right = m_Main.FindAction("Right", throwIfNotFound: true);
         m_Main_Run = m_Main.FindAction("Run", throwIfNotFound: true);
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
+        m_Main_Bike = m_Main.FindAction("Bike", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +250,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Right;
     private readonly InputAction m_Main_Run;
     private readonly InputAction m_Main_Interact;
+    private readonly InputAction m_Main_Bike;
     public struct MainActions
     {
         private @PlayerControls m_Wrapper;
@@ -239,6 +261,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Right => m_Wrapper.m_Main_Right;
         public InputAction @Run => m_Wrapper.m_Main_Run;
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
+        public InputAction @Bike => m_Wrapper.m_Main_Bike;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -266,6 +289,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Bike.started += instance.OnBike;
+            @Bike.performed += instance.OnBike;
+            @Bike.canceled += instance.OnBike;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -288,6 +314,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Bike.started -= instance.OnBike;
+            @Bike.performed -= instance.OnBike;
+            @Bike.canceled -= instance.OnBike;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -313,5 +342,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRight(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnBike(InputAction.CallbackContext context);
     }
 }
