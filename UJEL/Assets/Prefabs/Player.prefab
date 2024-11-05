@@ -99,10 +99,15 @@ MonoBehaviour:
   portalLayer:
     serializedVersion: 2
     m_Bits: 1024
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 2064
   state: 0
+  stateBeforePause: 0
   inDialog: 0
   inJump: 0
   inEncounter: 0
+  canSwim: 1
 --- !u!95 &1742707013374701376
 Animator:
   serializedVersion: 5

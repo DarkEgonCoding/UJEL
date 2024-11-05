@@ -17,7 +17,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float runSpeed = 9f;
     public PlayerController player;
     [SerializeField] public float jumpSpeed = 5f;
+    [SerializeField] public float swimSpeed = 3f;
+    [SerializeField] public float runSwimSpeed = 6f;
     public bool isMoving;
+    public bool isSwimming = false;
     public PlayerControls controls;
     Vector2 moveDirection;
     private Animator animator;
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public LayerMask interactableLayer;
     [SerializeField] public LayerMask ledgeLayer;
     [SerializeField] public LayerMask portalLayer;
+    [SerializeField] public LayerMask waterLayer;
     public LayerMask TriggerableLayers {
         get => grassLayer | portalLayer;
     }
@@ -39,6 +43,7 @@ public class PlayerController : MonoBehaviour
     public bool inDialog;
     public bool inJump = false;
     public bool inEncounter = false;
+    public bool canSwim = false;
     private void Awake(){
         controls = new PlayerControls();
     }
@@ -109,7 +114,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetFloat("moveY", 0);
             } 
         }
-        if(XisPressed){
+        if(XisPressed && !isSwimming){
             moveSpeed = runSpeed;
             animator.speed = 1.5f;
         }
@@ -124,13 +129,19 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isMoving", false);
             return false;
         }
-        return true;
+        if(Physics2D.OverlapCircle(targetPos, 0.3f, waterLayer) != null){
+            if(canSwim == true){
+                isSwimming = true;
+                return true; //return true if you unlocked swim
+            }
+            else return false; //return false if you cannot swim
+        }
+        return true; //return true if it doesn't collide with anything
     }
 
     IEnumerator DoMove(Vector2 direction){
         isMoving = true;        
         animator.SetBool("isMoving", isMoving);
-        float speed = moveSpeed;
         
         var targetPos = transform.position;
         targetPos += (Vector3)direction;
@@ -145,6 +156,14 @@ public class PlayerController : MonoBehaviour
         }
 
         if(IsWalkable(targetPos)){
+            if(isSwimming){
+                animator.SetBool("isMoving", false);
+                moveSpeed = swimSpeed;
+                if(XisPressed){
+                    moveSpeed = runSwimSpeed;
+                }
+            }
+            float speed = moveSpeed;
             while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon){
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
                 yield return null;
@@ -155,6 +174,7 @@ public class PlayerController : MonoBehaviour
         OnMoveOver();
 
         isMoving = false;
+        isSwimming = false;
         if (!UpisPressed && !DownisPressed && !LeftisPressed && !RightisPressed) animator.SetBool("isMoving", false);
         moveDirection = Vector2.zero;
     }
