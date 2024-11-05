@@ -122,20 +122,26 @@ public class PlayerController : MonoBehaviour
             moveSpeed = OriginalMoveSpeed;
             animator.speed = 1f;
         }
+        Debug.Log(isSwimming);
     }
 
     private bool IsWalkable(Vector3 targetPos){
-        if(Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer | interactableLayer | ledgeLayer) != null){
-            animator.SetBool("isMoving", false);
-            return false;
-        }
-        if(Physics2D.OverlapCircle(targetPos, 0.3f, waterLayer) != null){
-            if(canSwim == true){
+        Collider2D collider = Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer | interactableLayer | ledgeLayer | waterLayer);
+        if(collider != null){ //if the player collides with something
+            if ((waterLayer & (1 << collider.gameObject.layer)) != 0){
+                if(canSwim == true){
                 isSwimming = true;
                 return true; //return true if you unlocked swim
             }
             else return false; //return false if you cannot swim
+            }
+            else{
+                animator.SetBool("isMoving", false);
+                return false;
+            }
+            
         }
+        isSwimming = false;
         return true; //return true if it doesn't collide with anything
     }
 
@@ -174,7 +180,6 @@ public class PlayerController : MonoBehaviour
         OnMoveOver();
 
         isMoving = false;
-        isSwimming = false;
         if (!UpisPressed && !DownisPressed && !LeftisPressed && !RightisPressed) animator.SetBool("isMoving", false);
         moveDirection = Vector2.zero;
     }
