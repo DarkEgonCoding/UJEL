@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void Start(){
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         state = GameState.FreeRoam;
         SetPositionAndSnapToTile(transform.position);
 
@@ -133,14 +133,18 @@ public class PlayerController : MonoBehaviour
                 animator.SetFloat("moveX", 1);
                 animator.SetFloat("moveY", 0);
             } 
+            if(XisPressed && !isSwimming && !isBiking){
+                moveSpeed = runSpeed;
+                animator.speed = 1.5f;
+            }
+            else {
+                moveSpeed = OriginalMoveSpeed;
+                animator.speed = 1f;
+            }
         }
-        if(XisPressed && !isSwimming && !isBiking){
-            moveSpeed = runSpeed;
-            animator.speed = 1.5f;
-        }
-        else {
-            moveSpeed = OriginalMoveSpeed;
-            animator.speed = 1f;
+
+        if(inEncounter){
+            state = GameState.Battle;
         }
     }
 
@@ -182,6 +186,7 @@ public class PlayerController : MonoBehaviour
             if (TryToJump(ledge, direction)){
                 isMoving = false;
                 animator.SetBool("isMoving", false);
+                animator.SetBool("isJumping", true);
                 yield break;
             }
         }
@@ -191,16 +196,22 @@ public class PlayerController : MonoBehaviour
             // Changes Speed based on what type of moving you are doing
             if(isSwimming && !isBiking){
                 animator.SetBool("isMoving", false);
+                animator.SetBool("isSwimming", true);
                 moveSpeed = swimSpeed;
+                animator.speed = 1f;
                 if(XisPressed){
                     moveSpeed = runSwimSpeed;
+                    animator.speed = 1.5f;
                 }
             }
             if(isBiking && !isSwimming){
                 animator.SetBool("isMoving", false);
+                animator.SetBool("isBiking", true);
                 moveSpeed = bikeRegularSpeed;
+                animator.speed = 1f;
                 if(XisPressed){
                     moveSpeed = bikeFastSpeed;
+                    animator.speed = 1.5f;
                 }
             }
 
@@ -218,7 +229,11 @@ public class PlayerController : MonoBehaviour
 
         // Resets movement
         isMoving = false;
-        if (!UpisPressed && !DownisPressed && !LeftisPressed && !RightisPressed) animator.SetBool("isMoving", false);
+        if (!UpisPressed && !DownisPressed && !LeftisPressed && !RightisPressed){
+            animator.SetBool("isMoving", false);
+            animator.SetBool("isSwimming", false);
+            animator.SetBool("isBiking", false);
+        } 
         moveDirection = Vector2.zero;
     }
 
@@ -236,18 +251,20 @@ public class PlayerController : MonoBehaviour
     }
 
     void Interact(){
-        if(inDialog){ //if in dialog, next line
-            if(DialogManager.Instance.isTyping == false){
-                DialogManager.Instance.NextDialog();
+        if(state == GameState.FreeRoam){
+            if(inDialog){ //if in dialog, next line
+                if(DialogManager.Instance.isTyping == false){
+                    DialogManager.Instance.NextDialog();
+                }
             }
-        }
-        else{ // if not in dialog, check for interaction
-            var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
-            var interactPos = transform.position + facingDir;
-            
-            var collider = Physics2D.OverlapCircle(interactPos, 0.3f, interactableLayer);
-            if (collider != null){
-                collider.GetComponent<Interactable>()?.Interact();
+            else{ // if not in dialog, check for interaction
+                var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
+                var interactPos = transform.position + facingDir;
+                
+                var collider = Physics2D.OverlapCircle(interactPos, 0.3f, interactableLayer);
+                if (collider != null){
+                    collider.GetComponent<Interactable>()?.Interact();
+                }
             }
         }
     }
@@ -277,6 +294,7 @@ public class PlayerController : MonoBehaviour
             transform.position = jumpDest;
 
         inJump = false;
+        animator.SetBool("isJumping", false);
     }
 
     public void SetPositionAndSnapToTile(Vector2 pos){
