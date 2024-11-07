@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92fc6a5a2f96b284f99c379964c6d30a, type: 3}
-  m_Name: AmongUs
+  m_Name: BaseFire
   m_EditorClassIdentifier: 
-  name: AmongUs
+  name: BaseFire
   description: 
-  type: 0
-  power: 300
+  type: 2
+  power: 40
   accuracy: 100
-  pp: 10
+  pp: 20

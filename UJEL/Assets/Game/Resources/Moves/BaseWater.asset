@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92fc6a5a2f96b284f99c379964c6d30a, type: 3}
-  m_Name: Domination
+  m_Name: BaseWater
   m_EditorClassIdentifier: 
-  name: Domination
+  name: BaseWater
   description: 
-  type: 0
-  power: 1
+  type: 3
+  power: 40
   accuracy: 100
-  pp: 50
+  pp: 20

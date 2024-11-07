@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pokemon
@@ -27,22 +29,70 @@ public class Pokemon
     }
 
     public int Attack {
-        get { return Mathf.FloorToInt((Base.Attack * Level) / 100f) + 5;}
+        get { return Mathf.FloorToInt((2 * Base.Attack * Level) / 100f) + Level + 5;}
     }
     public int Defense {
-        get { return Mathf.FloorToInt((Base.Defense * Level) / 100f) + 5;}
+        get { return Mathf.FloorToInt((2 * Base.Defense * Level) / 100f) + Level + 5;}
     }
     public int SpAttack {
-        get { return Mathf.FloorToInt((Base.SpAttack * Level) / 100f) + 5;}
+        get { return Mathf.FloorToInt((2 * Base.SpAttack * Level) / 100f) + Level + 5;}
     }
     public int SpDefense {
-        get { return Mathf.FloorToInt((Base.SpDefense * Level) / 100f) + 5;}
+        get { return Mathf.FloorToInt((2 * Base.SpDefense * Level) / 100f) + Level + 5;}
     }
     public int Speed {
-        get { return Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5;}
+        get { return Mathf.FloorToInt((2 * Base.Speed * Level) / 100f) + Level + 5;}
     }
     public int MaxHp {
-        get { return Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10;}
+        get { return Mathf.FloorToInt((2 * Base.MaxHp * Level) / 100f) + Level + 10;}
     }
 
+    public DamageDetails TakeDamage(Move move, Pokemon attacker){
+
+        float critical = 1f;
+        if (UnityEngine.Random.value * 100f <= 6.25f){
+            critical = 2f;
+        }
+
+        float type = TypeChart.GetEffectiveness(move.Base.Type, this.Base.type1) * TypeChart.GetEffectiveness(move.Base.Type, this.Base.type2);
+
+        var damageDetails = new DamageDetails(){
+            TypeEffectiveness = type,
+            Critical = critical,
+            Fainted = 0
+        };
+
+        float modifiers = UnityEngine.Random.Range(0.85f, 1f) * type * critical;
+        float a = (2 * attacker.Level / 5) + 2;
+        float d = (a * move.Base.Power * attacker.Attack / Defense / 50) + 2;
+        int damage = Mathf.FloorToInt(d * modifiers);
+
+        if(HP == MaxHp && HP - damage <= -10*MaxHp){ // if you overkill by 10 times HP while max hp
+            HP -= damage;
+            HP = 0;
+            damageDetails.Fainted = 2;
+            return damageDetails;
+        }
+
+        HP -= damage;
+        if (HP <= 0){
+            HP = 0;
+            damageDetails.Fainted = 1;
+            return damageDetails;
+        }
+        
+        damageDetails.Fainted = 0;
+        return damageDetails;
+    }
+
+    public Move GetRandomMove(){
+        int r = UnityEngine.Random.Range(0, Moves.Count);
+        return Moves[r];
+    }
 }
+
+public class DamageDetails{
+        public int Fainted { get; set; }
+        public float Critical { get; set; }
+        public float TypeEffectiveness { get; set; }
+    }

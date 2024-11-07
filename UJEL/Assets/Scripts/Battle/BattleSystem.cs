@@ -52,7 +52,7 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerAction(){
         state = BattleState.PlayerAction;
-        StartCoroutine(dialogBox.TypeDialog("Choose an action"));
+        StartCoroutine(dialogBox.TypeDialog($"What should {playerUnit.Pokemon.Base.Name} do?"));
         dialogBox.EnableActionSelector(true);
     }
 
@@ -61,6 +61,73 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableActionSelector(false);
         dialogBox.EnableDialogText(false);
         dialogBox.EnableMoveSelector(true);
+    }
+
+    IEnumerator PerformPlayerMove(){
+        state = BattleState.Busy;
+
+        var move = playerUnit.Pokemon.Moves[currentMove];
+        yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} used {move.Base.name}!");
+
+        var damageDetails = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon); // 0 = false, 1 = true, 2 = oneshot
+        
+        if (damageDetails.Fainted == 2){ // if you one shot, instantly kill health bar
+            enemyHud.UpdateHPOneShot();
+            yield return dialogBox.TypeDialog($"Overkill!");
+            yield return ShowDamageDetails(damageDetails);
+            yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} fainted!");
+        }
+        else if(damageDetails.Fainted == 1){ // if not a one shot, slowly move health bar
+            yield return enemyHud.UpdateHP();
+            yield return ShowDamageDetails(damageDetails);
+            yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} fainted!");
+        }
+        else if(damageDetails.Fainted == 0){
+            yield return enemyHud.UpdateHP();
+            yield return ShowDamageDetails(damageDetails);
+            StartCoroutine(EnemyMove());
+        }
+    }
+
+    IEnumerator EnemyMove(){
+        state = BattleState.EnemyMove;
+
+        //Select Move
+        var move = enemyUnit.Pokemon.GetRandomMove();
+
+        yield return dialogBox.TypeDialog($"Enemy {enemyUnit.Pokemon.Base.Name} used {move.Base.name}!");
+
+        var damageDetails = playerUnit.Pokemon.TakeDamage(move, enemyUnit.Pokemon);
+
+        if (damageDetails.Fainted == 2){ // if you one shot, instantly kill health bar
+            playerHud.UpdateHPOneShot();
+            yield return dialogBox.TypeDialog($"Overkill!");
+            yield return ShowDamageDetails(damageDetails);
+            yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} fainted!");
+        }
+        else if(damageDetails.Fainted == 1){ // if not a one shot, slowly move health bar
+            yield return playerHud.UpdateHP();
+            yield return ShowDamageDetails(damageDetails);
+            yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} fainted!");
+        }
+        else if(damageDetails.Fainted == 0){ // if enemy not killed, return to player action
+            yield return playerHud.UpdateHP();
+            yield return ShowDamageDetails(damageDetails);
+            PlayerAction();
+        }
+    }
+
+    IEnumerator ShowDamageDetails(DamageDetails damageDetails){
+        if (damageDetails.Critical > 1f){
+            yield return dialogBox.TypeDialog("A critical hit!");
+        }
+
+        if (damageDetails.TypeEffectiveness > 1){
+            yield return dialogBox.TypeDialog("It's super effective!");
+        }
+        else if (damageDetails.TypeEffectiveness < 1){
+            yield return dialogBox.TypeDialog("It's not very effective... stupid.");
+        }
     }
 
     private void Update(){
@@ -120,5 +187,11 @@ public class BattleSystem : MonoBehaviour
         }
 
         dialogBox.UpdateMoveSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]);
+
+        if (controls.Main.Interact.WasPerformedThisFrame()){
+            dialogBox.EnableMoveSelector(false);
+            dialogBox.EnableDialogText(true);
+            StartCoroutine(PerformPlayerMove());
+        }
     }
 }
