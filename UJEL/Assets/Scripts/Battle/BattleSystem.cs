@@ -69,6 +69,11 @@ public class BattleSystem : MonoBehaviour
         var move = playerUnit.Pokemon.Moves[currentMove];
         yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} used {move.Base.name}!");
 
+        playerUnit.PlayAttackAnimation();
+        yield return new WaitForSeconds(1f);
+
+        enemyUnit.PlayHitAnimation();
+
         var damageDetails = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon); // 0 = false, 1 = true, 2 = oneshot
         
         if (damageDetails.Fainted == 2){ // if you one shot, instantly kill health bar
@@ -76,11 +81,13 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"Overkill!");
             yield return ShowDamageDetails(damageDetails);
             yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} fainted!");
+            enemyUnit.PlayFaintAnimation();
         }
         else if(damageDetails.Fainted == 1){ // if not a one shot, slowly move health bar
             yield return enemyHud.UpdateHP();
             yield return ShowDamageDetails(damageDetails);
             yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} fainted!");
+            enemyUnit.PlayFaintAnimation();
         }
         else if(damageDetails.Fainted == 0){
             yield return enemyHud.UpdateHP();
@@ -96,6 +103,10 @@ public class BattleSystem : MonoBehaviour
         var move = enemyUnit.Pokemon.GetRandomMove();
 
         yield return dialogBox.TypeDialog($"Enemy {enemyUnit.Pokemon.Base.Name} used {move.Base.name}!");
+        enemyUnit.PlayAttackAnimation();
+        yield return new WaitForSeconds(1f);
+
+        playerUnit.PlayHitAnimation();
 
         var damageDetails = playerUnit.Pokemon.TakeDamage(move, enemyUnit.Pokemon);
 
@@ -104,11 +115,13 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"Overkill!");
             yield return ShowDamageDetails(damageDetails);
             yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} fainted!");
+            playerUnit.PlayFaintAnimation();
         }
         else if(damageDetails.Fainted == 1){ // if not a one shot, slowly move health bar
             yield return playerHud.UpdateHP();
             yield return ShowDamageDetails(damageDetails);
             yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} fainted!");
+            playerUnit.PlayFaintAnimation();
         }
         else if(damageDetails.Fainted == 0){ // if enemy not killed, return to player action
             yield return playerHud.UpdateHP();
