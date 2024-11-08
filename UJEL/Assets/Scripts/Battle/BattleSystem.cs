@@ -77,6 +77,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.PlayHitAnimation();
 
         var damageDetails = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
+        move.PP--;
 
         if(damageDetails.Fainted){
             yield return enemyHud.UpdateHP();
@@ -107,6 +108,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit.PlayHitAnimation();
 
         var damageDetails = playerUnit.Pokemon.TakeDamage(move, enemyUnit.Pokemon);
+        move.PP--;
 
         if(damageDetails.Fainted){
             yield return playerHud.UpdateHP();
@@ -133,7 +135,7 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog("It's super effective!");
         }
         else if (damageDetails.TypeEffectiveness < 1){
-            yield return dialogBox.TypeDialog("It's not very effective... stupid.");
+            yield return dialogBox.TypeDialog("It's not very effective...");
         }
     }
 
