@@ -59,7 +59,7 @@ public class Pokemon
         var damageDetails = new DamageDetails(){
             TypeEffectiveness = type,
             Critical = critical,
-            Fainted = 0
+            Fainted = false
         };
 
         float modifiers = UnityEngine.Random.Range(0.85f, 1f) * type * critical;
@@ -67,21 +67,14 @@ public class Pokemon
         float d = (a * move.Base.Power * attacker.Attack / Defense / 50) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
 
-        if(HP == MaxHp && HP - damage <= -10*MaxHp){ // if you overkill by 10 times HP while max hp
-            HP -= damage;
-            HP = 0;
-            damageDetails.Fainted = 2;
-            return damageDetails;
-        }
-
         HP -= damage;
         if (HP <= 0){
             HP = 0;
-            damageDetails.Fainted = 1;
+            damageDetails.Fainted = true;
             return damageDetails;
         }
         
-        damageDetails.Fainted = 0;
+        damageDetails.Fainted = false;
         return damageDetails;
     }
 
@@ -92,7 +85,7 @@ public class Pokemon
 }
 
 public class DamageDetails{
-        public int Fainted { get; set; }
+        public bool Fainted { get; set; }
         public float Critical { get; set; }
         public float TypeEffectiveness { get; set; }
     }

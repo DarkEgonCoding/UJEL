@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class LongGrass : MonoBehaviour, IPlayerTriggerable
 {
-    [SerializeField] public float EncounterPercentage = 10f;
+    [SerializeField] public float EncounterPercentage = .1f; // 10%
 
     public void OnPlayerTriggered(PlayerController player){
-        if (Random.Range(1, 101) <= EncounterPercentage){
-                Debug.Log("Encounter");
-                player.inEncounter = true;
+        if (Random.value <= EncounterPercentage){
+                player.animator.SetBool("isMoving", false);
+                player.OnEncountered.Invoke();
             }
     }
 }

@@ -888,7 +888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4457096823413243020
 Transform:
   m_ObjectHideFlags: 0
@@ -923,6 +923,9 @@ MonoBehaviour:
   playerHud: {fileID: 9052100869611989298}
   enemyHud: {fileID: 6168925999135363775}
   dialogBox: {fileID: 1567663389311684241}
+  OnBattleOver:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2959708154564711569
 GameObject:
   m_ObjectHideFlags: 0
@@ -2495,6 +2498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3027306843962591198}
   - component: {fileID: 2683686600282882009}
+  - component: {fileID: 646240518175654642}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2533,6 +2537,21 @@ MonoBehaviour:
   dialogText: {fileID: 3124164799532795141}
   lettersPerSecond: 45
   isTyping: 0
+--- !u!114 &646240518175654642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164724522529123066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8265f40ca65547499068fc0d381b036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 5910214389247273340}
+  battleSystem: {fileID: 7416825755846713842}
+  worldCamera: {fileID: 7996305377751016373}
 --- !u!1 &5196520119491210585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3987,5 +4006,21 @@ PrefabInstance:
 --- !u!4 &1352093750989100444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2565333728093669931, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+  m_PrefabInstance: {fileID: 3556294997523374007}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5910214389247273340 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7160498940358260427, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+  m_PrefabInstance: {fileID: 3556294997523374007}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82830b4800869b4aa4ebb7dce15107d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!20 &7996305377751016373 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6891327849152920578, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
   m_PrefabInstance: {fileID: 3556294997523374007}
   m_PrefabAsset: {fileID: 0}

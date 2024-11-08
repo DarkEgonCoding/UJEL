@@ -4,11 +4,10 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.TextCore.Text;
-
-public enum GameState { FreeRoam, Battle, Dialog, Pause}
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     [SerializeField] public float runSpeed = 9f;
     public PlayerController player;
+    public UnityEvent OnEncountered;
     [SerializeField] public float jumpSpeed = 5f;
     [SerializeField] public float swimSpeed = 3f;
     [SerializeField] public float runSwimSpeed = 6f;
@@ -26,8 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool canBike = true;
     public bool isSwimming = false;
     public PlayerControls controls;
-    Vector2 moveDirection;
-    private Animator animator;
+    public Animator animator;
     [SerializeField] public LayerMask solidObjectsLayer;
     [SerializeField] public LayerMask grassLayer;
     [SerializeField] public LayerMask interactableLayer;
@@ -42,11 +41,9 @@ public class PlayerController : MonoBehaviour
     bool LeftisPressed;
     bool RightisPressed;
     bool XisPressed;
-    public GameState state;
+    public GameState state = GameState.FreeRoam;
     public GameState stateBeforePause;
-    public bool inDialog;
     public bool inJump = false;
-    public bool inEncounter = false;
     public bool canSwim = false;
     private void Awake(){
         controls = new PlayerControls();
@@ -62,16 +59,13 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
         animator = GetComponentInChildren<Animator>();
-        state = GameState.FreeRoam;
         SetPositionAndSnapToTile(transform.position);
 
         DialogManager.Instance.OnShowDialog += () => {
-            inDialog = true;
             state = GameState.Dialog;
         };
 
         DialogManager.Instance.OnCloseDialog += () => {
-            inDialog = false;
             state = GameState.FreeRoam;
         };
 
@@ -111,40 +105,34 @@ public class PlayerController : MonoBehaviour
         controls.Main.Interact.performed += ctx => Interact();
     }
 
-    void Update(){
-        if(state == GameState.FreeRoam){
-            if(!isMoving && UpisPressed && !inDialog && !inJump && !inEncounter){
+    public void HandleUpdate(){
+            if(UpisPressed && !isMoving && !inJump){
                 StartCoroutine(DoMove(Vector2.up));
                 animator.SetFloat("moveX", 0);
                 animator.SetFloat("moveY", 1);
             } 
-            if(!isMoving && DownisPressed && !inDialog && !inJump && !inEncounter){
+            if(DownisPressed && !isMoving && !inJump){
                 StartCoroutine(DoMove(Vector2.down));
                 animator.SetFloat("moveX", 0);
                 animator.SetFloat("moveY", -1);
             }
-            if(!isMoving && LeftisPressed && !inDialog && !inJump && !inEncounter){
+            if(LeftisPressed && !isMoving && !inJump){
                 StartCoroutine(DoMove(Vector2.left));
                 animator.SetFloat("moveX", -1);
                 animator.SetFloat("moveY", 0);
             } 
-            if(!isMoving && RightisPressed && !inDialog && !inJump && !inEncounter){
+            if(RightisPressed && !isMoving && !inJump){
                 StartCoroutine(DoMove(Vector2.right));
                 animator.SetFloat("moveX", 1);
                 animator.SetFloat("moveY", 0);
             } 
-            if(XisPressed && !isSwimming && !isBiking){
-                moveSpeed = runSpeed;
-                animator.speed = 1.5f;
-            }
-            else {
-                moveSpeed = OriginalMoveSpeed;
-                animator.speed = 1f;
-            }
+        if(XisPressed && !isSwimming && !isBiking){
+            moveSpeed = runSpeed;
+            animator.speed = 1.5f;
         }
-
-        if(inEncounter){
-            state = GameState.Battle;
+        else {
+            moveSpeed = OriginalMoveSpeed;
+            animator.speed = 1f;
         }
     }
 
@@ -234,7 +222,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isSwimming", false);
             animator.SetBool("isBiking", false);
         } 
-        moveDirection = Vector2.zero;
     }
 
     private void OnMoveOver(){
@@ -251,13 +238,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void Interact(){
-        if(state == GameState.FreeRoam){
-            if(inDialog){ //if in dialog, next line
+            if(state == GameState.Dialog){ //if in dialog, next line
                 if(DialogManager.Instance.isTyping == false){
                     DialogManager.Instance.NextDialog();
                 }
             }
-            else{ // if not in dialog, check for interaction
+            else if(state == GameState.FreeRoam) { // if not in dialog, check for interaction
                 var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
                 var interactPos = transform.position + facingDir;
                 
@@ -265,7 +251,6 @@ public class PlayerController : MonoBehaviour
                 if (collider != null){
                     collider.GetComponent<Interactable>()?.Interact();
                 }
-            }
         }
     }
 

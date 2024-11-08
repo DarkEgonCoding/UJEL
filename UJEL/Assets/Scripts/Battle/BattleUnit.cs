@@ -23,12 +23,13 @@ public class BattleUnit : MonoBehaviour
     public void Setup(){
         Pokemon = new Pokemon(_base, level);
         if (isPlayerUnit){
-            GetComponent<UnityEngine.UI.Image>().sprite = Pokemon.Base.BackSprite;
+            GetComponent<Image>().sprite = Pokemon.Base.BackSprite;
         }
         else{
-            GetComponent<UnityEngine.UI.Image>().sprite = Pokemon.Base.FrontSprite;
+            GetComponent<Image>().sprite = Pokemon.Base.FrontSprite;
         }
 
+        image.color = originalColor;
         PlayEnterAnimation();
     }
 
