@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new Pokemon")]
+[CreateAssetMenu(fileName = "new_pokemon", menuName = "Pokemon/Create new Pokemon")]
 public class PokemonBase : ScriptableObject
 {
     [SerializeField] string name;
@@ -26,33 +26,43 @@ public class PokemonBase : ScriptableObject
     public string Name {
         get { return name; }
     }
+
     public string Description {
         get { return description; }
     }
+
     public Sprite FrontSprite{
         get { return frontSprite; }
     }
+
     public Sprite BackSprite {
         get { return backSprite; }
     }
+
     public int MaxHp {
         get { return maxHp; }
     }
+
     public int Attack {
         get { return attack; }
     }
+
     public int SpAttack {
         get { return spAttack; }
     }
+
     public int Defense {
         get { return defense; }
     }
+
     public int SpDefense {
         get { return spDefense; }
     }
+
     public int Speed {
         get { return speed; }
     }
+
     public List<LearnableMove> LearnableMoves {
         get { return learnableMoves;}
     }
