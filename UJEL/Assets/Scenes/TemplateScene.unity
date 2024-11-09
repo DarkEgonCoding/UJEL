@@ -17925,6 +17925,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1241480122690673999, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: dialog.lines.Array.data[0]
+      value: We're no strangers to love, hi hi h ihi hi  I don't know what i'm typing
+        about but I'm typing a thing thats cool
+      objectReference: {fileID: 0}
     - target: {fileID: 2345704622308824517, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
       propertyPath: m_Name
       value: NPC

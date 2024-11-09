@@ -35,26 +35,30 @@ public class BattleSystem : MonoBehaviour
     }
 
     public void StartBattle(){
-        StartCoroutine(SetupBattle());
+        SetupBattle();
     }
 
-    public IEnumerator SetupBattle(){
+    public void SetupBattle(){
         playerUnit.Setup();
         enemyUnit.Setup();
         playerHud.SetData(playerUnit.Pokemon);
         enemyHud.SetData(enemyUnit.Pokemon);
 
         dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
-
-        yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.Name} appeared!");
-        yield return new WaitForSeconds(1f);
-
-        PlayerAction();
     }
 
-    void PlayerAction(){
+    public IEnumerator EnterPokemon(){
+        enemyUnit.PlayEnterAnimation();
+        playerUnit.PlayEnterAnimation();
+        
+        yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.Name} appeared!");
+
+        yield return StartCoroutine(PlayerAction());
+    }
+
+    private IEnumerator PlayerAction(){
         state = BattleState.PlayerAction;
-        StartCoroutine(dialogBox.TypeDialog($"What should {playerUnit.Pokemon.Base.Name} do?"));
+        yield return StartCoroutine(dialogBox.TypeDialog($"What should {playerUnit.Pokemon.Base.Name} do?"));
         dialogBox.EnableActionSelector(true);
     }
 
@@ -91,7 +95,7 @@ public class BattleSystem : MonoBehaviour
         else{
             yield return enemyHud.UpdateHP();
             yield return ShowDamageDetails(damageDetails);
-            StartCoroutine(EnemyMove());
+            yield return StartCoroutine(EnemyMove());
         }
     }
 
@@ -101,7 +105,7 @@ public class BattleSystem : MonoBehaviour
         //Select Move
         var move = enemyUnit.Pokemon.GetRandomMove();
 
-        yield return dialogBox.TypeDialog($"Enemy {enemyUnit.Pokemon.Base.Name} used {move.Base.name}!");
+        dialogBox.TypeDialog($"Enemy {enemyUnit.Pokemon.Base.Name} used {move.Base.name}!");
         enemyUnit.PlayAttackAnimation();
         yield return new WaitForSeconds(1f);
 
@@ -122,7 +126,7 @@ public class BattleSystem : MonoBehaviour
         else if(damageDetails.Fainted == false){
             yield return playerHud.UpdateHP();
             yield return ShowDamageDetails(damageDetails);
-            PlayerAction();
+            yield return StartCoroutine(PlayerAction());
         }
     }
 

@@ -1164,7 +1164,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'This is a test dialog.
+  m_text: '
 
 '
   m_isRightToLeft: 0
@@ -2552,6 +2552,7 @@ MonoBehaviour:
   playerController: {fileID: 5910214389247273340}
   battleSystem: {fileID: 7416825755846713842}
   worldCamera: {fileID: 7996305377751016373}
+  battleCamera: {fileID: 6245236278213933204}
   state: 0
 --- !u!1 &5196520119491210585
 GameObject:
@@ -3825,6 +3826,7 @@ GameObject:
   - component: {fileID: 5419864958804798291}
   - component: {fileID: 6245236278213933204}
   - component: {fileID: 2289125771668018266}
+  - component: {fileID: 7403155836008698556}
   m_Layer: 0
   m_Name: BattleCamera
   m_TagString: Untagged
@@ -3906,6 +3908,23 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8199082531858876854}
   m_Enabled: 0
+--- !u!114 &7403155836008698556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8199082531858876854}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534cc290595d00e498e362dcd405651f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionMaterial: {fileID: 2100000, guid: 6f7befa0db168384cae01a614d2b5049, type: 2}
+  AnimationSpeed: 1.6
+  TransitionTex: {fileID: 2800000, guid: 451cfb19adbafd74688c584f9d74b1e6, type: 3}
+  Reversed: 0
+  waitTime: 0.3
 --- !u!1 &8383794294740375773
 GameObject:
   m_ObjectHideFlags: 0
@@ -4045,8 +4064,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TransitionMaterial: {fileID: 2100000, guid: 6f7befa0db168384cae01a614d2b5049, type: 2}
-  AnimationSpeed: 1
-  TransitionTex: {fileID: 2800000, guid: 349e96d14ff88cc499872bc084b5e31c, type: 3}
+  AnimationSpeed: 1.2
+  TransitionTex: {fileID: 2800000, guid: f7222c5ab815d7b47a98524880d6bad4, type: 3}
+  Reversed: 0
+  waitTime: 0.3
 --- !u!20 &7996305377751016373 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6891327849152920578, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}

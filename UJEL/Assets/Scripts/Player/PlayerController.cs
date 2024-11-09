@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour
 
     void Interact(){
             if(GameController.instance.state == GameState.Dialog){ //if in dialog, next line
-                if(DialogManager.Instance.isTyping == false){
+                if(DialogManager.Instance.skippingDialog == false){
                     DialogManager.Instance.NextDialog();
                 }
             }

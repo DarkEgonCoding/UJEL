@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] Camera worldCamera;
+    [SerializeField] Camera battleCamera;
     public GameState state;
     GameState stateBeforePause;
 
@@ -39,11 +40,21 @@ public class GameController : MonoBehaviour
     IEnumerator StartBattle(){
         state = GameState.Battle;
 
-        yield return StartCoroutine(worldCamera.GetComponent<ScreenTransition>().TransitionAnimation());
+        ScreenTransition transition = worldCamera.GetComponent<ScreenTransition>();
+        transition.Reversed = false;
+
+        yield return StartCoroutine(transition.TransitionAnimation());
 
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
+        
         battleSystem.StartBattle();
+
+        transition = battleCamera.GetComponent<ScreenTransition>();
+        transition.Reversed = true;
+        yield return StartCoroutine(transition.TransitionAnimation());
+
+        yield return StartCoroutine(battleSystem.EnterPokemon());
     }
 
     public void PauseGame(bool pause){

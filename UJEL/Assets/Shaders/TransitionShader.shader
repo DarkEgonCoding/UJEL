@@ -45,10 +45,10 @@ Shader "Hidden/TransitionShader"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                if (tex2D(_MainTex, i.uv).x < _Cutoff) {
+                if (tex2D(_TransitionTex, i.uv).r < _Cutoff) {
                     return 0.0f;
                 }
-                return tex2D(_TransitionTex, i.uv);
+                return tex2D(_MainTex, i.uv);
             }
 
             ENDCG

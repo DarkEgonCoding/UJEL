@@ -21,6 +21,7 @@ public class BattleUnit : MonoBehaviour
     }
 
     public void Setup(){
+        image.enabled = false;
         Pokemon = new Pokemon(_base, level);
         if (isPlayerUnit){
             GetComponent<Image>().sprite = Pokemon.Base.BackSprite;
@@ -30,7 +31,6 @@ public class BattleUnit : MonoBehaviour
         }
 
         image.color = originalColor;
-        PlayEnterAnimation();
     }
 
     public void PlayEnterAnimation(){
@@ -39,6 +39,7 @@ public class BattleUnit : MonoBehaviour
         }
         else image.transform.localPosition = new Vector3(500f, originalPos.y);
 
+        image.enabled = true;
         image.transform.DOLocalMoveX(originalPos.x, 1f);
     }
 
