@@ -10,19 +10,15 @@ public class GameController : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] Camera worldCamera;
-    GameState state;
+    public GameState state;
+    GameState stateBeforePause;
+
+    public static GameController instance;
 
     private void Start(){
-        playerController.OnEncountered.AddListener(StartBattle);
+        instance = this;
+        playerController.OnEncountered.AddListener(() => StartCoroutine(StartBattle()));
         battleSystem.OnBattleOver.AddListener(EndBattle);
-    }
-
-    void StartBattle(){
-        state = GameState.Battle;
-        battleSystem.gameObject.SetActive(true);
-        worldCamera.gameObject.SetActive(false);
-
-        battleSystem.StartBattle();
     }
 
     void EndBattle(bool won){
@@ -37,6 +33,26 @@ public class GameController : MonoBehaviour
         }
         else if (state == GameState.Battle){
             battleSystem.HandleUpdate();
+        }
+    }
+
+    IEnumerator StartBattle(){
+        state = GameState.Battle;
+
+        yield return StartCoroutine(worldCamera.GetComponent<ScreenTransition>().TransitionAnimation());
+
+        battleSystem.gameObject.SetActive(true);
+        worldCamera.gameObject.SetActive(false);
+        battleSystem.StartBattle();
+    }
+
+    public void PauseGame(bool pause){
+        if (pause){
+            stateBeforePause = state;
+            state = GameState.Pause;
+        }
+        else{
+            state = stateBeforePause;
         }
     }
 }

@@ -41,8 +41,6 @@ public class PlayerController : MonoBehaviour
     bool LeftisPressed;
     bool RightisPressed;
     bool XisPressed;
-    public GameState state = GameState.FreeRoam;
-    public GameState stateBeforePause;
     public bool inJump = false;
     public bool canSwim = false;
     private void Awake(){
@@ -62,11 +60,11 @@ public class PlayerController : MonoBehaviour
         SetPositionAndSnapToTile(transform.position);
 
         DialogManager.Instance.OnShowDialog += () => {
-            state = GameState.Dialog;
+            GameController.instance.state = GameState.Dialog;
         };
 
         DialogManager.Instance.OnCloseDialog += () => {
-            state = GameState.FreeRoam;
+            GameController.instance.state = GameState.FreeRoam;
         };
 
 
@@ -238,12 +236,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void Interact(){
-            if(state == GameState.Dialog){ //if in dialog, next line
+            if(GameController.instance.state == GameState.Dialog){ //if in dialog, next line
                 if(DialogManager.Instance.isTyping == false){
                     DialogManager.Instance.NextDialog();
                 }
             }
-            else if(state == GameState.FreeRoam) { // if not in dialog, check for interaction
+            else if(GameController.instance.state == GameState.FreeRoam) { // if not in dialog, check for interaction
                 var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
                 var interactPos = transform.position + facingDir;
                 
@@ -288,15 +286,5 @@ public class PlayerController : MonoBehaviour
         pos.y = Mathf.Floor(pos.y) + 0.5f;
 
         transform.position = pos;
-    }
-
-    public void PauseGame(bool pause){
-        if (pause){
-            stateBeforePause = state;
-            state = GameState.Pause;
-        }
-        else{
-            state = stateBeforePause;
-        }
     }
 }

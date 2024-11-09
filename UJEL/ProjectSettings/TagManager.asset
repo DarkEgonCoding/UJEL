@@ -64,3 +64,6 @@ TagManager:
   - name: Fader
     uniqueID: 997262767
     locked: 0
+  - name: Transition
+    uniqueID: 2468135573
+    locked: 0

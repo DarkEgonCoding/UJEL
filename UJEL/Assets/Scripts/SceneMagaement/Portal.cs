@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,7 +22,7 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
     }
 
     IEnumerator SwitchScene(){
-        player.PauseGame(true);
+        GameController.instance.PauseGame(true);
         yield return Fader.instance.FadeIn(0.5f);
         DontDestroyOnLoad(gameObject);
         yield return SceneManager.LoadSceneAsync(sceneToLoad);
@@ -30,7 +31,7 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
         player.SetPositionAndSnapToTile(destPortal.SpawnPoint.position);
 
         yield return Fader.instance.FadeOut(0.5f);
-        player.PauseGame(false);
+        GameController.instance.PauseGame(false);
         Destroy(gameObject);
     }
 
