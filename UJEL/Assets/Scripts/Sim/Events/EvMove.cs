@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Sim {
     /// <summary>
     /// A class representing a single event that happened in a battle.
     /// </summary>
-    public class EvMove
+    public class EvMove : Event
     {
         private Move mv;
         private Pokemon src;
@@ -16,7 +17,7 @@ namespace Sim {
         /// <summary>
         /// Constructs a new move event.
         /// </summary>
-        public EvMove(Move mv, Pokemon src, List<Pokemon> targets) {
+        public EvMove(Battle battle, Move mv, Pokemon src, List<Pokemon> targets) {
             this.mv = mv;
             this.src = src;
             this.targets = targets;
@@ -25,7 +26,7 @@ namespace Sim {
         /// <summary>
         /// Applys an event's effects to the battle.
         /// </summary>
-        private void Apply() {
+        public override void Apply() {
             return;
         }
 
@@ -33,7 +34,7 @@ namespace Sim {
         /// Gets the description string that can be desplayed to the player.
         /// Returns null if the event should go by without description.
         /// </summary>
-        public string[] GetDescription() {
+        public override string[] GetDescription() {
             return new string[] {
                 ""
             };

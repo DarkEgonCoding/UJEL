@@ -18,15 +18,9 @@ namespace Sim {
         public bool Canceled { get; set; }
 
         /// <summary>
-        /// The default constructor for a class. All subclasses should implement this.
-        /// </summary>
-        public Event() {
-        }
-
-        /// <summary>
         /// Applys an event's effects to the battle.
         /// </summary>
-        public void Apply() {
+        public virtual void Apply() {
             
         }
 
@@ -34,7 +28,7 @@ namespace Sim {
         /// Gets the description string that can be desplayed to the player.
         /// Returns null if the event should go by without description.
         /// </summary>
-        public string[] GetDescription() {
+        public virtual string[] GetDescription() {
             return new string[0];
         }
     }
