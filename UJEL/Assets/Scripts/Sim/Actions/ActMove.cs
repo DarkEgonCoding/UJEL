@@ -27,6 +27,7 @@ namespace Sim
         /// </summary>
         public void Do() {
             battle.EnququeEvent((Event) new EvMove(battle, mv, src, targets));
+            mv.GetType(
             return;
         }
     }

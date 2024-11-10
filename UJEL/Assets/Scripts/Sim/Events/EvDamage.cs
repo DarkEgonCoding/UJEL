@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,19 +11,22 @@ namespace Sim {
     /// </summary>
     public class EvDamage
     {
-        // The data for the move that was used.
+        private Battle battle;
+        private Pokemon target;
+        private GenData.DamageType dtype;
+        private int power;
 
         /// <summary>
         /// The default constructor for a class. All subclasses should implement this.
         /// </summary>
-        public EvDamage(Battle battle) {
+        public EvDamage(Battle battle, Pokemon target, GenData.DamageType dtype, int power) {
         }
 
         /// <summary>
         /// Applys an event's effects to the battle.
         /// </summary>
         public void Apply() {
-            
+
         }
 
         /// <summary>
@@ -30,9 +34,7 @@ namespace Sim {
         /// Returns null if the event should go by without description.
         /// </summary>
         public string[] GetDescription() {
-            return new string[] {
-                ""
-            };
+            return null;
         }
     }
 }

@@ -6,29 +6,31 @@ using UnityEngine;
 namespace Sim {
 
     /// <summary>
-    /// A class representing a single event that happened in a battle.
+    /// A class for different general data, enums and common tables.
+    /// Types, physical non-physical, etc...
     /// </summary>
     public class GenData
     {
+
         public enum Type {
-            NORMAL = 0,
-            FIRE,
-            WATER,
-            ELECTRIC,
-            GRASS,
-            ICE,
-            FIGHTING,
-            POISON,
-            GROUND,
-            FLYING,
-            PSYCHIC,
-            BUG,
-            ROCK,
-            GHOST,
-            DRAGON,
-            DARK,
-            STEEL,
-            FAIRY
+            T_NORMAL = 0,
+            T_FIRE,
+            T_WATER,
+            T_ELECTRIC,
+            T_GRASS,
+            T_ICE,
+            T_FIGHTING,
+            T_POISON,
+            T_GROUND,
+            T_FLYING,
+            T_PSYCHIC,
+            T_BUG,
+            T_ROCK,
+            T_GHOST,
+            T_DRAGON,
+            T_DARK,
+            T_STEEL,
+            T_FAIRY
         };
 
         private static float[,] _typeChart = new float[,] {
@@ -55,6 +57,19 @@ namespace Sim {
 
         public static float GetEffectiveness(Type attacker, Type defender) {
             return _typeChart[(int) attacker, (int) defender];
+        }
+
+        public enum DamageType {
+            DT_PHYSICAL,
+            DT_SPECIAL
+        };
+
+        public static int AdjustByMultiplier(int damage, int multiplier) {
+            if (multiplier >= 0) {
+                return Mathf.FloorToInt(damage + damage * 0.5f * multiplier);
+            } else {
+                return Mathf.FloorToInt(damage / -multiplier);
+            }
         }
     }
 }

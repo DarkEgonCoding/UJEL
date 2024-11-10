@@ -8,24 +8,29 @@ namespace Sim {
     /// <summary>
     /// A class representing a single event that happened in a battle.
     /// </summary>
-    public class EvEffectiveness : Event
+    public class EvResist : Event
     {
         private Move mv;
         private Pokemon src;
-        private List<Pokemon> targets;
+        private Pokemon target;
+        private float mult;
 
         /// <summary>
-        /// Constructs a new move event.
+        /// Constructs a new effectiveness event.
         /// </summary>
-        public EvTyping(Battle battle, Move mv, Pokemon src, List<Pokemon> targets) {
+        public EvResist(Battle battle, Move mv, Pokemon src, Pokemon target, float mult) {
             this.mv = mv;
             this.src = src;
-            this.targets = targets;
+            this.target = target;
+            this.mult = mult;
         }
 
+        /// <summary>
+        /// Returns the human readable string description of the event.
+        /// </summary>
         public override string[] GetDescription() {
             return new string[] {
-                "And it was super effective."
+                "But it was not very effective."
             };
         }
     }
