@@ -11,7 +11,6 @@ public class DialogManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogText;
     [SerializeField] int lettersPerSecond;
     Coroutine dialogCoroutine;
-
     public event Action OnShowDialog;
     public event Action OnCloseDialog;
     private string currentText;
@@ -46,7 +45,7 @@ public class DialogManager : MonoBehaviour
         isTyping = false;
     }
 
-    public IEnumerator SkipDialog(){
+    private IEnumerator SkipDialog(){
         skippingDialog = true;
         if(dialogCoroutine != null) StopCoroutine(dialogCoroutine);
         dialogText.text = currentText;

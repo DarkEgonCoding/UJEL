@@ -9,27 +9,56 @@ public class BattleDialogBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogText;
     [SerializeField] int lettersPerSecond = 30;
     [SerializeField] Color highlightedColor;
-    [SerializeField] GameObject actionSelector;
+    [SerializeField] public GameObject actionSelector;
     [SerializeField] GameObject moveSelector;
     [SerializeField] GameObject moveDetails;
     [SerializeField] List<TextMeshProUGUI> actionTexts;
     [SerializeField] List<TextMeshProUGUI> moveTexts;
-
     [SerializeField] TextMeshProUGUI ppText;
     [SerializeField] TextMeshProUGUI typeText;
+    bool skippingDialog;
+    public bool isTyping;
+    Coroutine dialogCoroutine;
+    string currentText;
     
     public void SetDialog(string dialog){
         dialogText.text = dialog;
     }
 
-    public IEnumerator TypeDialog(string dialog){
-        dialogText.text = "";
-        foreach (var letter in dialog.ToCharArray()){
-            dialogText.text += letter;
-            yield return new WaitForSeconds(1f/lettersPerSecond);
-        }
+    public Coroutine StartDialog(string line){
+        dialogCoroutine = StartCoroutine(TypeDialog(line));
+        return dialogCoroutine;
+    }
 
-        yield return new WaitForSeconds(1f);
+    private IEnumerator TypeDialog(string line){
+        isTyping = true;
+        currentText = line;
+        dialogText.text = "";
+        foreach (var letter in line.ToCharArray()){
+            dialogText.text += letter;
+            yield return new WaitForSeconds(1f / lettersPerSecond);
+        }
+        isTyping = false;
+    }
+
+    private IEnumerator SkipDialog(){
+        skippingDialog = true;
+        if(dialogCoroutine != null) StopCoroutine(dialogCoroutine);
+        dialogText.text = currentText;
+        yield return new WaitForSeconds(.2f);
+        isTyping = false;
+        skippingDialog = false;
+    }
+
+    public void TrySkipDialog(){
+        Debug.Log("Skip");
+        if(isTyping)
+        {
+            if(!skippingDialog)
+            {
+                StartCoroutine(SkipDialog());
+            }
+        }
     }
 
     public void EnableDialogText(bool enabled){

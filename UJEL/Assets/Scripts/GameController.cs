@@ -48,13 +48,15 @@ public class GameController : MonoBehaviour
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
         
-        battleSystem.StartBattle();
+        var playerParty = playerController.GetComponent<PokemonParty>();
+        var wildPokemon = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildPokemon();
+        battleSystem.StartBattle(playerParty, wildPokemon);
 
         transition = battleCamera.GetComponent<ScreenTransition>();
         transition.Reversed = true;
         yield return StartCoroutine(transition.TransitionAnimation());
 
-        yield return StartCoroutine(battleSystem.EnterPokemon());
+        yield return battleSystem.EnterPokemon();
     }
 
     public void PauseGame(bool pause){
