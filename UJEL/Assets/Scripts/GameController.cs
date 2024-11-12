@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] Camera worldCamera;
     [SerializeField] Camera battleCamera;
+    [SerializeField] AudioClip wildBattleMusic;
     public GameState state;
     GameState stateBeforePause;
 
@@ -39,6 +40,8 @@ public class GameController : MonoBehaviour
 
     IEnumerator StartBattle(){
         state = GameState.Battle;
+
+        AudioManager.instance.PlayMusic(wildBattleMusic, startSeconds: .5f);
 
         ScreenTransition transition = worldCamera.GetComponent<ScreenTransition>();
         transition.Reversed = false;

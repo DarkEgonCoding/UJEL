@@ -16,6 +16,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleHud enemyHud;
     [SerializeField] BattleDialogBox dialogBox;
     [SerializeField] PartyScreen partyScreen;
+    [SerializeField] AudioClip trainerBattleMusic;
+    [SerializeField] AudioClip battleVictoryMusic;
     public PlayerControls controls;
     public UnityEvent<bool> OnBattleOver;
 

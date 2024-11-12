@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 7743067434613474124}
   - component: {fileID: 4773020434990954794}
   - component: {fileID: 2532841962803375304}
+  - component: {fileID: 4961145265364402142}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -190,6 +191,9 @@ MonoBehaviour:
   moveSpeed: 5
   runSpeed: 9
   player: {fileID: 0}
+  OnEncountered:
+    m_PersistentCalls:
+      m_Calls: []
   jumpSpeed: 3
   swimSpeed: 3
   runSwimSpeed: 6
@@ -199,6 +203,7 @@ MonoBehaviour:
   isBiking: 0
   canBike: 1
   isSwimming: 0
+  animator: {fileID: 0}
   solidObjectsLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -217,11 +222,7 @@ MonoBehaviour:
   waterLayer:
     serializedVersion: 2
     m_Bits: 2064
-  state: 0
-  stateBeforePause: 0
-  inDialog: 0
   inJump: 0
-  inEncounter: 0
   canSwim: 1
 --- !u!114 &7743067434613474124
 MonoBehaviour:
@@ -307,6 +308,14 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!81 &4961145265364402142
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8706015446509186742}
+  m_Enabled: 1
 --- !u!1001 &4487099918915280518
 PrefabInstance:
   m_ObjectHideFlags: 0
