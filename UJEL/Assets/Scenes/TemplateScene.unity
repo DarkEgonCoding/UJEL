@@ -17925,6 +17925,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneMusic: {fileID: 8300000, guid: 41c03f74d9fed2647ad6eabcb4940d40, type: 3}
+  startSeconds: 0.25
+  doFade: 1
 --- !u!4 &1997876025
 Transform:
   m_ObjectHideFlags: 0
