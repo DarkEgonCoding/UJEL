@@ -8,7 +8,7 @@ namespace Sim {
     /// <summary>
     /// A class representing a single event that happened in a battle.
     /// </summary>
-    public class EvWeak : Event
+    public class EvCrit : EvDamageMod
     {
         private Move mv;
         private Pokemon src;
@@ -18,20 +18,24 @@ namespace Sim {
         /// <summary>
         /// Constructs a new effectiveness event.
         /// </summary>
-        public EvWeak(Battle battle, Move mv, Pokemon src, Pokemon target, float mult) {
+        public EvCrit(Battle battle, Move mv, Pokemon src, Pokemon target, float mult) {
             this.mv = mv;
             this.src = src;
             this.target = target;
-            this.mult = mult;
+        }
+
+        /// <summary>
+        /// Multiply the power by the multiplier.
+        /// </summary>
+        public override int ModifyPower(int power) {
+            return Mathf.FloorToInt(mult * power);
         }
 
         /// <summary>
         /// Returns the human readable string description of the event.
         /// </summary>
         public override string[] GetDescription() {
-            return new string[] {
-                "And it was super effective."
-            };
+            return new string[] { "It was a critical hit!" };
         }
     }
 }

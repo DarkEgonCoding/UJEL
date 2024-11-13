@@ -10,14 +10,14 @@ namespace Sim {
     /// </summary>
     public class EvMove : Event
     {
-        private Move mv;
+        private MoveData mv;
         private Pokemon src;
         private List<Pokemon> targets;
 
         /// <summary>
         /// Constructs a new move event.
         /// </summary>
-        public EvMove(Battle battle, Move mv, Pokemon src, List<Pokemon> targets) {
+        public EvMove(Battle battle, MoveData mv, Pokemon src, List<Pokemon> targets) {
             this.mv = mv;
             this.src = src;
             this.targets = targets;

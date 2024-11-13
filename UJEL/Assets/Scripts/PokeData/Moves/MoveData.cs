@@ -14,7 +14,7 @@ namespace Sim {
 
         // Typing
         [SerializeField] GenData.Type type;
-        [SerializeField] GenData
+        [SerializeField] GenData.DamageType dtype;
 
         // Stats
         [SerializeField] int power;
@@ -30,6 +30,10 @@ namespace Sim {
         }
 
         public GenData.Type Type {
+            get { return type; }
+        }
+
+        public GenData.DamageType DamageType {
             get { return type; }
         }
 

@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Sim {
     public class Pokemon
     {
         // Public interface for pokemon base stats. Ideally constant.
-        public PokemonData Species { get; }
+        public SpeciesData Species { get; }
         
         // Non-constant stats for the pokemon.
         public int Level { get; set; }
@@ -22,6 +23,7 @@ namespace Sim {
         public int SpAMult { get; set; }
         public int SpDMult { get; set; }
         public int SpeMult { get; set; }
+        public int EvaMult { get; set; }
 
         // Individual values for the pokemon. Calculated upon construction and then constant.
         public float AtkIv { get; }
@@ -42,7 +44,7 @@ namespace Sim {
         /// <summary>
         /// Constructs a pokemon given a base and a starting level.
         /// </summary>
-        public Pokemon(PokemonData species, int level){
+        public Pokemon(SpeciesData species, int level){
             this.Species = species;
             this.Level = level;
             this.Hp = MaxHp;

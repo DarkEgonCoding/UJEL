@@ -10,6 +10,10 @@ namespace Sim {
     /// </summary>
     public class Event
     {
+        // Events are structured as a linked list.
+        public Event Root { get; set; }
+        public Event Next { get; set; }
+
         /// <summary>
         /// Boolean representing whether or not this event has been canceled.
         /// Canceled events can mean different things for different event types.
@@ -32,4 +36,5 @@ namespace Sim {
             return new string[0];
         }
     }
+
 }

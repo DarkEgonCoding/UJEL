@@ -9,7 +9,7 @@ namespace Sim {
     /// A class representing damage done to a pokemon. Damage should then be amplified by crits,
     /// abilities, status modifiers, etc...
     /// </summary>
-    public class EvDamage
+    public class EvDamage : Event
     {
         private Battle battle;
         private Pokemon target;
@@ -25,7 +25,7 @@ namespace Sim {
         /// <summary>
         /// Applys an event's effects to the battle.
         /// </summary>
-        public void Apply() {
+        public override void Apply() {
 
         }
 
@@ -33,7 +33,7 @@ namespace Sim {
         /// Gets the description string that can be desplayed to the player.
         /// Returns null if the event should go by without description.
         /// </summary>
-        public string[] GetDescription() {
+        public override string[] GetDescription() {
             return null;
         }
     }

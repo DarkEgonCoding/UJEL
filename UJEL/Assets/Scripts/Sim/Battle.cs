@@ -49,11 +49,18 @@ namespace Sim {
             return events;
         }
 
+        /// <summary>
+        /// Pushes an event to the event queue.
+        /// </summary>
         public void EnququeEvent(Event ev) {
             events.Enqueue(ev);
             foreach (SimListener listener in listeners) {
                 listener.NotifyEventPush(ev);
             }
+        }
+
+        public void AppendModifier(Event ev) {
+
         }
 
         public Event DequeueEvent() {

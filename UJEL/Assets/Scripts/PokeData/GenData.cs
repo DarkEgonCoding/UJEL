@@ -13,6 +13,7 @@ namespace Sim {
     {
 
         public enum Type {
+            T_NULL = -1,
             T_NORMAL = 0,
             T_FIRE,
             T_WATER,

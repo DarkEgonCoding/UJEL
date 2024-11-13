@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Sim {
 
     [CreateAssetMenu(fileName = "new_pokemon", menuName = "Pokemon/Create new Pokemon")]
-    public class PokemonData : ScriptableObject
+    public class SpeciesData : ScriptableObject
     {
         // Name and Description
         [SerializeField] string speciesName;
@@ -37,6 +37,15 @@ namespace Sim {
 
         public string Description {
             get { return description; }
+        }
+
+        // Types
+        public GenData.Type Type1 {
+            get { return type1; }
+        }
+
+        public GenData.Type Type2 {
+            get { return type2; }
         }
 
         // Sprite data
@@ -75,7 +84,7 @@ namespace Sim {
 
         // Move data
         public List<LearnableMove> LearnableMoves {
-            get { return learnableMoves;}
+            get { return learnableMoves; }
         }
     }
 
