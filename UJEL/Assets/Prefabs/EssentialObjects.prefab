@@ -4852,13 +4852,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3448501490695601815, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.data[2]._base
+      value: 
+      objectReference: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.data[2].level
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7160498940358260427, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
-      propertyPath: portalLayer.m_Bits
-      value: 1024
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.data[3]._base
+      value: 
+      objectReference: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.data[3].level
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.data[4]._base
+      value: 
+      objectReference: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.data[4].level
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.data[5]._base
+      value: 
+      objectReference: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemons.Array.data[5].level
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8706015446509186742, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: m_Name
@@ -4867,85 +4895,24 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8706015446509186742, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7939514392924025271}
-    - targetCorrespondingSourceObject: {fileID: 8706015446509186742, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7417282568350225556}
-    - targetCorrespondingSourceObject: {fileID: 6601807827841351029, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8074967078706380875}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
 --- !u!4 &1352093750989100444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2565333728093669931, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
   m_PrefabInstance: {fileID: 3556294997523374007}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5299476280215826689 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8706015446509186742, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
-  m_PrefabInstance: {fileID: 3556294997523374007}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7939514392924025271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5299476280215826689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8746822dcf7a0d84692cccaa2ef2b524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pokemons:
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 7
-  - _base: {fileID: 11400000, guid: 1d5821be2798fba42b3dc597655b156a, type: 2}
-    level: 5
---- !u!81 &7417282568350225556
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5299476280215826689}
-  m_Enabled: 1
 --- !u!114 &5910214389247273340 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7160498940358260427, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
   m_PrefabInstance: {fileID: 3556294997523374007}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5299476280215826689}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a82830b4800869b4aa4ebb7dce15107d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7693320554832552642 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6601807827841351029, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
-  m_PrefabInstance: {fileID: 3556294997523374007}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8074967078706380875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7693320554832552642}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 534cc290595d00e498e362dcd405651f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TransitionMaterial: {fileID: 2100000, guid: 6f7befa0db168384cae01a614d2b5049, type: 2}
-  AnimationSpeed: 1.2
-  TransitionTex: {fileID: 2800000, guid: f7222c5ab815d7b47a98524880d6bad4, type: 3}
-  Reversed: 0
-  waitTime: 0.3
 --- !u!20 &7996305377751016373 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6891327849152920578, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
