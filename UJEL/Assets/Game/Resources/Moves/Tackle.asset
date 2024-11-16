@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fc6a5a2f96b284f99c379964c6d30a, type: 3}
   m_Name: Tackle
   m_EditorClassIdentifier: 
-  name: 
+  name: Tackle
   description: 
-  type: 0
+  type: 1
   power: 40
   accuracy: 100
   pp: 20
+  IsSpecial: 0
