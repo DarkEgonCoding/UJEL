@@ -80,6 +80,7 @@ public class BattleSystem : MonoBehaviour
     }
 
     private void OpenPartyScreen(){
+        dialogBox.EnableActionSelector(false);
         state = BattleState.PartyScreen;
         partyScreen.SetPartyData(playerParty.Pokemons);
         partyScreen.gameObject.SetActive(true);
@@ -96,7 +97,7 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerMove(){
         if(dialogBox.isTyping) yield break;
-        state = BattleState.PerformMove;
+        state = BattleState.Busy;
 
         var move = playerUnit.Pokemon.Moves[currentMove];
         dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} used {move.Base.name}!");
