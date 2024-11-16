@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 997262767
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 7054760933576745604}
   - component: {fileID: 97551302075656426}
   - component: {fileID: 3350422086787670379}
+  - component: {fileID: 6176193734897764204}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -190,7 +191,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7339517912132183027}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &3350422086787670379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,3 +208,20 @@ MonoBehaviour:
   CameraX: 0
   CameraY: 0
   CameraZ: -5
+--- !u!114 &6176193734897764204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7339517912132183027}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534cc290595d00e498e362dcd405651f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionMaterial: {fileID: 2100000, guid: 6f7befa0db168384cae01a614d2b5049, type: 2}
+  AnimationSpeed: 1.2
+  TransitionTex: {fileID: 2800000, guid: f7222c5ab815d7b47a98524880d6bad4, type: 3}
+  Reversed: 0
+  waitTime: 0.3
