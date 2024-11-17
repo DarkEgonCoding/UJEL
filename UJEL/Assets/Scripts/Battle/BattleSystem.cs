@@ -43,6 +43,7 @@ public class BattleSystem : MonoBehaviour
     }
 
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon){
+        dialogBox.SetDialog("");
         this.playerParty = playerParty;
         this.wildPokemon = wildPokemon;
         SetupBattle();
