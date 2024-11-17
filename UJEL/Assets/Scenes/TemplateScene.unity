@@ -17993,6 +17993,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1241480122690673999, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: sprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1241480122690673999, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: sprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 1148791261, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+    - target: {fileID: 1241480122690673999, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: sprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -877939042, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+    - target: {fileID: 1241480122690673999, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: sprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 979921598, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+    - target: {fileID: 1241480122690673999, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: sprites.Array.data[3]
+      value: 
+      objectReference: {fileID: -27465258, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+    - target: {fileID: 1241480122690673999, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
       propertyPath: dialog.lines.Array.data[0]
       value: We're no strangers to love, hi hi h ihi hi  I don't know what i'm typing
         about but I'm typing a thing thats cool
