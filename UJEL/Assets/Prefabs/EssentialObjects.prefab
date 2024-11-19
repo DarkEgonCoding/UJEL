@@ -2940,6 +2940,7 @@ GameObject:
   - component: {fileID: 3027306843962591198}
   - component: {fileID: 2683686600282882009}
   - component: {fileID: 646240518175654642}
+  - component: {fileID: 309560227406838143}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2997,6 +2998,39 @@ MonoBehaviour:
   battleCamera: {fileID: 6245236278213933204}
   wildBattleMusic: {fileID: 8300000, guid: ee8427fe622a95b44aeab90ebaec07e2, type: 3}
   state: 0
+--- !u!114 &309560227406838143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164724522529123066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52aebda7b905c264fadff773848ad259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  solidObjectsLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  grassLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  ledgeLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  portalLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1 &5196520119491210585
 GameObject:
   m_ObjectHideFlags: 0

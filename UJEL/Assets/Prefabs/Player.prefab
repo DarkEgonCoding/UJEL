@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 2532841962803375304}
   - component: {fileID: 5357730594382681090}
   - component: {fileID: 2666599348999236595}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -205,24 +205,6 @@ MonoBehaviour:
   canBike: 1
   isSwimming: 0
   animator: {fileID: 0}
-  solidObjectsLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  grassLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  interactableLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  ledgeLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  portalLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  waterLayer:
-    serializedVersion: 2
-    m_Bits: 2064
   inJump: 0
   canSwim: 1
 --- !u!114 &7743067434613474124

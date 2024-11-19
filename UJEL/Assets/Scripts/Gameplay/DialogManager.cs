@@ -13,6 +13,7 @@ public class DialogManager : MonoBehaviour
     Coroutine dialogCoroutine;
     public event Action OnShowDialog;
     public event Action OnCloseDialog;
+    public event Action onDialogFinished;
     private string currentText;
 
     public static DialogManager Instance { get; private set; }
@@ -25,10 +26,14 @@ public class DialogManager : MonoBehaviour
     public bool isTyping;
     public bool skippingDialog;
 
-    public void ShowDialog(Dialog dialog){
+    public bool IsShowing { get; private set; }
+
+    public void ShowDialog(Dialog dialog, Action onFinished = null){
             OnShowDialog?.Invoke();
 
+            IsShowing = true;
             this.dialog = dialog;
+            onDialogFinished = onFinished;
             dialogBox.SetActive(true);
             dialogText.text = dialog.Lines[0];
             dialogCoroutine = StartCoroutine(TypeDialog(dialog.Lines[0]));
@@ -68,6 +73,8 @@ public class DialogManager : MonoBehaviour
                 else{
                     currentLine = 0;
                     dialogBox.SetActive(false);
+                    IsShowing = false;
+                    onDialogFinished?.Invoke();
                     OnCloseDialog?.Invoke();
                 }
             }

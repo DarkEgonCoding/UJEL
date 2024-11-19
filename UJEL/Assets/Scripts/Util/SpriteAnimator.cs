@@ -27,8 +27,15 @@ public class SpriteAnimator
         timer += Time.deltaTime;
         if (timer > frameRate){
             currentFrame = (currentFrame + 1) % frames.Count;
+
+            Debug.Log(currentFrame);
+
             spriteRenderer.sprite = frames[currentFrame];
             timer -= frameRate;
         }
+    }
+
+    public List<Sprite> Frames {
+        get { return frames; }
     }
 }

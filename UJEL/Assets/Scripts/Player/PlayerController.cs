@@ -27,15 +27,6 @@ public class PlayerController : MonoBehaviour
     public bool isSwimming = false;
     public PlayerControls controls;
     public Animator animator;
-    [SerializeField] public LayerMask solidObjectsLayer;
-    [SerializeField] public LayerMask grassLayer;
-    [SerializeField] public LayerMask interactableLayer;
-    [SerializeField] public LayerMask ledgeLayer;
-    [SerializeField] public LayerMask portalLayer;
-    [SerializeField] public LayerMask waterLayer;
-    public LayerMask TriggerableLayers {
-        get => grassLayer | portalLayer;
-    }
     bool UpisPressed;
     bool DownisPressed;
     bool LeftisPressed;
@@ -89,10 +80,10 @@ public class PlayerController : MonoBehaviour
             isBiking = !isBiking;
             
             //If you are click bike in water, set isBiking false
-            Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.3f, waterLayer);
+            Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.3f, GameLayers.i.waterLayer);
             if (collider != null)
             {
-                if ((waterLayer & (1 << collider.gameObject.layer)) != 0)
+                if ((GameLayers.i.waterLayer & (1 << collider.gameObject.layer)) != 0)
                 {
                     isBiking = false;
                 }
@@ -135,9 +126,9 @@ public class PlayerController : MonoBehaviour
     }
 
     private bool IsWalkable(Vector3 targetPos){
-        Collider2D collider = Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer | interactableLayer | ledgeLayer | waterLayer);
+        Collider2D collider = Physics2D.OverlapCircle(targetPos, 0.3f, GameLayers.i.solidObjectsLayer | GameLayers.i.interactableLayer | GameLayers.i.ledgeLayer | GameLayers.i.waterLayer);
         if(collider != null){ //if the player collides with something
-            if ((waterLayer & (1 << collider.gameObject.layer)) != 0 && !isBiking)
+            if ((GameLayers.i.waterLayer & (1 << collider.gameObject.layer)) != 0 && !isBiking)
             {
                 if(canSwim == true)
                 {
@@ -223,7 +214,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnMoveOver(){
-        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.2f, TriggerableLayers);
+        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.2f, GameLayers.i.TriggerableLayers);
         
         foreach (var collider in colliders){
             var triggerable = collider.GetComponent<IPlayerTriggerable>();
@@ -245,16 +236,16 @@ public class PlayerController : MonoBehaviour
                 var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
                 var interactPos = transform.position + facingDir;
                 
-                var collider = Physics2D.OverlapCircle(interactPos, 0.3f, interactableLayer);
+                var collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.i.interactableLayer);
                 if (collider != null){
-                    collider.GetComponent<Interactable>()?.Interact();
+                    collider.GetComponent<Interactable>()?.Interact(transform);
                 }
         }
     }
 
 // LEDGE JUMP Mechanics
     Ledge CheckForLedge(Vector3 targetPos){
-        var collider = Physics2D.OverlapCircle(targetPos, 0.3f, ledgeLayer);
+        var collider = Physics2D.OverlapCircle(targetPos, 0.3f, GameLayers.i.ledgeLayer);
         return collider?.GetComponent<Ledge>();
     }
 
