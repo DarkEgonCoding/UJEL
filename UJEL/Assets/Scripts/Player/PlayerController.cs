@@ -125,6 +125,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Update(){
+        if(GameController.instance.state == GameState.Trainer){
+            animator.SetBool("isMoving", false);
+        }
+    }
+
     private bool IsWalkable(Vector3 targetPos){
         Collider2D collider = Physics2D.OverlapCircle(targetPos, 0.3f, GameLayers.i.solidObjectsLayer | GameLayers.i.interactableLayer | GameLayers.i.ledgeLayer | GameLayers.i.waterLayer);
         if(collider != null){ //if the player collides with something

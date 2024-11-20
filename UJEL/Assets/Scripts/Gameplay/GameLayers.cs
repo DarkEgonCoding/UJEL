@@ -11,6 +11,7 @@ public class GameLayers : MonoBehaviour
     [SerializeField] public LayerMask portalLayer;
     [SerializeField] public LayerMask waterLayer;
     [SerializeField] public LayerMask playerLayer;
+    [SerializeField] public LayerMask fovLayer;
 
     public static GameLayers i { get; set; }
 

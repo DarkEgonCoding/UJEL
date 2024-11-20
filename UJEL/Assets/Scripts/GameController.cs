@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause}
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer}
 
 public class GameController : MonoBehaviour
 {
