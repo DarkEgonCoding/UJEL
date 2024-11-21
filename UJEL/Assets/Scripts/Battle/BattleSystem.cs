@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using JetBrains.Annotations;
+using UnityEngine.UI;
 
 public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen}
 
@@ -19,6 +20,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] AudioClip trainerBattleMusic;
     [SerializeField] AudioClip battleVictoryMusic;
+    [SerializeField] Image playerImage;
+    [SerializeField] Image trainerImage;
     public PlayerControls controls;
     public UnityEvent<bool> OnBattleOver;
 
@@ -26,7 +29,12 @@ public class BattleSystem : MonoBehaviour
     int currentAction;
     int currentMove;
     PokemonParty playerParty;
+    PokemonParty trainerParty;
     Pokemon wildPokemon;
+    PlayerController player;
+    TrainerController trainer;
+
+    bool isTrainerBattle = false;
 
     private void Awake(){
         controls = new PlayerControls();
@@ -44,20 +52,77 @@ public class BattleSystem : MonoBehaviour
 
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon){
         dialogBox.SetDialog("");
+        isTrainerBattle = false;
         this.playerParty = playerParty;
         this.wildPokemon = wildPokemon;
-        SetupBattle();
+        StartCoroutine(SetupBattle());
     }
 
-    public void SetupBattle(){
-        playerUnit.Setup(playerParty.GetHealthyPokemon());
-        enemyUnit.Setup(wildPokemon);
-        playerHud.SetData(playerUnit.Pokemon);
-        enemyHud.SetData(enemyUnit.Pokemon);
+    public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty){
+        dialogBox.SetDialog("");
+        isTrainerBattle = true;
+        this.playerParty = playerParty;
+        this.trainerParty = trainerParty;
 
+        player = playerParty.GetComponent<PlayerController>();
+        trainer = trainerParty.GetComponent<TrainerController>();
+
+        StartCoroutine(SetupBattle());
+    }
+
+    public IEnumerator SetupBattle(){
+        if (!isTrainerBattle){ // Wild Pokemon Battle
+            playerUnit.Setup(playerParty.GetHealthyPokemon());
+            enemyUnit.Setup(wildPokemon);
+            playerHud.SetData(playerUnit.Pokemon);
+            enemyHud.SetData(enemyUnit.Pokemon);
+
+            dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
+        }
+        else { // Trainer Battle
+            yield return StartCoroutine(EnterTrainers());
+
+            // Send out first pokemon of trainer
+                trainerImage.gameObject.SetActive(false);
+                enemyUnit.gameObject.SetActive(true);
+                enemyHud.gameObject.SetActive(true);
+                var enemyPokemon = trainerParty.GetHealthyPokemon();
+                enemyUnit.Setup(enemyPokemon);
+                enemyHud.SetData(enemyUnit.Pokemon);
+                enemyUnit.PlayEnterAnimation();
+                yield return dialogBox.StartDialog($"{trainer.Name} sent out {enemyPokemon.Base.Name}!");
+                yield return new WaitForSeconds(1.3f);
+            // Send out first pokemon of the player
+                playerImage.gameObject.SetActive(false);
+                playerUnit.gameObject.SetActive(true);
+                playerHud.gameObject.SetActive(true);
+                var playerPokemon = playerParty.GetHealthyPokemon();
+                playerUnit.Setup(playerPokemon);
+                playerHud.SetData(playerUnit.Pokemon);
+                playerUnit.PlayEnterAnimation();
+                yield return dialogBox.StartDialog($"Go {playerPokemon.Base.Name}!");
+                dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
+                yield return new WaitForSeconds(1.3f);
+                yield return StartCoroutine(ActionSelection());
+        }
         partyScreen.Init();
+    }
 
-        dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
+    public IEnumerator EnterTrainers(){
+        playerHud.gameObject.SetActive(false);
+        enemyHud.gameObject.SetActive(false);
+
+        playerUnit.gameObject.SetActive(false);
+        enemyUnit.gameObject.SetActive(false);
+
+        playerImage.gameObject.SetActive(true);
+        trainerImage.gameObject.SetActive(true);
+        playerImage.sprite = player.Sprite;
+        trainerImage.sprite = trainer.Sprite;
+
+        yield return new WaitForSeconds(1f);
+        yield return dialogBox.StartDialog($"{trainer.Name} wants to battle!");
+        yield return new WaitForSeconds(1.3f);
     }
 
     public IEnumerator EnterPokemon(){
@@ -72,7 +137,6 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator ActionSelection(bool overrideActive = false){
         if(!dialogBox.actionSelector.activeInHierarchy || overrideActive){
-            Debug.Log("playeraction");
             state = BattleState.ActionSelection;
             yield return dialogBox.StartDialog($"What should {playerUnit.Pokemon.Base.Name} do?");
             yield return new WaitForSeconds(0.5f);
@@ -118,7 +182,18 @@ public class BattleSystem : MonoBehaviour
             enemyUnit.PlayFaintAnimation();
 
             yield return new WaitForSeconds(2f);
-            OnBattleOver.Invoke(true);
+            if (!isTrainerBattle){
+                OnBattleOver.Invoke(true);
+            }
+            else {
+                var nextPokemon = trainerParty.GetHealthyPokemon();
+                if (nextPokemon != null){
+                    StartCoroutine(SendNextTrainerPokemon(nextPokemon));
+                }
+                else{
+                    OnBattleOver.Invoke(true);
+                }
+            }
         }
         else{
             yield return enemyHud.UpdateHP();
@@ -315,5 +390,16 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         StartCoroutine(EnemyMove());
+    }
+
+    IEnumerator SendNextTrainerPokemon(Pokemon nextPokemon){
+        state = BattleState.Busy;
+        enemyUnit.Setup(nextPokemon);
+        enemyHud.SetData(nextPokemon);
+        yield return dialogBox.StartDialog($"{trainer.Name} sent out {nextPokemon.Base.Name}!");
+        enemyUnit.PlayEnterAnimation();
+        yield return new WaitForSeconds(1f);
+
+        yield return StartCoroutine(ActionSelection());
     }
 }

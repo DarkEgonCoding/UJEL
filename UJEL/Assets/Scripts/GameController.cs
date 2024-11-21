@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -60,6 +61,29 @@ public class GameController : MonoBehaviour
         yield return StartCoroutine(transition.TransitionAnimation());
 
         yield return battleSystem.EnterPokemon();
+    }
+
+    public IEnumerator StartTrainerBattle(TrainerController trainer){
+        state = GameState.Battle;
+
+        AudioManager.instance.PlayMusic(trainer.trainerBattleMusic, startSeconds: 0.5f);
+
+        ScreenTransition transition = worldCamera.GetComponent<ScreenTransition>();
+        transition.Reversed = false;
+
+        yield return StartCoroutine(transition.TransitionAnimation());
+
+        battleSystem.gameObject.SetActive(true);
+        worldCamera.gameObject.SetActive(false);
+        
+        var playerParty = playerController.GetComponent<PokemonParty>();
+        var trainerParty = trainer.GetComponent<PokemonParty>();
+
+        battleSystem.StartTrainerBattle(playerParty, trainerParty);
+
+        transition = battleCamera.GetComponent<ScreenTransition>();
+        transition.Reversed = true;
+        yield return StartCoroutine(transition.TransitionAnimation());
     }
 
     public void PauseGame(bool pause){

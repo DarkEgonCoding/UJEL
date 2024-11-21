@@ -11,6 +11,8 @@ using UnityEngine.TextCore.Text;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] Sprite sprite;
+    [SerializeField] string name;
     [SerializeField] public float OriginalMoveSpeed = 5f;
     public float moveSpeed;
     [SerializeField] public float runSpeed = 9f;
@@ -55,7 +57,9 @@ public class PlayerController : MonoBehaviour
         };
 
         DialogManager.Instance.OnCloseDialog += () => {
-            GameController.instance.state = GameState.FreeRoam;
+            if(GameController.instance.state != GameState.Battle){
+                GameController.instance.state = GameState.FreeRoam;
+            }
         };
 
 
@@ -283,5 +287,12 @@ public class PlayerController : MonoBehaviour
         pos.y = Mathf.Floor(pos.y) + 0.5f;
 
         transform.position = pos;
+    }
+
+    public string Name {
+        get => name;
+    }
+    public Sprite Sprite {
+        get => sprite;
     }
 }

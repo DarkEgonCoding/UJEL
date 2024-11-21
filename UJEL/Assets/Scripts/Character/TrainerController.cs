@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class TrainerController : MonoBehaviour
 {
+    [SerializeField] Sprite sprite;
+    [SerializeField] string name;
     [SerializeField] GameObject exclamation;
     [SerializeField] Dialog dialog;
     [SerializeField] GameObject fov;
+    [SerializeField] AudioClip spottedMusic;
+    [SerializeField] public AudioClip trainerBattleMusic;
+    
 
     Character character;
 
@@ -20,6 +25,7 @@ public class TrainerController : MonoBehaviour
     }
 
     public void OnSeePlayer(Collider2D playerCollider){
+        AudioManager.instance.PlayMusic(spottedMusic, startSeconds: 0.65f);
         GameController.instance.state = GameState.Trainer;
         StartCoroutine(TriggerTrainerBattle(playerCollider));
     }
@@ -31,14 +37,12 @@ public class TrainerController : MonoBehaviour
         var diff = playerCollider.transform.position - transform.position;
         var moveVec = diff - diff.normalized;
         moveVec = new Vector2(Mathf.Round(moveVec.x), Mathf.Round(moveVec.y));
-
-        Debug.Log(moveVec);
-
         yield return character.DoCharacterMove(moveVec);
 
         // Show dialog
         DialogManager.Instance.ShowDialog(dialog, () => {
-            Debug.Log("StartBattle");
+            StartCoroutine(GameController.instance.StartTrainerBattle(this));
+            fov.SetActive(false);
         });
     }
 
@@ -61,5 +65,12 @@ public class TrainerController : MonoBehaviour
         }
 
         fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
+    }
+
+    public string Name {
+        get => name;
+    }
+    public Sprite Sprite {
+        get => sprite;
     }
 }
