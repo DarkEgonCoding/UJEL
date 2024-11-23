@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TrainerController : MonoBehaviour
+public class TrainerController : MonoBehaviour, Interactable
 {
     [SerializeField] Sprite sprite;
     [SerializeField] string name;
@@ -12,6 +12,8 @@ public class TrainerController : MonoBehaviour
     [SerializeField] GameObject fov;
     [SerializeField] AudioClip spottedMusic;
     [SerializeField] public AudioClip trainerBattleMusic;
+
+    bool AlreadyBattled;
     
 
     Character character;
@@ -30,6 +32,18 @@ public class TrainerController : MonoBehaviour
         StartCoroutine(TriggerTrainerBattle(playerCollider));
     }
 
+    public void Interact(Transform initiator){
+        if (AlreadyBattled == true ) return;
+
+        character.LookTowards(initiator.position);
+
+        DialogManager.Instance.ShowDialog(dialog, () => {
+            StartCoroutine(GameController.instance.StartTrainerBattle(this));
+            fov.SetActive(false);
+            AlreadyBattled = true;
+        });
+    }
+
     public IEnumerator TriggerTrainerBattle(Collider2D playerCollider){
         yield return ShowExclamation(); // Show Exclamation
 
@@ -43,6 +57,7 @@ public class TrainerController : MonoBehaviour
         DialogManager.Instance.ShowDialog(dialog, () => {
             StartCoroutine(GameController.instance.StartTrainerBattle(this));
             fov.SetActive(false);
+            AlreadyBattled = true;
         });
     }
 

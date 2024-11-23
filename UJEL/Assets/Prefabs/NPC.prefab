@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2b3ff7e23781ba1438d445d8a032834c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,7 +176,6 @@ MonoBehaviour:
   dialog:
     lines:
     - Don't forget to change this
-  sprites: []
   movementPattern: []
   timeBetweenPattern: 2
 --- !u!114 &2368575169110248111
@@ -191,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66406b7aac532e46a54b1d0334f580e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   moveSpeed: 5
 --- !u!114 &4187634099955041844
 MonoBehaviour:
@@ -224,3 +224,4 @@ MonoBehaviour:
   - {fileID: 405516001, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
   - {fileID: -952690985, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
   - {fileID: 1863100752, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  defaultDirection: 1

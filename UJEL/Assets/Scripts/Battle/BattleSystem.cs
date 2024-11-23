@@ -25,6 +25,8 @@ public class BattleSystem : MonoBehaviour
     public PlayerControls controls;
     public UnityEvent<bool> OnBattleOver;
 
+    [SerializeField] GameObject pokeballSprite;
+
     BattleState state;
     int currentAction;
     int currentMove;
@@ -55,6 +57,7 @@ public class BattleSystem : MonoBehaviour
         isTrainerBattle = false;
         this.playerParty = playerParty;
         this.wildPokemon = wildPokemon;
+        player = playerParty.GetComponent<PlayerController>();
         StartCoroutine(SetupBattle());
     }
 
@@ -293,6 +296,8 @@ public class BattleSystem : MonoBehaviour
             }
             else if (currentAction == 1){
                 // Bag
+                StartCoroutine(ThrowPokeball());
+                StartCoroutine(EnemyMove());
             }
             else if (currentAction == 2){
                 // Pokemon
@@ -401,5 +406,14 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         yield return StartCoroutine(ActionSelection());
+    }
+
+    IEnumerator ThrowPokeball(){
+        state = BattleState.Busy;
+
+        yield return dialogBox.StartDialog($"{player.Name} used POKEBALL!");
+        yield return new WaitForSeconds(1f);
+
+        var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position, Quaternion.identity);
     }
 }
