@@ -18594,7 +18594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2634080820899398256, guid: 54a263eb72a63c5489220fafa312e2ae, type: 3}
       propertyPath: defaultDirection
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6504089255338939763, guid: 54a263eb72a63c5489220fafa312e2ae, type: 3}
       propertyPath: m_Name
