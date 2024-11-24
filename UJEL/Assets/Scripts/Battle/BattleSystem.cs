@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using JetBrains.Annotations;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen}
 
@@ -296,8 +297,8 @@ public class BattleSystem : MonoBehaviour
             }
             else if (currentAction == 1){
                 // Bag
+                dialogBox.EnableActionSelector(false);
                 StartCoroutine(ThrowPokeball());
-                StartCoroutine(EnemyMove());
             }
             else if (currentAction == 2){
                 // Pokemon
@@ -411,9 +412,78 @@ public class BattleSystem : MonoBehaviour
     IEnumerator ThrowPokeball(){
         state = BattleState.Busy;
 
+        if (isTrainerBattle){
+            yield return dialogBox.StartDialog($"You can't capture the trainer's pokemon!");
+            yield return new WaitForSeconds(.5f);
+            yield return EnemyMove();
+            yield break;
+        }
+
         yield return dialogBox.StartDialog($"{player.Name} used POKEBALL!");
         yield return new WaitForSeconds(1f);
 
-        var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position, Quaternion.identity);
+        var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position - new Vector3(2, 0), Quaternion.identity);
+        var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
+
+        // Animations
+        yield return pokeball.transform.DOJump(enemyUnit.transform.position + new Vector3(0,2), 2f, 1, 1f).WaitForCompletion();
+        yield return enemyUnit.PlayCatpureAnimation();
+        yield return pokeball.transform.DOMoveY(enemyUnit.transform.position.y - 1.3f, 0.5f).WaitForCompletion();
+
+        int shakeCount = TryToCatchPokemon(enemyUnit.Pokemon);
+
+        for (int i=0; i< Mathf.Min(shakeCount, 3); i++){
+            yield return new WaitForSeconds(0.5f);
+            yield return pokeball.transform.DOPunchRotation(new Vector3(0, 0, 10f), 0.8f).WaitForCompletion();
+        }
+
+        if (shakeCount == 4){
+            // Pokemon is Caught
+            yield return dialogBox.StartDialog($"You caught this loser -> {enemyUnit.Pokemon.Base.Name}");
+            yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
+            Destroy(pokeball);
+            yield return new WaitForSeconds(.75f);
+            
+            playerParty.AddPokemon(enemyUnit.Pokemon);
+            yield return dialogBox.StartDialog($"{enemyUnit.Pokemon.Base.Name} has been added to your party.");
+            yield return new WaitForSeconds(.5f);
+
+            OnBattleOver.Invoke(true);   
+        }
+        else{
+            // Pokemon broke out
+            yield return new WaitForSeconds(1f);
+            pokeball. DOFade(0, 0.2f);
+            yield return enemyUnit.PlayBreakOutAnimation();
+
+            yield return dialogBox.StartDialog($"{enemyUnit.Pokemon.Base.Name} broke free!");
+
+            Destroy(pokeball);
+            yield return new WaitForSeconds(0.75f);
+
+            yield return EnemyMove();
+        }
+    }
+
+    int TryToCatchPokemon(Pokemon pokemon){
+        var statusBonus = 1;
+        float a = ((3f * pokemon.MaxHp - 2f * pokemon.HP)/ (3f * pokemon.MaxHp)) * pokemon.Base.CatchRate * statusBonus;
+
+        if (a >= 255){
+            return 4;
+        }
+
+        float b = 1048560 / Mathf.Sqrt(Mathf.Sqrt(16711680 / a));
+
+        int shakeCount = 0;
+        while (shakeCount < 4){
+            if (UnityEngine.Random.Range(0, 65535) >= b){
+                return shakeCount;
+            }
+
+            ++shakeCount;
+        }
+
+        return shakeCount;
     }
 }

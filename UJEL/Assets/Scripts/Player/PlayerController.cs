@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     bool XisPressed;
     public bool inJump = false;
     public bool canSwim = false;
+    public bool onBridge = false;
     private void Awake(){
         controls = new PlayerControls();
     }
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
             Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.3f, GameLayers.i.waterLayer);
             if (collider != null)
             {
-                if ((GameLayers.i.waterLayer & (1 << collider.gameObject.layer)) != 0)
+                if ((GameLayers.i.waterLayer & (1 << collider.gameObject.layer)) != 0 && !onBridge)
                 {
                     isBiking = false;
                 }
@@ -138,23 +139,35 @@ public class PlayerController : MonoBehaviour
     private bool IsWalkable(Vector3 targetPos){
         Collider2D collider = Physics2D.OverlapCircle(targetPos, 0.3f, GameLayers.i.solidObjectsLayer | GameLayers.i.interactableLayer | GameLayers.i.ledgeLayer | GameLayers.i.waterLayer);
         if(collider != null){ //if the player collides with something
-            if ((GameLayers.i.waterLayer & (1 << collider.gameObject.layer)) != 0 && !isBiking)
-            {
-                if(canSwim == true)
+            if ((GameLayers.i.waterLayer & (1 << collider.gameObject.layer)) != 0)
                 {
-                    isSwimming = true;
-                    return true; //return true if you unlocked swim
+                    if(isBiking){
+                        if(onBridge){
+                            return true;
+                        }
+                        else return false;
+                    }
+                    if(canSwim == true)
+                    {
+                        if(onBridge){
+                            return true; // if you are above water and can swim, return true, but do not set isSwimming to true
+                        }
+                        isSwimming = true;
+                        return true; //return true if you unlocked swim
+                    }
+                    else
+                    {
+                        if(onBridge){ // if you are above water on a bridge and can't swim, still allow movement
+                            return true;
+                        }
+                        return false; //return false if you cannot swim
+                    } 
                 }
-                else
-                {
-                    return false; //return false if you cannot swim
-                } 
-            }
             else
-            {
-                animator.SetBool("isMoving", false);
-                return false;
-            }
+                {
+                    animator.SetBool("isMoving", false);
+                    return false;
+                }
             
         }
         isSwimming = false;
@@ -181,7 +194,7 @@ public class PlayerController : MonoBehaviour
         if(IsWalkable(targetPos)){
             
             // Changes Speed based on what type of moving you are doing
-            if(isSwimming && !isBiking){
+            if(isSwimming && !isBiking && onBridge == false){
                 animator.SetBool("isMoving", false);
                 animator.SetBool("isSwimming", true);
                 moveSpeed = swimSpeed;
