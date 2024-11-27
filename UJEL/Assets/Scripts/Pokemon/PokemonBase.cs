@@ -24,7 +24,48 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int speed;
     [SerializeField] int catchRate;
 
+    [SerializeField] int expYield;
+    [SerializeField] GrowthRate growthRate;
     [SerializeField] List<LearnableMove> learnableMoves;
+
+    public int GetExpForLevel(int level){
+        if (growthRate == GrowthRate.Fast){
+            return 4 * (level * level * level) / 5;
+        }
+        if (growthRate == GrowthRate.MediumFast){
+            return level * level * level;
+        }
+        if (growthRate == GrowthRate.Erratic){
+            if(level < 50){
+                return (((level * level * level) * (100 - level)) / 50);
+            }
+            else if (level < 68){
+                return (((level * level * level) * (150 - level)) / 100);
+            }
+            else if (level < 100){
+                return (((level * level * level) * ((1911 - (10 * level)) / 3)) / 500);
+            }
+        }
+        if (growthRate == GrowthRate.MediumSlow){
+            return (6/5) * (level * level * level) - (15 * (level * level)) + (100 * level) - 140;
+        }
+        if (growthRate == GrowthRate.Slow){
+            return (5 * level * level * level) / 4;
+        }
+        if (growthRate == GrowthRate.Fluctuating){
+            if (level < 15){
+                return ((level * level * level) * (((level + 1) / 3) + 24)) / 50;
+            }
+            else if (level < 36){
+                return ((level * level * level) * (level + 14)) / 50;
+            }
+            else if (level < 100){
+                return ((level * level * level) * ((level / 2) + 32)) / 50;
+            }
+        }
+
+        return -1; // THIS IS AN ERROR, THE GROWTH RATE DOES NOT EXIST
+    }
 
     public string Name {
         get { return name; }
@@ -60,6 +101,9 @@ public class PokemonBase : ScriptableObject
         get { return learnableMoves;}
     }
     public int CatchRate => catchRate;
+
+    public int ExpYield => expYield;
+    public GrowthRate GrowthRate => growthRate;
 }
 
 public enum PokemonType{
@@ -83,6 +127,15 @@ public enum PokemonType{
     Steel,
     Fairy,
     DarkMatter
+}
+
+public enum GrowthRate{
+    MediumFast,
+    Erratic,
+    Fluctuating,
+    MediumSlow,
+    Fast,
+    Slow,
 }
 
 public class TypeChart{

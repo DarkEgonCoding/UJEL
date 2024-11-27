@@ -38,6 +38,7 @@ public class BattleSystem : MonoBehaviour
     TrainerController trainer;
 
     bool isTrainerBattle = false;
+    int escapeAttempts;
 
     private void Awake(){
         controls = new PlayerControls();
@@ -110,6 +111,7 @@ public class BattleSystem : MonoBehaviour
                 yield return StartCoroutine(ActionSelection());
         }
         partyScreen.Init();
+        escapeAttempts = 0;
     }
 
     public IEnumerator EnterTrainers(){
@@ -187,9 +189,13 @@ public class BattleSystem : MonoBehaviour
 
             yield return new WaitForSeconds(2f);
             if (!isTrainerBattle){
+                yield return GainExperience();
+                yield return new WaitForSeconds(0.5f);
                 OnBattleOver.Invoke(true);
             }
             else {
+                yield return GainExperience();
+                yield return new WaitForSeconds(0.5f);
                 var nextPokemon = trainerParty.GetHealthyPokemon();
                 if (nextPokemon != null){
                     StartCoroutine(SendNextTrainerPokemon(nextPokemon));
@@ -306,6 +312,8 @@ public class BattleSystem : MonoBehaviour
             }
             else if (currentAction == 3){
                 // Run
+                dialogBox.EnableActionSelector(false);
+                StartCoroutine(TryToEscape());
             }
         }
     }
@@ -440,6 +448,7 @@ public class BattleSystem : MonoBehaviour
         if (shakeCount == 4){
             // Pokemon is Caught
             yield return dialogBox.StartDialog($"You caught this loser -> {enemyUnit.Pokemon.Base.Name}");
+            yield return GainExperience();
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
             Destroy(pokeball);
             yield return new WaitForSeconds(.75f);
@@ -485,5 +494,78 @@ public class BattleSystem : MonoBehaviour
         }
 
         return shakeCount;
+    }
+
+    IEnumerator TryToEscape(){
+        state = BattleState.Busy;
+
+        if (isTrainerBattle){
+            yield return dialogBox.StartDialog("You can't run from trainer battles!");
+            yield return new WaitForSeconds(0.75f);
+            StartCoroutine(EnemyMove());
+            yield break;
+        }
+
+        ++escapeAttempts;
+
+        float playerSpeed = playerUnit.Pokemon.Speed;
+        float enemySpeed = enemyUnit.Pokemon.Speed;
+
+        if (enemySpeed < playerSpeed){ // If you are faster than the enemy
+            var randomVal = UnityEngine.Random.Range(0, 101);
+            if (randomVal < 10){ // 10% change to fail
+                yield return dialogBox.StartDialog("Can't escape!");
+                yield return new WaitForSeconds(0.75f);
+                StartCoroutine(EnemyMove());
+            }
+            else{ // Run success
+                yield return dialogBox.StartDialog("Ran away safely!");
+                yield return new WaitForSeconds(0.75f);
+                OnBattleOver.Invoke(true);
+            }
+        }
+        else{
+            float f = (playerSpeed * 128) / enemySpeed + 30 * escapeAttempts;
+            f = f % 256;
+            Debug.Log(f);
+
+            var SecondRandomVal = UnityEngine.Random.Range(0, 256);
+            Debug.Log(SecondRandomVal);
+
+            if (SecondRandomVal < f){
+                yield return dialogBox.StartDialog("Ran away safely!");
+                yield return new WaitForSeconds(0.75f);
+                OnBattleOver.Invoke(true);
+            }
+            else{
+                yield return dialogBox.StartDialog("Can't escape!");
+                yield return new WaitForSeconds(0.75f);
+                StartCoroutine(EnemyMove());
+            }
+        }
+    }
+
+    IEnumerator GainExperience(){
+        // Exp Gain
+        int expYield = enemyUnit.Pokemon.Base.ExpYield;
+        int enemyLevel = enemyUnit.Pokemon.Level;
+        float trainerBonus = (isTrainerBattle)? 1.5f : 1;
+
+        int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / 7);
+        playerUnit.Pokemon.Exp += expGain;
+        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} gained {expGain} exp.");
+        yield return new WaitForSeconds(0.75f);
+        yield return playerHud.SetExpSmooth();
+        yield return new WaitForSeconds(0.25f);
+
+        // Check Level Up
+        while (playerUnit.Pokemon.CheckForLevelUp()){
+            playerHud.SetLevel();
+            yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} grew to level {playerUnit.Pokemon.Level}!");
+
+            yield return playerHud.SetExpSmooth(true);
+        }
+
+        yield return new WaitForSeconds(1f);
     }
 }

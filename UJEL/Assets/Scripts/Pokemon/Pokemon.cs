@@ -30,9 +30,12 @@ public class Pokemon
     public int HP {get; set;}
 
     public List<Move> Moves {get; set;}
+    public int Exp { get; set; }
 
     public void Init(){
         HP = MaxHp;
+
+        Exp = Base.GetExpForLevel(Level);
 
         Moves = new List<Move>();
         foreach (var move in Base.LearnableMoves){
@@ -43,6 +46,14 @@ public class Pokemon
                 break;
             }
         }
+    }
+
+    public bool CheckForLevelUp(){
+        if (Exp > Base.GetExpForLevel(level + 1)){
+            ++level;
+            return true;
+        }
+        return false;
     }
 
     public int Attack {
