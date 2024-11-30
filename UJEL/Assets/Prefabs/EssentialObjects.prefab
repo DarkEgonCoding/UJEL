@@ -1272,6 +1272,8 @@ MonoBehaviour:
       m_Calls: []
   pokeballSprite: {fileID: 5141495524530228643, guid: 106ce86cca52b8a469a99a761ea98a32, type: 3}
   moveSelectionUI: {fileID: 6776317186331000214}
+  didLearnMove: 0
+  learnedMove: {fileID: 0}
 --- !u!1 &2959708154564711569
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,6 +3610,7 @@ GameObject:
   - component: {fileID: 2683686600282882009}
   - component: {fileID: 646240518175654642}
   - component: {fileID: 309560227406838143}
+  - component: {fileID: 1571092516961370920}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -3701,6 +3704,18 @@ MonoBehaviour:
   fovLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &1571092516961370920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164724522529123066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ddb908fa7c729419f05867d9550daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5196520119491210585
 GameObject:
   m_ObjectHideFlags: 0

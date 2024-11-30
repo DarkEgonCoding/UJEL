@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TrainerController : MonoBehaviour, Interactable
+public class TrainerController : MonoBehaviour, Interactable, ISavable
 {
     [SerializeField] Sprite sprite;
     [SerializeField] string name;
     [SerializeField] GameObject exclamation;
     [SerializeField] Dialog dialog;
+    [SerializeField] Dialog PostBattleDialog;
+    [SerializeField] Dialog SecondPostBattleDialog;
+    [SerializeField] bool DisableDialogWhenFinished = false;
     [SerializeField] GameObject fov;
     [SerializeField] AudioClip spottedMusic;
     [SerializeField] public AudioClip trainerBattleMusic;
 
-    bool AlreadyBattled;
+    bool AlreadyBattled = false;
+    int DialogSelection = 1;
     
 
     Character character;
@@ -33,9 +37,25 @@ public class TrainerController : MonoBehaviour, Interactable
     }
 
     public void Interact(Transform initiator){
-        if (AlreadyBattled == true ) return;
 
         character.LookTowards(initiator.position);
+        
+        if (AlreadyBattled == true){
+            if(PostBattleDialog != null && DialogSelection == 1){
+                character.LookTowards(initiator.position);
+                DialogManager.Instance.ShowDialog(PostBattleDialog);
+                DialogSelection = 2;
+                return;
+            }
+            if(SecondPostBattleDialog != null && DialogSelection == 2){
+                character.LookTowards(initiator.position);
+                DialogManager.Instance.ShowDialog(SecondPostBattleDialog);
+                DialogSelection = 1;
+                if(DisableDialogWhenFinished) DialogSelection = 0;
+                return;
+            }
+            return;
+        }
 
         DialogManager.Instance.ShowDialog(dialog, () => {
             StartCoroutine(GameController.instance.StartTrainerBattle(this));
@@ -80,6 +100,24 @@ public class TrainerController : MonoBehaviour, Interactable
         }
 
         fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
+    }
+
+    public object CaptureState()
+    {
+        return AlreadyBattled;
+    }
+
+    public void RestoreState(object state)
+    {
+        AlreadyBattled = (bool)state;
+        SetFovRotation(character.animator.DefaultDirection);
+
+        if (AlreadyBattled){
+            fov.SetActive(false);
+        }
+        else{
+            fov.SetActive(true);
+        }
     }
 
     public string Name {

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer}
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu}
 
 public class GameController : MonoBehaviour
 {
@@ -15,13 +15,35 @@ public class GameController : MonoBehaviour
     [SerializeField] AudioClip wildBattleMusic;
     public GameState state;
     GameState stateBeforePause;
+    public PlayerControls controls;
 
     public static GameController instance;
+
+    private void Awake(){
+        controls = new PlayerControls();
+        PokemonDB.Init();
+        MoveDB.Init();
+    }
+
+    private void OnEnable(){
+        controls.Enable();
+    }
+
+    private void OnDisable(){
+        controls.Disable();
+    }
 
     private void Start(){
         instance = this;
         playerController.OnEncountered.AddListener(() => StartCoroutine(StartBattle()));
         battleSystem.OnBattleOver.AddListener(EndBattle);
+
+        //Bag
+        controls.Main.C.performed += ctx => OpenMenu();
+
+        //Save and Load --- TEMPORARY
+        controls.Main.Save.performed += ctx => Save();
+        controls.Main.Load.performed += ctx => Load();
     }
 
     void EndBattle(bool won){
@@ -36,6 +58,9 @@ public class GameController : MonoBehaviour
         }
         else if (state == GameState.Battle){
             battleSystem.HandleUpdate();
+        }
+        else if (state == GameState.Menu){
+            MenuHandleUpdate();
         }
     }
 
@@ -96,6 +121,43 @@ public class GameController : MonoBehaviour
         }
         else{
             state = stateBeforePause;
+        }
+    }
+
+    public void OpenMenu(){
+        if (state == GameState.FreeRoam){
+            state = GameState.Menu;
+        }
+    }
+
+    public void MenuHandleUpdate(){
+        /*
+        if (controls.Main.Down.WasPerformedThisFrame()){
+            
+        }
+        else if (controls.Main.Up.WasPerformedThisFrame()){
+            
+        }
+
+        if (controls.Main.Interact.WasPerformedThisFrame()){
+            
+        }
+        if (controls.Main.Run.WasPerformedThisFrame()){
+            state = GameState.FreeRoam;
+            // Set Active false
+        }
+        */
+    }
+
+    public void Save(){
+        if (state == GameState.FreeRoam){
+            SavingSystem.i.Save("saveSlot1");
+        }
+    }
+
+    public void Load(){
+        if (state == GameState.FreeRoam){
+            SavingSystem.i.Load("saveSlot1");
         }
     }
 }

@@ -13,6 +13,7 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
     PlayerController player;
     public void OnPlayerTriggered(PlayerController player){
         this.player = player;
+        player.animator.SetBool("isMoving", false);
         StartCoroutine(SwitchScene());
     }
 

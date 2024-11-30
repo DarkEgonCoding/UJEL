@@ -175,7 +175,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.Busy;
 
         var move = playerUnit.Pokemon.Moves[currentMove];
-        dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} used {move.Base.name}!");
+        dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} used {move.Base.Name}!");
 
         playerUnit.PlayAttackAnimation();
         yield return new WaitForSeconds(1f);
@@ -223,7 +223,7 @@ public class BattleSystem : MonoBehaviour
         //Select Move
         var move = enemyUnit.Pokemon.GetRandomMove();
 
-        dialogBox.StartDialog($"Enemy {enemyUnit.Pokemon.Base.Name} used {move.Base.name}!");
+        dialogBox.StartDialog($"Enemy {enemyUnit.Pokemon.Base.Name} used {move.Base.Name}!");
         enemyUnit.PlayAttackAnimation();
         yield return new WaitForSeconds(1f);
 

@@ -38,6 +38,7 @@ public class Pokemon
 
         Exp = Base.GetExpForLevel(Level);
 
+        // Generate Moves
         Moves = new List<Move>();
         foreach (var move in Base.LearnableMoves){
             if (move.Level <= Level){
@@ -47,6 +48,31 @@ public class Pokemon
                 break;
             }
         }
+    }
+
+    public PokemonSaveData GetSaveData(){
+        var saveData = new PokemonSaveData(){
+            name = Base.name,
+            hp = HP,
+            level = Level,
+            exp = Exp,
+            // Add Status?
+            moves = Moves.Select(m => m.GetSaveData()).ToList()
+        };
+
+        return saveData;
+    }
+
+    public Pokemon(PokemonSaveData saveData){
+        _base = PokemonDB.GetPokemonByName(saveData.name);
+        HP = saveData.hp;
+        level = saveData.level;
+        Exp = saveData.exp;
+
+        // Status?
+        // Calculate Stats?
+
+        Moves = saveData.moves.Select(s => new Move(s)).ToList();
     }
 
     public bool CheckForLevelUp(){
@@ -132,4 +158,17 @@ public class DamageDetails{
         public bool Fainted { get; set; }
         public float Critical { get; set; }
         public float TypeEffectiveness { get; set; }
-    }
+}
+
+[System.Serializable]
+public class PokemonSaveData
+{
+    public string name;
+    public int hp;
+    public int level;
+    public int exp;
+
+    // Status Effects?
+
+    public List<MoveSaveData> moves;
+}

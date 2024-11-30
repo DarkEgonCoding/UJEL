@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class PokemonParty : MonoBehaviour
@@ -10,6 +11,9 @@ public class PokemonParty : MonoBehaviour
     public List<Pokemon> Pokemons {
         get {
             return pokemons;
+        }
+        set {
+            pokemons = value;
         }
     }
 

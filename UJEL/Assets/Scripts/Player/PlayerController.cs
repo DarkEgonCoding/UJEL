@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
@@ -9,7 +11,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.TextCore.Text;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ISavable
 {
     [SerializeField] Sprite sprite;
     [SerializeField] string name;
@@ -242,7 +244,6 @@ public class PlayerController : MonoBehaviour
         foreach (var collider in colliders){
             var triggerable = collider.GetComponent<IPlayerTriggerable>();
             if (triggerable != null){
-                animator.SetBool("isMoving", false);
                 triggerable.OnPlayerTriggered(this);
                 break;
             }
@@ -302,10 +303,40 @@ public class PlayerController : MonoBehaviour
         transform.position = pos;
     }
 
+    public object CaptureState() // Save data
+    {
+        var saveData = new PlayerSavaData()
+        {
+            position = new float[] {transform.position.x, transform.position.y},
+            pokemons = GetComponent<PokemonParty>().Pokemons.Select(p => p.GetSaveData()).ToList()
+        };
+
+        return saveData;
+    }
+
+    public void RestoreState(object state) // Restore data in loading
+    {
+        var saveData = (PlayerSavaData)state;
+
+        // Restore Position
+        var pos = saveData.position;
+        transform.position = new Vector3(pos[0], pos[1]);
+
+        // Restore Party
+        GetComponent<PokemonParty>().Pokemons = saveData.pokemons.Select(s => new Pokemon(s)).ToList();
+    }
+
     public string Name {
         get => name;
     }
     public Sprite Sprite {
         get => sprite;
     }
+}
+
+[Serializable]
+public class PlayerSavaData
+{
+    public float[] position;
+    public List<PokemonSaveData> pokemons;
 }
