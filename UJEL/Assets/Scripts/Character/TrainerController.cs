@@ -110,7 +110,8 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
     public void RestoreState(object state)
     {
         AlreadyBattled = (bool)state;
-        SetFovRotation(character.animator.DefaultDirection);
+        
+        character.animator.SetFacingDirection(character.animator.DefaultDirection);
 
         if (AlreadyBattled){
             fov.SetActive(false);

@@ -38,6 +38,8 @@ public class CharacterAnimator : MonoBehaviour
     private void Update(){
         var prevAnim = currentAnim;
 
+        if (MoveX != 0 && MoveY != 0) Debug.LogError("Error in CharacterAnimator Update: MoveX and MoveY are != 0");
+
         // Moving Animations
         if (MoveX == 1){
             currentAnim = walkRightAnim;
@@ -68,15 +70,19 @@ public class CharacterAnimator : MonoBehaviour
     public void SetFacingDirection(FacingDirection dir){
         if (dir == FacingDirection.Right){
             MoveX = 1;
+            MoveY = 0;
         }
         else if (dir == FacingDirection.Left){
             MoveX = -1;
+            MoveY = 0;
         }
         else if (dir == FacingDirection.Down){
             MoveY = -1;
+            MoveX = 0;
         }
         else if (dir == FacingDirection.Up){
             MoveY = 1;
+            MoveX = 0;
         }
     }
 

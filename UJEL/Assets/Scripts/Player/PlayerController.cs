@@ -139,15 +139,24 @@ public class PlayerController : MonoBehaviour, ISavable
     }
 
     private bool IsWalkable(Vector3 targetPos){
-        Collider2D collider = Physics2D.OverlapCircle(targetPos, 0.3f, GameLayers.i.solidObjectsLayer | GameLayers.i.interactableLayer | GameLayers.i.ledgeLayer | GameLayers.i.waterLayer);
-        if(collider != null){ //if the player collides with something
-            if ((GameLayers.i.waterLayer & (1 << collider.gameObject.layer)) != 0)
-                {
-                    if(isBiking){
+        Collider2D[] colliders = new Collider2D[5];
+        int hits = Physics2D.OverlapCircleNonAlloc(targetPos, 0.3f, colliders, GameLayers.i.solidObjectsLayer | GameLayers.i.interactableLayer | GameLayers.i.ledgeLayer | GameLayers.i.waterLayer);
+        if(hits > 0){ //if the player collides with something
+            bool hitWater = false;
+            for (int i = 0; i < hits; i++){
+                if ((GameLayers.i.waterLayer & (1 << colliders[i].gameObject.layer)) != 0) hitWater = true;
+                else{
+                    animator.SetBool("isMoving", false);
+                    return false;
+                }
+            }
+            if(hitWater){
+                if(isBiking){
                         if(onBridge){
                             return true;
                         }
-                        else return false;
+                        animator.SetBool("isMoving", false);
+                        return false;
                     }
                     if(canSwim == true)
                     {
@@ -164,13 +173,7 @@ public class PlayerController : MonoBehaviour, ISavable
                         }
                         return false; //return false if you cannot swim
                     } 
-                }
-            else
-                {
-                    animator.SetBool("isMoving", false);
-                    return false;
-                }
-            
+            }
         }
         isSwimming = false;
         return true; //return true if it doesn't collide with anything
