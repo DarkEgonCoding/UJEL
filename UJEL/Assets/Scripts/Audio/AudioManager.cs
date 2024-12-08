@@ -17,11 +17,13 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-    }
-
-    private void Start(){
-        originalMusicVol = musicPlayer.volume;
+        if (instance == null){
+            instance = this;
+            originalMusicVol = musicPlayer.volume;
+        }
+        else {
+            instance.originalMusicVol = musicPlayer.volume;
+        }
     }
 
     public void PlayMusic(AudioClip clip, bool loop = true, bool fade = false, float startSeconds = 0){

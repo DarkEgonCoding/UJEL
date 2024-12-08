@@ -11,8 +11,10 @@ public class Fader : MonoBehaviour
     public static Fader instance;
 
     private void Awake(){
-        image = GetComponent<SpriteRenderer>();
-        instance = this;
+        if (instance == null){
+            image = GetComponent<SpriteRenderer>();
+            instance = this;
+        }
     }
 
     public IEnumerator FadeIn(float time){

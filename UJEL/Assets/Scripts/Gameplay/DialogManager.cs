@@ -18,7 +18,9 @@ public class DialogManager : MonoBehaviour
 
     public static DialogManager Instance { get; private set; }
     private void Awake(){
-        Instance = this;
+        if (Instance == null){
+            Instance = this;
+        }
     }
 
     int currentLine = 0;
