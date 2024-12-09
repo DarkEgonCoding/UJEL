@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu}
@@ -16,11 +20,14 @@ public class GameController : MonoBehaviour
     public GameState state;
     GameState stateBeforePause;
     public PlayerControls controls;
-
     public static GameController instance;
+    [SerializeField] GameObject menu;
+    [SerializeField] List<TextMeshProUGUI> menuItems;
+    int selectedMenuItem = 0;
 
     private void Awake(){
         controls = new PlayerControls();
+        menuItems = menu.GetComponentsInChildren<TextMeshProUGUI>().ToList();
         PokemonDB.Init();
         MoveDB.Init();
     }
@@ -42,8 +49,8 @@ public class GameController : MonoBehaviour
         controls.Main.C.performed += ctx => OpenMenu();
 
         //Save and Load --- TEMPORARY
-        controls.Main.Save.performed += ctx => Save();
-        controls.Main.Load.performed += ctx => Load();
+        //controls.Main.Save.performed += ctx => Save();
+        //controls.Main.Load.performed += ctx => Load();
     }
 
     void EndBattle(bool won){
@@ -123,30 +130,63 @@ public class GameController : MonoBehaviour
             state = stateBeforePause;
         }
     }
-
     public void OpenMenu(){
         if (state == GameState.FreeRoam){
             state = GameState.Menu;
+            menu.SetActive(true);
+            UpdateItemSelection();
         }
     }
 
     public void MenuHandleUpdate(){
-        /*
+        int prevSelection = selectedMenuItem;
+
         if (controls.Main.Down.WasPerformedThisFrame()){
-            
+            ++selectedMenuItem;
         }
         else if (controls.Main.Up.WasPerformedThisFrame()){
-            
+            --selectedMenuItem;
         }
 
+        selectedMenuItem = Mathf.Clamp(selectedMenuItem, 0, menuItems.Count - 1);
+        if (prevSelection != selectedMenuItem) UpdateItemSelection();
+
         if (controls.Main.Interact.WasPerformedThisFrame()){
-            
+            menu.SetActive(false);
+            OnMenuSelected(selectedMenuItem);
         }
         if (controls.Main.Run.WasPerformedThisFrame()){
+            menu.SetActive(false);
             state = GameState.FreeRoam;
-            // Set Active false
         }
-        */
+    }
+
+    void OnMenuSelected(int selectedItem){
+        if (selectedItem == 0){
+            // Pokemon
+        }
+        else if (selectedItem == 1){
+            // Bag
+        }
+        else if (selectedItem == 2){
+            Save();
+            state = GameState.FreeRoam;
+        }
+        else if (selectedItem == 3){
+            Load();
+            state = GameState.FreeRoam;
+        }
+    }
+
+    void UpdateItemSelection(){
+        for (int i = 0; i < menuItems.Count; i++){
+            if (i == selectedMenuItem){
+                menuItems[i].color = GlobalSettings.i.HighlightedColor;
+            }
+            else{
+                menuItems[i].color = Color.black;
+            }
+        }
     }
 
     public void Save(){

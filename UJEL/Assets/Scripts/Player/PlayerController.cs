@@ -136,6 +136,9 @@ public class PlayerController : MonoBehaviour, ISavable
         if(GameController.instance.state == GameState.Trainer){
             animator.SetBool("isMoving", false);
         }
+        if(GameController.instance.state == GameState.Menu){
+            animator.SetBool("isMoving", false);
+        }
     }
 
     private bool IsWalkable(Vector3 targetPos){
