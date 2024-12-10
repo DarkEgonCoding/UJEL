@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.TextCore.Text;
 
+public enum PlayerSprite { boy, girl, imposter }
 public class PlayerController : MonoBehaviour, ISavable
 {
     [SerializeField] Sprite sprite;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour, ISavable
     public bool inJump = false;
     public bool canSwim = false;
     public bool onBridge = false;
+    [SerializeField] PlayerSprite playerSprite = PlayerSprite.imposter;
     private void Awake(){
         controls = new PlayerControls();
     }
