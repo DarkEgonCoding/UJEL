@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
         instance = this;
         playerController.OnEncountered.AddListener(() => StartCoroutine(StartBattle()));
         battleSystem.OnBattleOver.AddListener(EndBattle);
-        UICanvas.enabled = false;
+        UICanvas.gameObject.SetActive(false);
 
         //Bag
         controls.Main.C.performed += ctx => OpenMenu();
@@ -211,7 +211,7 @@ public class GameController : MonoBehaviour
                 Debug.Log("you haven't done this yet...");
             }
             if (controls.Main.Run.WasPerformedThisFrame()){
-                UICanvas.enabled = false;
+                UICanvas.gameObject.SetActive(true);
                 inventoryUI.gameObject.SetActive(false);
                 menuState = MenuState.Main;
                 menu.SetActive(true);
@@ -232,7 +232,7 @@ public class GameController : MonoBehaviour
         }
         else if (selectedItem == 1){
             // Bag
-            UICanvas.enabled = true;
+            UICanvas.gameObject.SetActive(true);
             inventoryUI.gameObject.SetActive(true);
             menuState = MenuState.Bag;
         }
@@ -251,10 +251,10 @@ public class GameController : MonoBehaviour
     void UpdateItemSelection(){
         for (int i = 0; i < menuItems.Count; i++){
             if (i == selectedMenuItem){
-                menuItems[i].color = GlobalSettings.i.HighlightedColor;
+                menuItems[i].faceColor = GlobalSettings.i.HighlightedColor;
             }
             else{
-                menuItems[i].color = Color.black;
+                menuItems[i].faceColor = Color.black;
             }
         }
     }

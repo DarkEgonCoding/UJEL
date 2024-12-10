@@ -138,6 +138,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5025495395887900146}
     m_Modifications:
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4639989368951865760, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
       propertyPath: m_Name
       value: PartyMember (4)
@@ -222,6 +234,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -240,6 +264,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5025495395887900146}
     m_Modifications:
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4639989368951865760, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
       propertyPath: m_Name
       value: PartyMember (5)
@@ -324,6 +360,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -342,6 +390,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5025495395887900146}
     m_Modifications:
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4639989368951865760, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
       propertyPath: m_Name
       value: PartyMember (1)
@@ -426,6 +486,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -444,6 +516,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5025495395887900146}
     m_Modifications:
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4639989368951865760, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
       propertyPath: m_Name
       value: PartyMember (2)
@@ -528,6 +612,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -546,6 +642,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5025495395887900146}
     m_Modifications:
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4639989368951865760, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
       propertyPath: m_Name
       value: PartyMember
@@ -630,6 +738,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -648,6 +768,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5025495395887900146}
     m_Modifications:
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820010518116030668, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4639989368951865760, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
       propertyPath: m_Name
       value: PartyMember (3)
@@ -731,6 +863,18 @@ PrefabInstance:
     - target: {fileID: 4947572561181273904, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8062056129306808154, guid: 4ca7718468a92cf4098408e3be69e294, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

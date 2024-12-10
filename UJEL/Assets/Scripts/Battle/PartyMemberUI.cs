@@ -25,10 +25,10 @@ public class PartyMemberUI : MonoBehaviour
 
     public void SetSelected(bool selected){
         if (selected){
-            nameText.color = highlightedColor;
+            nameText.faceColor = highlightedColor;
         }
         else{
-            nameText.color = Color.black;
+            nameText.faceColor = Color.black;
         }
     }
 }
