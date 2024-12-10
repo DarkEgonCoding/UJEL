@@ -28,6 +28,8 @@ public class GameController : MonoBehaviour
     [SerializeField] List<TextMeshProUGUI> menuItems;
     [SerializeField] PartyScreen settingsPartyScreen;
     PokemonParty playerParty;
+    [SerializeField] InventoryUI inventoryUI;
+    [SerializeField] Canvas UICanvas;
     int selectedMenuItem = 0;
     int currentPartyMember;
 
@@ -50,6 +52,7 @@ public class GameController : MonoBehaviour
         instance = this;
         playerController.OnEncountered.AddListener(() => StartCoroutine(StartBattle()));
         battleSystem.OnBattleOver.AddListener(EndBattle);
+        UICanvas.enabled = false;
 
         //Bag
         controls.Main.C.performed += ctx => OpenMenu();
@@ -203,10 +206,13 @@ public class GameController : MonoBehaviour
 
         // Bag Update
         if (menuState == MenuState.Bag){
+            inventoryUI.HandleBagUpdate();
             if (controls.Main.Interact.WasPerformedThisFrame()){
                 Debug.Log("you haven't done this yet...");
             }
             if (controls.Main.Run.WasPerformedThisFrame()){
+                UICanvas.enabled = false;
+                inventoryUI.gameObject.SetActive(false);
                 menuState = MenuState.Main;
                 menu.SetActive(true);
                 UpdateItemSelection();
@@ -226,6 +232,8 @@ public class GameController : MonoBehaviour
         }
         else if (selectedItem == 1){
             // Bag
+            UICanvas.enabled = true;
+            inventoryUI.gameObject.SetActive(true);
             menuState = MenuState.Bag;
         }
         else if (selectedItem == 2){
