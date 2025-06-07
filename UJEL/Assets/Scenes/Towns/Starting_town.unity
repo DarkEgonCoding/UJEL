@@ -171,6 +171,11 @@ Transform:
   - {fileID: 1793296522}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &893566556 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8750114950223878791, guid: d13c0bd6964ffe04797f411bd5193c1a, type: 3}
+  m_PrefabInstance: {fileID: 2050186622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1058047374
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +212,134 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3628476899799554387, guid: 1fa4b2e7d52f37b4d9e3399dfb19c062, type: 3}
   m_PrefabInstance: {fileID: 1094294549735392408}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1281779390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1281779391}
+  - component: {fileID: 1281779393}
+  - component: {fileID: 1281779392}
+  - component: {fileID: 1281779394}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1281779391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281779390}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 893566556}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &1281779392
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281779390}
+  m_Enabled: 1
+--- !u!20 &1281779393
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281779390}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.03
+  far clip plane: 1000
+  field of view: 68.33568
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!114 &1281779394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281779390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d6361269d8df01e87eed85fbd6a0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: 8c4e9f5f9d5fb95e4a105b2b0a647ed4, type: 2}
+  dawnStartTime: 10
+  dawnBlendTime: 5
+  dawnColor: {r: 0.8584906, g: 0.19842473, b: 0.19842473, a: 0}
+  dawnIntensity: 1
+  dayStartTime: 20
+  dayBlendTime: 5
+  dayColor: {r: 0.23707858, g: 0.18867925, b: 0.754717, a: 0}
+  dayIntensity: 1
+  eveningStartTime: 30
+  eveningBlendTime: 5
+  eveningColor: {r: 0.56515515, g: 0.32306874, b: 0.5660378, a: 0}
+  eveningIntensity: 1
+  duskStartTime: 40
+  duskBlendTime: 5
+  duskColor: {r: 0.12616934, g: 0.6226415, b: 0.09104663, a: 0}
+  duskIntensity: 1
+  nightStartTime: 50
+  nightBlendTime: 5
+  nightColor: {r: 0.67010134, g: 0.745283, b: 0.13007298, a: 0}
+  nightIntensity: 1
+  enricoPucci: 5
+  dayCycleTime: 60
 --- !u!1 &1329970464
 GameObject:
   m_ObjectHideFlags: 0
@@ -30593,7 +30726,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 391233565
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -31285,7 +31418,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8750114950223878791, guid: d13c0bd6964ffe04797f411bd5193c1a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1281779391}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d13c0bd6964ffe04797f411bd5193c1a, type: 3}
 --- !u!1001 &1094294549735392408
