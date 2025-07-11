@@ -11,17 +11,95 @@ public class MenuController : MonoBehaviour
     [SerializeField] public GameObject Video;
     [SerializeField] public GameObject PresentsScreen;
     [SerializeField] private TextMeshProUGUI title;
+    [SerializeField] public GameObject MenuObject;
+    [SerializeField] public GameObject SettingsMenu;
     private TextMeshProUGUI[] PresentTexts;
+    public PlayerControls menuControls;
+    public static MenuController instance;
 
     private void Awake()
     {
         PresentTexts = PresentsScreen.GetComponentsInChildren<TextMeshProUGUI>(true); // include inactive ones
+        menuControls = new PlayerControls();
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    private void OnEnable()
+    {
+        menuControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        menuControls.Disable();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        // Setup menus
+        var selectorInstance = MenuObject.GetComponent<Selector>();
+        selectorInstance.UpdateMenuVisual();
+        menuControls.Main.Up.performed += ctx => selectorInstance.MenuUp();
+        menuControls.Main.Down.performed += ctx => selectorInstance.MenuDown();
+        
+        // TODO FIX THIS
+        menuControls.Main.Interact.performed += ctx => selectorInstance.SelectItem();
+
+        IntroCutscene();
+    }
+
+    public void OpenSettingsMenu()
+    {
+        SettingsMenu.SetActive(true);
+        MenuObject.SetActive(false);
+    }
+
+    /* OLD MENU SELECTOR SWITCH CODE
+    public void menuSelection(int menu, int selection)
+    {
+        Debug.Log("MenuSelector item thing run");
+        switch (menu)
+        {
+            case 0:
+                switch (selection) // Main Menu
+                {
+                    case 0: // New Game
+                        Debug.Log("New Game");
+                        break;
+                    case 1: // Load Game
+                        Debug.Log("Item 1");
+                        break;
+                    case 2: // Settings
+                        Debug.Log("Item 2");
+                        break;
+                    case 3: // Quit Game
+                        Debug.Log("Item 3");
+                        break;
+                    default:
+                        Debug.LogError("This shouldn't happen.");
+                        break;
+                }
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                Debug.LogError("This shouldn't happen.");
+                break;
+        }
+    }
+    */
+
+    private void IntroCutscene()
+    {
         MainMenu.SetActive(false);
+        SettingsMenu.SetActive(false);
         PresentsScreen.SetActive(false);
         Screen.SetActive(false);
         Video.SetActive(false);
