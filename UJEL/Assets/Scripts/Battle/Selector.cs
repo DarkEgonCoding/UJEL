@@ -11,8 +11,8 @@ public class Selector : MonoBehaviour
     [SerializeField] public Color normalColor = Color.white;
     [SerializeField] Color highlightColor = Color.blue;
     [SerializeField] int menuIndex = 0;
-
     [SerializeField] private UnityEvent[] onSelectEvents;
+    [SerializeField] private UnityEvent onReturn;
 
     private int selectedIndex = 0;
 
@@ -30,7 +30,7 @@ public class Selector : MonoBehaviour
 
     public void SelectItem()
     {
-        Debug.Log("Selector: SelectItem called on index " + selectedIndex);
+        //Debug.Log("Selector: SelectItem called on index " + selectedIndex);
 
         if (selectedIndex < onSelectEvents.Length)
         {
@@ -40,6 +40,11 @@ public class Selector : MonoBehaviour
         {
             Debug.LogWarning("No UnityEvent assigned to selected index.");
         }
+    }
+
+    public void Return()
+    {
+        onReturn.Invoke();
     }
     
     public void UpdateMenuVisual()

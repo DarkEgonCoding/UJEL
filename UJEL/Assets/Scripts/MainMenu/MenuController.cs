@@ -16,6 +16,8 @@ public class MenuController : MonoBehaviour
     private TextMeshProUGUI[] PresentTexts;
     public PlayerControls menuControls;
     public static MenuController instance;
+    private Selector currentSelector;
+    [SerializeField] private ScreenFader screenFader;
 
     private void Awake()
     {
@@ -41,60 +43,45 @@ public class MenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Setup menus
-        var selectorInstance = MenuObject.GetComponent<Selector>();
-        selectorInstance.UpdateMenuVisual();
-        menuControls.Main.Up.performed += ctx => selectorInstance.MenuUp();
-        menuControls.Main.Down.performed += ctx => selectorInstance.MenuDown();
-        
-        // TODO FIX THIS
-        menuControls.Main.Interact.performed += ctx => selectorInstance.SelectItem();
-
         IntroCutscene();
+    }
+
+    public void UpdateSelector()
+    {
+        ClearCurrentSelector();
+        SetCurrentSelector(FindObjectOfType<Selector>());
+    }
+
+    public void SetCurrentSelector(Selector selector)
+    {
+        currentSelector = selector;
+        currentSelector.UpdateMenuVisual();
+
+        menuControls.Main.Up.performed += ctx => currentSelector.MenuUp();
+        menuControls.Main.Down.performed += ctx => currentSelector.MenuDown();
+        menuControls.Main.Interact.performed += ctx => currentSelector.SelectItem();
+        menuControls.Main.Run.performed += ctx => currentSelector.Return();
+    }
+
+    public void ClearCurrentSelector()
+    {
+        if (currentSelector != null)
+        {
+            menuControls.Main.Up.performed -= ctx => currentSelector.MenuUp();
+            menuControls.Main.Down.performed -= ctx => currentSelector.MenuDown();
+            menuControls.Main.Interact.performed -= ctx => currentSelector.SelectItem();
+            menuControls.Main.Run.performed -= ctx => currentSelector.Return();
+        }
+
+        currentSelector = null;
     }
 
     public void OpenSettingsMenu()
     {
         SettingsMenu.SetActive(true);
         MenuObject.SetActive(false);
+        UpdateSelector();
     }
-
-    /* OLD MENU SELECTOR SWITCH CODE
-    public void menuSelection(int menu, int selection)
-    {
-        Debug.Log("MenuSelector item thing run");
-        switch (menu)
-        {
-            case 0:
-                switch (selection) // Main Menu
-                {
-                    case 0: // New Game
-                        Debug.Log("New Game");
-                        break;
-                    case 1: // Load Game
-                        Debug.Log("Item 1");
-                        break;
-                    case 2: // Settings
-                        Debug.Log("Item 2");
-                        break;
-                    case 3: // Quit Game
-                        Debug.Log("Item 3");
-                        break;
-                    default:
-                        Debug.LogError("This shouldn't happen.");
-                        break;
-                }
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                Debug.LogError("This shouldn't happen.");
-                break;
-        }
-    }
-    */
 
     private void IntroCutscene()
     {
@@ -116,6 +103,7 @@ public class MenuController : MonoBehaviour
 
         PresentsScreen.SetActive(true);
 
+        // Display all starting text
         foreach (var text in PresentTexts)
         {
             yield return StartCoroutine(FadeTextToFullAlpha(3f, text));
@@ -124,12 +112,27 @@ public class MenuController : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        yield return new WaitForSeconds(0.75f);
-
-        title.alpha = 0;
+        // Fade Transition
+        screenFader.FadeIn();
+        yield return new WaitForSeconds(screenFader.fadeDuration);
         MainMenu.SetActive(true);
+        OpenMainMenu();
+        StartCoroutine(OpenMainMenuCoroutine());
+        screenFader.FadeOut();
+    }
+
+    public void OpenMainMenu()
+    {
+        MenuObject.SetActive(true);
+        SettingsMenu.SetActive(false);
         Screen.SetActive(true);
         Video.SetActive(true);
+        UpdateSelector();
+    }
+
+    public IEnumerator OpenMainMenuCoroutine()
+    {
+        title.alpha = 0;
         yield return StartCoroutine(FadeTextToFullAlpha(1f, title));
     }
 
