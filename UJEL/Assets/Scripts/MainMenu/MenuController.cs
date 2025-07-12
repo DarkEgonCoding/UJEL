@@ -1,7 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
+using UnityEditor.ProjectWindowCallback;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
@@ -13,11 +18,16 @@ public class MenuController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] public GameObject MenuObject;
     [SerializeField] public GameObject SettingsMenu;
+    [SerializeField] private TextMeshProUGUI Ztxt;
+    [SerializeField] private TextMeshProUGUI Xtxt;
+    [SerializeField] private float highlightTime = 0.3f;
     private TextMeshProUGUI[] PresentTexts;
     public PlayerControls menuControls;
     public static MenuController instance;
     private Selector currentSelector;
     [SerializeField] private ScreenFader screenFader;
+
+    private Coroutine highlightRoutine;
 
     private void Awake()
     {
@@ -44,6 +54,34 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         IntroCutscene();
+
+        // Turn these on to add the highlighting to the text, only half working right now.
+        //menuControls.Main.Interact.performed += ctx => HighlightZ();
+        //menuControls.Main.Run.performed += ctx => HighlightX();
+    }
+
+    private void HighlightZ()
+    {
+        highlightRoutine = StartCoroutine(HighlightObject(highlightTime, Ztxt));
+    }
+
+    private void HighlightX()
+    {
+        highlightRoutine = StartCoroutine(HighlightObject(highlightTime, Xtxt));
+    }
+
+    private IEnumerator HighlightObject(float seconds, TextMeshProUGUI text)
+    {
+        if (highlightRoutine != null) yield break;
+
+        Color originalColor = text.color; // Save original color
+
+        // Change color for time
+        text.color = Color.blue;
+        yield return new WaitForSeconds(seconds);
+
+        // Return to original color
+        text.color = originalColor;
     }
 
     public void UpdateSelector()
@@ -174,5 +212,10 @@ public class MenuController : MonoBehaviour
 
         color.a = 0f;
         text.color = color;
+    }
+
+    public void NewGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }
