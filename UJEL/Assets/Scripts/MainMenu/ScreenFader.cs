@@ -21,12 +21,14 @@ public class ScreenFader : MonoBehaviour
 
     private IEnumerator FadeInCoroutine()
     {
+        fadeImage.enabled = true;
         yield return Fade(0f, 1f); // Fade to black
     }
 
     private IEnumerator FadeOutCoroutine()
     {
         yield return Fade(1f, 0f); // Fade back in
+        fadeImage.enabled = false;
     }
 
     public IEnumerator Fade(float fromAlpha, float toAlpha)

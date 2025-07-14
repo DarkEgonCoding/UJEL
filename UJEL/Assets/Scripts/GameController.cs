@@ -33,22 +33,26 @@ public class GameController : MonoBehaviour
     int selectedMenuItem = 0;
     int currentPartyMember;
 
-    private void Awake(){
+    private void Awake()
+    {
         controls = new PlayerControls();
         menuItems = menu.GetComponentsInChildren<TextMeshProUGUI>().ToList();
         PokemonDB.Init();
         MoveDB.Init();
     }
 
-    private void OnEnable(){
+    private void OnEnable()
+    {
         controls.Enable();
     }
 
-    private void OnDisable(){
+    private void OnDisable()
+    {
         controls.Disable();
     }
 
-    private void Start(){
+    private void Start()
+    {
         instance = this;
         playerController.OnEncountered.AddListener(() => StartCoroutine(StartBattle()));
         battleSystem.OnBattleOver.AddListener(EndBattle);
@@ -62,25 +66,31 @@ public class GameController : MonoBehaviour
         //controls.Main.Load.performed += ctx => Load();
     }
 
-    void EndBattle(bool won){
+    void EndBattle(bool won)
+    {
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);
     }
 
-    private void Update(){
-        if (state == GameState.FreeRoam){
+    private void Update()
+    {
+        if (state == GameState.FreeRoam)
+        {
             playerController.HandleUpdate();
         }
-        else if (state == GameState.Battle){
+        else if (state == GameState.Battle)
+        {
             battleSystem.HandleUpdate();
         }
-        else if (state == GameState.Menu){
+        else if (state == GameState.Menu)
+        {
             MenuHandleUpdate();
         }
     }
 
-    IEnumerator StartBattle(){
+    IEnumerator StartBattle()
+    {
         state = GameState.Battle;
 
         AudioManager.instance.PlayMusic(wildBattleMusic, startSeconds: .5f);
@@ -92,12 +102,14 @@ public class GameController : MonoBehaviour
 
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
-        
-        var playerParty = playerController.GetComponent<PokemonParty>();
-        var wildPokemon = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildPokemon();
 
-        var wildPokemonCopy = new Pokemon(wildPokemon.Base, wildPokemon.Level);
-        
+        var playerParty = playerController.GetComponent<PokemonParty>();
+
+        var wildPokemonCopy = currentEncounterZone.GetRandomWildPokemon();
+        //var wildPokemon = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildPokemon();
+
+        //var wildPokemonCopy = new Pokemon(wildPokemon.Base, wildPokemon.Level);
+
         battleSystem.StartBattle(playerParty, wildPokemonCopy);
 
         transition = battleCamera.GetComponent<ScreenTransition>();
@@ -107,7 +119,8 @@ public class GameController : MonoBehaviour
         yield return battleSystem.EnterPokemon();
     }
 
-    public IEnumerator StartTrainerBattle(TrainerController trainer){
+    public IEnumerator StartTrainerBattle(TrainerController trainer)
+    {
         state = GameState.Battle;
 
         AudioManager.instance.PlayMusic(trainer.trainerBattleMusic, startSeconds: 0.5f);
@@ -119,7 +132,7 @@ public class GameController : MonoBehaviour
 
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
-        
+
         var playerParty = playerController.GetComponent<PokemonParty>();
         var trainerParty = trainer.GetComponent<PokemonParty>();
 
@@ -130,17 +143,22 @@ public class GameController : MonoBehaviour
         yield return StartCoroutine(transition.TransitionAnimation());
     }
 
-    public void PauseGame(bool pause){
-        if (pause){
+    public void PauseGame(bool pause)
+    {
+        if (pause)
+        {
             stateBeforePause = state;
             state = GameState.Pause;
         }
-        else{
+        else
+        {
             state = stateBeforePause;
         }
     }
-    public void OpenMenu(){
-        if (state == GameState.FreeRoam){
+    public void OpenMenu()
+    {
+        if (state == GameState.FreeRoam)
+        {
             state = GameState.Menu;
             menuState = MenuState.Main;
             menu.SetActive(true);
@@ -148,43 +166,54 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void MenuHandleUpdate(){
+    public void MenuHandleUpdate()
+    {
         // Main Menu Update
-        if (menuState == MenuState.Main){
+        if (menuState == MenuState.Main)
+        {
             int prevSelection = selectedMenuItem;
 
-            if (controls.Main.Down.WasPerformedThisFrame()){
+            if (controls.Main.Down.WasPerformedThisFrame())
+            {
                 ++selectedMenuItem;
             }
-            else if (controls.Main.Up.WasPerformedThisFrame()){
+            else if (controls.Main.Up.WasPerformedThisFrame())
+            {
                 --selectedMenuItem;
             }
 
             selectedMenuItem = Mathf.Clamp(selectedMenuItem, 0, menuItems.Count - 1);
             if (prevSelection != selectedMenuItem) UpdateItemSelection();
 
-            if (controls.Main.Interact.WasPerformedThisFrame()){
+            if (controls.Main.Interact.WasPerformedThisFrame())
+            {
                 menu.SetActive(false);
                 StartCoroutine(OnMenuSelected(selectedMenuItem));
             }
-            if (controls.Main.Run.WasPerformedThisFrame()){
+            if (controls.Main.Run.WasPerformedThisFrame())
+            {
                 menu.SetActive(false);
                 state = GameState.FreeRoam;
             }
         }
 
         // Pokemon Update
-        if (menuState == MenuState.Pokemon){
-            if(controls.Main.Right.WasPerformedThisFrame()){
+        if (menuState == MenuState.Pokemon)
+        {
+            if (controls.Main.Right.WasPerformedThisFrame())
+            {
                 ++currentPartyMember;
             }
-            else if (controls.Main.Left.WasPerformedThisFrame()){
+            else if (controls.Main.Left.WasPerformedThisFrame())
+            {
                 --currentPartyMember;
             }
-            else if (controls.Main.Down.WasPerformedThisFrame()){
+            else if (controls.Main.Down.WasPerformedThisFrame())
+            {
                 currentPartyMember += 2;
             }
-            else if (controls.Main.Up.WasPerformedThisFrame()){
+            else if (controls.Main.Up.WasPerformedThisFrame())
+            {
                 currentPartyMember -= 2;
             }
 
@@ -192,11 +221,13 @@ public class GameController : MonoBehaviour
 
             settingsPartyScreen.UpdateMemberSelection(currentPartyMember);
 
-            if (controls.Main.Interact.WasPerformedThisFrame()){
+            if (controls.Main.Interact.WasPerformedThisFrame())
+            {
                 // Switch around pokemon and stuff
                 Debug.Log("you haven't done this yet...");
             }
-            if (controls.Main.Run.WasPerformedThisFrame()){
+            if (controls.Main.Run.WasPerformedThisFrame())
+            {
                 settingsPartyScreen.gameObject.SetActive(false);
                 menuState = MenuState.Main;
                 menu.SetActive(true);
@@ -205,12 +236,15 @@ public class GameController : MonoBehaviour
         }
 
         // Bag Update
-        if (menuState == MenuState.Bag){
+        if (menuState == MenuState.Bag)
+        {
             inventoryUI.HandleBagUpdate();
-            if (controls.Main.Interact.WasPerformedThisFrame()){
+            if (controls.Main.Interact.WasPerformedThisFrame())
+            {
                 Debug.Log("you haven't done this yet...");
             }
-            if (controls.Main.Run.WasPerformedThisFrame()){
+            if (controls.Main.Run.WasPerformedThisFrame())
+            {
                 UICanvas.gameObject.SetActive(true);
                 inventoryUI.gameObject.SetActive(false);
                 menuState = MenuState.Main;
@@ -220,8 +254,10 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private IEnumerator OnMenuSelected(int selectedItem){
-        if (selectedItem == 0){ 
+    private IEnumerator OnMenuSelected(int selectedItem)
+    {
+        if (selectedItem == 0)
+        {
             // Party
             playerParty = playerController.GetComponent<PokemonParty>();
             settingsPartyScreen.Init();
@@ -230,44 +266,61 @@ public class GameController : MonoBehaviour
             yield return new WaitForEndOfFrame();
             menuState = MenuState.Pokemon;
         }
-        else if (selectedItem == 1){
+        else if (selectedItem == 1)
+        {
             // Bag
             UICanvas.gameObject.SetActive(true);
             inventoryUI.gameObject.SetActive(true);
             menuState = MenuState.Bag;
         }
-        else if (selectedItem == 2){
+        else if (selectedItem == 2)
+        {
             // Save
             Save();
             state = GameState.FreeRoam;
         }
-        else if (selectedItem == 3){
+        else if (selectedItem == 3)
+        {
             // Load
             Load();
             state = GameState.FreeRoam;
         }
     }
 
-    void UpdateItemSelection(){
-        for (int i = 0; i < menuItems.Count; i++){
-            if (i == selectedMenuItem){
+    void UpdateItemSelection()
+    {
+        for (int i = 0; i < menuItems.Count; i++)
+        {
+            if (i == selectedMenuItem)
+            {
                 menuItems[i].faceColor = GlobalSettings.i.HighlightedColor;
             }
-            else{
+            else
+            {
                 menuItems[i].faceColor = Color.black;
             }
         }
     }
 
-    public void Save(){
-        if (state == GameState.Menu){
+    public void Save()
+    {
+        if (state == GameState.Menu)
+        {
             SavingSystem.i.Save("saveSlot1");
         }
     }
 
-    public void Load(){
-        if (state == GameState.Menu){
+    public void Load()
+    {
+        if (state == GameState.Menu)
+        {
             SavingSystem.i.Load("saveSlot1");
         }
+    }
+
+    public EncounterZone currentEncounterZone;
+    public void SetCurrentEncounterZone(EncounterZone zone)
+    {
+        currentEncounterZone = zone;
     }
 }

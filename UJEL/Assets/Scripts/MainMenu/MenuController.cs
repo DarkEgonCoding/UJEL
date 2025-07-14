@@ -24,6 +24,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Ztxt;
     [SerializeField] private TextMeshProUGUI Xtxt;
     [SerializeField] private float highlightTime = 0.3f;
+    [SerializeField] public TMP_InputField inputField;
     private TextMeshProUGUI[] PresentTexts;
     public PlayerControls menuControls;
     public static MenuController instance;
@@ -133,7 +134,6 @@ public class MenuController : MonoBehaviour
         GenderSelection.SetActive(false);
         MainMenu.SetActive(false);
         SettingsMenu.SetActive(false);
-        PresentsScreen.SetActive(false);
         Screen.SetActive(false);
         Video.SetActive(false);
         StartCoroutine(StartMenuAnimation());
@@ -162,6 +162,7 @@ public class MenuController : MonoBehaviour
         screenFader.FadeIn();
         yield return new WaitForSeconds(screenFader.fadeDuration);
         MainMenu.SetActive(true);
+        PresentsScreen.SetActive(false);
         OpenMainMenu();
         StartCoroutine(OpenMainMenuCoroutine());
         screenFader.FadeOut();
@@ -233,9 +234,9 @@ public class MenuController : MonoBehaviour
         //SceneManager.LoadScene(1);
     }
 
-    public void ReadStringInput(string s)
+    public void ReadStringInput()
     {
-        PlayerNameInput = s;
+        PlayerNameInput = inputField.text;
     }
 
     public void SelectedPlayerName()
