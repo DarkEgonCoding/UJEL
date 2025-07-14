@@ -18,6 +18,9 @@ public class MenuController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] public GameObject MenuObject;
     [SerializeField] public GameObject SettingsMenu;
+    [SerializeField] public GameObject NameSelection;
+    [SerializeField] public GameObject GenderSelection;
+    [SerializeField] public GameObject BackgroundImage;
     [SerializeField] private TextMeshProUGUI Ztxt;
     [SerializeField] private TextMeshProUGUI Xtxt;
     [SerializeField] private float highlightTime = 0.3f;
@@ -26,6 +29,8 @@ public class MenuController : MonoBehaviour
     public static MenuController instance;
     private Selector currentSelector;
     [SerializeField] private ScreenFader screenFader;
+    private string PlayerNameInput;
+
 
     private Coroutine highlightRoutine;
 
@@ -116,6 +121,7 @@ public class MenuController : MonoBehaviour
 
     public void OpenSettingsMenu()
     {
+        BackgroundImage.SetActive(true);
         SettingsMenu.SetActive(true);
         MenuObject.SetActive(false);
         UpdateSelector();
@@ -123,6 +129,8 @@ public class MenuController : MonoBehaviour
 
     private void IntroCutscene()
     {
+        NameSelection.SetActive(false);
+        GenderSelection.SetActive(false);
         MainMenu.SetActive(false);
         SettingsMenu.SetActive(false);
         PresentsScreen.SetActive(false);
@@ -162,6 +170,7 @@ public class MenuController : MonoBehaviour
     public void OpenMainMenu()
     {
         MenuObject.SetActive(true);
+        BackgroundImage.SetActive(true);
         SettingsMenu.SetActive(false);
         Screen.SetActive(true);
         Video.SetActive(true);
@@ -216,6 +225,34 @@ public class MenuController : MonoBehaviour
 
     public void NewGame()
     {
-        SceneManager.LoadScene(1);
+        MenuObject.SetActive(false);
+        NameSelection.SetActive(true);
+        BackgroundImage.SetActive(false);
+
+
+        //SceneManager.LoadScene(1);
+    }
+
+    public void ReadStringInput(string s)
+    {
+        PlayerNameInput = s;
+    }
+
+    public void SelectedPlayerName()
+    {
+        if (RuleChecker(PlayerNameInput) == false)
+        {
+            return;
+        }
+
+        NameSelection.SetActive(false);
+        BackgroundImage.SetActive(false);
+        GenderSelection.SetActive(true);
+    }
+
+    private bool RuleChecker(string input)
+    {
+        if (input.Length > 15 || input.Length < 1) return false; // Must be between 1 and 15 characters
+        return true;
     }
 }
