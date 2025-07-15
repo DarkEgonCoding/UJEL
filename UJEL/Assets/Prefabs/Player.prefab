@@ -211,6 +211,7 @@ MonoBehaviour:
   inJump: 0
   canSwim: 1
   onBridge: 0
+  playerSprite: 2
 --- !u!114 &7743067434613474124
 MonoBehaviour:
   m_ObjectHideFlags: 0
