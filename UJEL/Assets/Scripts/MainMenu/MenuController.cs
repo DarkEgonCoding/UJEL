@@ -21,8 +21,11 @@ public class MenuController : MonoBehaviour
     [SerializeField] public GameObject NameSelection;
     [SerializeField] public GameObject GenderSelection;
     [SerializeField] public GameObject BackgroundImage;
+    [SerializeField] public GameObject ConfirmationObj;
     [SerializeField] private TextMeshProUGUI Ztxt;
     [SerializeField] private TextMeshProUGUI Xtxt;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI genderText;
     [SerializeField] private float highlightTime = 0.3f;
     [SerializeField] public TMP_InputField inputField;
     private TextMeshProUGUI[] PresentTexts;
@@ -113,6 +116,8 @@ public class MenuController : MonoBehaviour
         {
             menuControls.Main.Up.performed -= ctx => currentSelector.MenuUp();
             menuControls.Main.Down.performed -= ctx => currentSelector.MenuDown();
+            menuControls.Main.Left.performed -= ctx => currentSelector.MenuLeft();
+            menuControls.Main.Right.performed -= ctx => currentSelector.MenuRight();
             menuControls.Main.Interact.performed -= ctx => currentSelector.SelectItem();
             menuControls.Main.Run.performed -= ctx => currentSelector.Return();
         }
@@ -130,6 +135,7 @@ public class MenuController : MonoBehaviour
 
     private void IntroCutscene()
     {
+        ConfirmationObj.SetActive(false);
         NameSelection.SetActive(false);
         GenderSelection.SetActive(false);
         MainMenu.SetActive(false);
@@ -229,9 +235,28 @@ public class MenuController : MonoBehaviour
         MenuObject.SetActive(false);
         NameSelection.SetActive(true);
         BackgroundImage.SetActive(false);
-
+        ClearCurrentSelector();
 
         //SceneManager.LoadScene(1);
+    }
+
+    public void BoySelected()
+    {
+        SelectedGender(true);
+    }
+
+    public void GirlSelected()
+    {
+        SelectedGender(false);
+    }
+
+    public void SelectedGender(bool isBoy)
+    {
+        genderText.text = isBoy ? "Boy" : "Girl";
+
+        GenderSelection.SetActive(false);
+        ConfirmationObj.SetActive(true);
+        UpdateSelector();
     }
 
     public void ReadStringInput()
@@ -246,9 +271,12 @@ public class MenuController : MonoBehaviour
             return;
         }
 
+        nameText.text = PlayerNameInput;
+
         NameSelection.SetActive(false);
         BackgroundImage.SetActive(false);
         GenderSelection.SetActive(true);
+        UpdateSelector();
     }
 
     private bool RuleChecker(string input)

@@ -7,10 +7,16 @@ using UnityEngine.Events;
 
 public class Selector : MonoBehaviour
 {
+    [Header("Menu Items")]
     [SerializeField] List<TextMeshProUGUI> menuItems;
+
+    [Header("Layout Settings")]
+    [SerializeField] private bool isHorizontal = false; // false = vertical (default), true = horizontal
+
+    [Header("Visual Settings")]
     [SerializeField] public Color normalColor = Color.white;
     [SerializeField] Color highlightColor = Color.blue;
-    [SerializeField] int menuIndex = 0;
+
     [SerializeField] private UnityEvent[] onSelectEvents;
     [SerializeField] private UnityEvent onReturn;
 
@@ -18,20 +24,44 @@ public class Selector : MonoBehaviour
 
     public void MenuUp()
     {
-        selectedIndex = (selectedIndex - 1 + menuItems.Count) % menuItems.Count;
-        UpdateMenuVisual();
+        if (!isHorizontal)
+        {
+            selectedIndex = (selectedIndex - 1 + menuItems.Count) % menuItems.Count;
+            UpdateMenuVisual();
+        }
     }
 
     public void MenuDown()
     {
-        selectedIndex = (selectedIndex + 1) % menuItems.Count;
-        UpdateMenuVisual();
+        if (!isHorizontal)
+        {
+            selectedIndex = (selectedIndex + 1) % menuItems.Count;
+            UpdateMenuVisual();
+        }
+    }
+
+    public void MenuLeft()
+    {
+        Debug.Log("Test");
+        if (isHorizontal)
+        {
+            selectedIndex = (selectedIndex + 1) % menuItems.Count;
+            UpdateMenuVisual();
+        }
+    }
+
+    public void MenuRight()
+    {
+        Debug.Log("Test");
+        if (isHorizontal)
+        {
+            selectedIndex = (selectedIndex - 1 + menuItems.Count) % menuItems.Count;
+            UpdateMenuVisual();
+        }
     }
 
     public void SelectItem()
     {
-        //Debug.Log("Selector: SelectItem called on index " + selectedIndex);
-
         if (selectedIndex < onSelectEvents.Length)
         {
             onSelectEvents[selectedIndex]?.Invoke();
