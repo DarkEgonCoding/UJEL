@@ -34,6 +34,7 @@ public class MenuController : MonoBehaviour
     private Selector currentSelector;
     [SerializeField] private ScreenFader screenFader;
     private string PlayerNameInput;
+    private bool isBoy;
 
 
     private Coroutine highlightRoutine;
@@ -106,6 +107,8 @@ public class MenuController : MonoBehaviour
 
         menuControls.Main.Up.performed += ctx => currentSelector.MenuUp();
         menuControls.Main.Down.performed += ctx => currentSelector.MenuDown();
+        menuControls.Main.Left.performed += ctx => currentSelector.MenuLeft();
+        menuControls.Main.Right.performed += ctx => currentSelector.MenuRight();
         menuControls.Main.Interact.performed += ctx => currentSelector.SelectItem();
         menuControls.Main.Run.performed += ctx => currentSelector.Return();
     }
@@ -236,8 +239,6 @@ public class MenuController : MonoBehaviour
         NameSelection.SetActive(true);
         BackgroundImage.SetActive(false);
         ClearCurrentSelector();
-
-        //SceneManager.LoadScene(1);
     }
 
     public void BoySelected()
@@ -250,9 +251,10 @@ public class MenuController : MonoBehaviour
         SelectedGender(false);
     }
 
-    public void SelectedGender(bool isBoy)
+    public void SelectedGender(bool isABoy)
     {
-        genderText.text = isBoy ? "Boy" : "Girl";
+        genderText.text = isABoy ? "Boy" : "Girl";
+        isBoy = isABoy;
 
         GenderSelection.SetActive(false);
         ConfirmationObj.SetActive(true);
@@ -283,5 +285,25 @@ public class MenuController : MonoBehaviour
     {
         if (input.Length > 15 || input.Length < 1) return false; // Must be between 1 and 15 characters
         return true;
+    }
+
+    public void ConfirmedTrue()
+    {
+        // PlayerNameInput
+        // isBoy
+        SceneManager.LoadScene(1);
+    }
+
+    public void ConfirmedFalse()
+    {
+        ConfirmationObj.SetActive(false);
+        OpenMainMenu();
+    }
+
+    public void ReturnSelectedGender()
+    {
+        GenderSelection.SetActive(false);
+        NameSelection.SetActive(true);
+        UpdateSelector();
     }
 }

@@ -42,7 +42,6 @@ public class Selector : MonoBehaviour
 
     public void MenuLeft()
     {
-        Debug.Log("Test");
         if (isHorizontal)
         {
             selectedIndex = (selectedIndex + 1) % menuItems.Count;
@@ -52,7 +51,6 @@ public class Selector : MonoBehaviour
 
     public void MenuRight()
     {
-        Debug.Log("Test");
         if (isHorizontal)
         {
             selectedIndex = (selectedIndex - 1 + menuItems.Count) % menuItems.Count;
