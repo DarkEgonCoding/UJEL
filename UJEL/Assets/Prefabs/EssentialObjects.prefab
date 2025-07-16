@@ -3963,6 +3963,7 @@ MonoBehaviour:
   settingsPartyScreen: {fileID: 6738179793185490156}
   inventoryUI: {fileID: 7878530263979720215}
   UICanvas: {fileID: 3236495773347155168}
+  currentEncounterZone: {fileID: 0}
 --- !u!114 &309560227406838143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3996,6 +3997,9 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 4096
+  triggerLayer:
+    serializedVersion: 2
+    m_Bits: 8192
   fovLayer:
     serializedVersion: 2
     m_Bits: 0

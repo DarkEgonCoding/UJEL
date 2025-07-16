@@ -40,12 +40,23 @@ public class DialogManager : MonoBehaviour
             dialogText.text = dialog.Lines[0];
             dialogCoroutine = StartCoroutine(TypeDialog(dialog.Lines[0]));
     }
+    
+    public IEnumerator ShowDialogCoroutine(Dialog dialog)
+    {
+        bool isFinished = false;
 
-    private IEnumerator TypeDialog(string line){
+        ShowDialog(dialog, () => isFinished = true);
+
+        yield return new WaitUntil(() => isFinished);
+    }
+
+    private IEnumerator TypeDialog(string line)
+    {
         isTyping = true;
         currentText = line;
         dialogText.text = "";
-        foreach (var letter in line.ToCharArray()){
+        foreach (var letter in line.ToCharArray())
+        {
             dialogText.text += letter;
             yield return new WaitForSeconds(1f / lettersPerSecond);
         }

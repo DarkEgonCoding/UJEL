@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, ISavable
     public float moveSpeed;
     [SerializeField] public float runSpeed = 9f;
     public PlayerController player;
+    public static PlayerController Instance;
     public UnityEvent OnEncountered;
     [SerializeField] public float jumpSpeed = 5f;
     [SerializeField] public float swimSpeed = 3f;
@@ -41,7 +42,14 @@ public class PlayerController : MonoBehaviour, ISavable
     public bool canSwim = false;
     public bool onBridge = false;
     [SerializeField] PlayerSprite playerSprite = PlayerSprite.imposter;
-    private void Awake(){
+    public Character character;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        character = GetComponent<Character>();
         controls = new PlayerControls();
     }
 
@@ -58,11 +66,18 @@ public class PlayerController : MonoBehaviour, ISavable
         SetPositionAndSnapToTile(transform.position);
 
         DialogManager.Instance.OnShowDialog += () => {
+            if (GameController.instance.state == GameState.Cutscene) GameController.instance.previousState = GameState.Cutscene;
             GameController.instance.state = GameState.Dialog;
         };
 
         DialogManager.Instance.OnCloseDialog += () => {
-            if(GameController.instance.state != GameState.Battle){
+            if (GameController.instance.previousState == GameState.Cutscene)
+            {
+                GameController.instance.state = GameState.Cutscene;
+                GameController.instance.previousState = GameState.Dialog;
+            }
+            else if (GameController.instance.state != GameState.Battle)
+            {
                 GameController.instance.state = GameState.FreeRoam;
             }
         };
@@ -134,60 +149,103 @@ public class PlayerController : MonoBehaviour, ISavable
         }
     }
 
-    private void Update(){
-        if(GameController.instance.state == GameState.Trainer){
+    private void Update()
+    {
+        if (GameController.instance.state == GameState.Trainer)
+        {
             animator.SetBool("isMoving", false);
         }
-        if(GameController.instance.state == GameState.Menu){
+        if (GameController.instance.state == GameState.Menu)
+        {
             animator.SetBool("isMoving", false);
         }
     }
 
-    private bool IsWalkable(Vector3 targetPos){
+    private void AnimationInCutscene(Vector2 direction)
+    {
+        Vector2 normDir = direction.normalized;
+        if (normDir == Vector2.up)
+        {
+            animator.SetFloat("moveX", 0);
+            animator.SetFloat("moveY", 1);
+        }
+        else if (normDir == Vector2.down)
+        {
+            animator.SetFloat("moveX", 0);
+            animator.SetFloat("moveY", -1);
+        }
+        else if (normDir == Vector2.right)
+        {
+            animator.SetFloat("moveX", 1);
+            animator.SetFloat("moveY", 0);
+        }
+        else if (normDir == Vector2.left)
+        {
+            animator.SetFloat("moveX", -1);
+            animator.SetFloat("moveY", 0);
+        }
+    }
+
+    private bool IsWalkable(Vector3 targetPos)
+    {
         Collider2D[] colliders = new Collider2D[5];
         int hits = Physics2D.OverlapCircleNonAlloc(targetPos, 0.3f, colliders, GameLayers.i.solidObjectsLayer | GameLayers.i.interactableLayer | GameLayers.i.ledgeLayer | GameLayers.i.waterLayer);
-        if(hits > 0){ //if the player collides with something
+        if (hits > 0)
+        { //if the player collides with something
             bool hitWater = false;
-            for (int i = 0; i < hits; i++){
+            for (int i = 0; i < hits; i++)
+            {
                 if ((GameLayers.i.waterLayer & (1 << colliders[i].gameObject.layer)) != 0) hitWater = true;
-                else{
+                else
+                {
                     animator.SetBool("isMoving", false);
                     return false;
                 }
             }
-            if(hitWater){
-                if(isBiking){
-                        if(onBridge){
-                            return true;
-                        }
-                        animator.SetBool("isMoving", false);
-                        return false;
-                    }
-                    if(canSwim == true)
+            if (hitWater)
+            {
+                if (isBiking)
+                {
+                    if (onBridge)
                     {
-                        if(onBridge){
-                            return true; // if you are above water and can swim, return true, but do not set isSwimming to true
-                        }
-                        isSwimming = true;
-                        return true; //return true if you unlocked swim
+                        return true;
                     }
-                    else
+                    animator.SetBool("isMoving", false);
+                    return false;
+                }
+                if (canSwim == true)
+                {
+                    if (onBridge)
                     {
-                        if(onBridge){ // if you are above water on a bridge and can't swim, still allow movement
-                            return true;
-                        }
-                        return false; //return false if you cannot swim
-                    } 
+                        return true; // if you are above water and can swim, return true, but do not set isSwimming to true
+                    }
+                    isSwimming = true;
+                    return true; //return true if you unlocked swim
+                }
+                else
+                {
+                    if (onBridge)
+                    { // if you are above water on a bridge and can't swim, still allow movement
+                        return true;
+                    }
+                    return false; //return false if you cannot swim
+                }
             }
         }
         isSwimming = false;
         return true; //return true if it doesn't collide with anything
     }
 
-    IEnumerator DoMove(Vector2 direction){
+    public IEnumerator DoMove(Vector2 direction){
         isMoving = true;        
         animator.SetBool("isMoving", isMoving);
-        
+
+        if (GameController.instance.state == GameState.Cutscene)
+        {
+            AnimationInCutscene(direction);
+            moveSpeed = OriginalMoveSpeed;
+        }
+
         var targetPos = transform.position;
         targetPos += (Vector3)direction;
 

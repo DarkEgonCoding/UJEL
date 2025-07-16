@@ -30593,7 +30593,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 391233565
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -31231,6 +31231,82 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1809360730
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 109509116778167230, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 310446598296146763, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1241480122690673999, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: dialog.lines.Array.data[0]
+      value: Name's Jimmy. Don't forget it.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345704622308824517, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+      propertyPath: m_Name
+      value: NPC
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+--- !u!114 &1809360731 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2368575169110248111, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+  m_PrefabInstance: {fileID: 1809360730}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66406b7aac532e46a54b1d0334f580e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2050186622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31288,6 +31364,201 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d13c0bd6964ffe04797f411bd5193c1a, type: 3}
+--- !u!1 &2131493198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2131493201}
+  - component: {fileID: 2131493200}
+  - component: {fileID: 2131493199}
+  m_Layer: 13
+  m_Name: PreventLeavingCutscene
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &2131493199
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131493198}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &2131493200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131493198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b400213476e51d84aaf3f34346e9a3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions:
+  - rid: 4394132614771638276
+  - rid: 4394132614771638277
+  - rid: 4394132614771638280
+  - rid: 4394132614771638278
+  - rid: 4394132614771638279
+  - rid: 4394132614771638286
+  - rid: 4394132614771638285
+  - rid: 4394132614771638283
+  - rid: 4394132614771638287
+  references:
+    version: 2
+    RefIds:
+    - rid: 4394132614771638276
+      type: {class: MoveActorAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: MoveActorAction
+        waitForCompletion: 1
+        actor:
+          isPlayer: 0
+          character: {fileID: 1809360731}
+        movePatterns:
+        - {x: 3, y: 0}
+        - {x: 0, y: 1}
+    - rid: 4394132614771638277
+      type: {class: DialogueAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: DialogueAction
+        waitForCompletion: 1
+        dialog:
+          lines:
+          - Don't leave yet!
+          - The professor has a job for you!
+    - rid: 4394132614771638278
+      type: {class: MoveActorAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: MoveActorAction
+        waitForCompletion: 0
+        actor:
+          isPlayer: 0
+          character: {fileID: 1809360731}
+        movePatterns:
+        - {x: 0, y: -7}
+        - {x: -9, y: 0}
+        - {x: 0, y: -8}
+        - {x: -8, y: 0}
+    - rid: 4394132614771638279
+      type: {class: MoveActorAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: MoveActorAction
+        waitForCompletion: 1
+        actor:
+          isPlayer: 1
+          character: {fileID: 0}
+        movePatterns:
+        - {x: 0, y: -8}
+        - {x: -9, y: 0}
+        - {x: 0, y: -8}
+        - {x: -7, y: 0}
+    - rid: 4394132614771638280
+      type: {class: MoveActorAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: MoveActorAction
+        waitForCompletion: 1
+        actor:
+          isPlayer: 1
+          character: {fileID: 0}
+        movePatterns:
+        - {x: 0, y: -2}
+    - rid: 4394132614771638283
+      type: {class: MoveActorAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: MoveActorAction
+        waitForCompletion: 1
+        actor:
+          isPlayer: 0
+          character: {fileID: 1809360731}
+        movePatterns:
+        - {x: 0, y: -2}
+        - {x: 4, y: 0}
+        - {x: 0, y: -1}
+        - {x: 6, y: 0}
+    - rid: 4394132614771638285
+      type: {class: DialogueAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: DialogueAction
+        waitForCompletion: 1
+        dialog:
+          lines:
+          - Don't run away this time.
+    - rid: 4394132614771638286
+      type: {class: TurnActorAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: TurnActorAction
+        waitForCompletion: 1
+        actor:
+          isPlayer: 0
+          character: {fileID: 1809360731}
+        direction: 3
+    - rid: 4394132614771638287
+      type: {class: FadeOutAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: FadeOutAction
+        waitForCompletion: 1
+        duration: 1
+--- !u!4 &2131493201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131493198}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 15.5, z: 0.056878906}
+  m_LocalScale: {x: 5, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1094294549735392408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31352,3 +31623,5 @@ SceneRoots:
   - {fileID: 579721708}
   - {fileID: 1058047375}
   - {fileID: 2050186622}
+  - {fileID: 1809360730}
+  - {fileID: 2131493201}

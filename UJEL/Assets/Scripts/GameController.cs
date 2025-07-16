@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu}
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene}
 
 public enum MenuState { Main, Pokemon, Bag}
 
@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
     [SerializeField] Camera battleCamera;
     [SerializeField] AudioClip wildBattleMusic;
     public GameState state;
+    public GameState previousState;
     GameState stateBeforePause;
     MenuState menuState;
     public PlayerControls controls;
@@ -87,6 +88,16 @@ public class GameController : MonoBehaviour
         {
             MenuHandleUpdate();
         }
+    }
+
+    public void StartCutsceneState()
+    {
+        state = GameState.Cutscene;
+    }
+
+    public void StartFreeRoamState()
+    {
+        state = GameState.FreeRoam;
     }
 
     IEnumerator StartBattle()
