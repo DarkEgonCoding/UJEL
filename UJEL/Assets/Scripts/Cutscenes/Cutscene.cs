@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
-public class Cutscene : MonoBehaviour, IPlayerTriggerable
+public class Cutscene : MonoBehaviour, IPlayerTriggerable, ISavable
 {
     [SerializeReference]
     [SerializeField] List<CutsceneAction> actions;
@@ -12,7 +14,37 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
     [SerializeField] bool disableAfterTrigger = false;
     [SerializeField] List<CutsceneCondition> disableIfConditionsMet;
     [SerializeField] List<CutsceneCondition> enableOnlyIfConditionsMet;
+
+    [SerializeField, HideInInspector]
+    public string cutsceneId;
+    public string Id => cutsceneId;
     private bool isActive = true;
+
+    public object CaptureState()
+    {
+        return isActive;
+    }
+
+    public void RestoreState(object state)
+    {
+        isActive = (bool)state;
+
+        if (!isActive)
+        {
+            DisableTrigger(); // Ensures collider and visuals match state
+        }
+    }
+
+    private void OnValidate()
+    {
+    #if UNITY_EDITOR
+        if (string.IsNullOrWhiteSpace(cutsceneId))
+        {
+            cutsceneId = gameObject.scene.name + "_" + gameObject.name;
+            EditorUtility.SetDirty(this); // Mark scene dirty so Unity knows it changed
+        }
+    #endif
+    }
 
     private void Start()
     {
@@ -36,6 +68,12 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
                 break;
             }
         }
+
+        if (GameFlags.WasCutsceneTriggered(cutsceneId))
+        {
+            DisableTrigger();
+            return;
+        }
     }
 
     public IEnumerator Play()
@@ -54,7 +92,10 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
         GameController.instance.StartFreeRoamState();
 
         if (disableAfterTrigger)
+        {
+            GameFlags.MarkCutsceneTriggered(cutsceneId);
             DisableTrigger();
+        }
     }
 
     public void AddAction(CutsceneAction action)
@@ -86,15 +127,10 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
     public void DisableTrigger()
     {
         isActive = false;
-        
-        var collider = GetComponent<Collider2D>();
-        if (collider) collider.enabled = false;
     }
 
     public void EnableTrigger()
     {
         isActive = true;
-        var collider = GetComponent<Collider2D>();
-        if (collider) collider.enabled = true;
     }
 }

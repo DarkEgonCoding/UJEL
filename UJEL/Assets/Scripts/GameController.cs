@@ -19,8 +19,19 @@ public class GameController : MonoBehaviour
     [SerializeField] Camera worldCamera;
     [SerializeField] Camera battleCamera;
     [SerializeField] AudioClip wildBattleMusic;
-    public GameState state;
-    public GameState previousState;
+
+    // Debug checks whenever state is changed
+    private GameState _state;
+    public GameState state
+    {
+        get => _state;
+        set
+        {
+            Debug.Log($"GameState changed: {_state} → {value}");
+            _state = value;
+        }
+    }
+
     GameState stateBeforePause;
     MenuState menuState;
     public PlayerControls controls;
@@ -154,7 +165,7 @@ public class GameController : MonoBehaviour
         yield return StartCoroutine(transition.TransitionAnimation());
     }
 
-    public void PauseGame(bool pause)
+    public void PauseGame(bool pause, GameState? resumeState = null)
     {
         if (pause)
         {
@@ -163,7 +174,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            state = stateBeforePause;
+            state = resumeState ?? stateBeforePause;
         }
     }
     public void OpenMenu()

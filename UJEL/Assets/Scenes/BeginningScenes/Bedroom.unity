@@ -3396,8 +3396,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9017727176958814891, guid: 9fe8faa93564280468ada7cbfec969a8, type: 3}
+      propertyPath: resumeState
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017727176958814891, guid: 9fe8faa93564280468ada7cbfec969a8, type: 3}
       propertyPath: sceneToLoad
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017727176958814891, guid: 9fe8faa93564280468ada7cbfec969a8, type: 3}
+      propertyPath: cutsceneFlag
+      value: _CutscenePrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3429,7 +3437,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052738735}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1052738737
 Camera:
   m_ObjectHideFlags: 0

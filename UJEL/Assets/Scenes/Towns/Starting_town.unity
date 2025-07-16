@@ -31380,6 +31380,7 @@ GameObject:
   - component: {fileID: 2131493201}
   - component: {fileID: 2131493200}
   - component: {fileID: 2131493199}
+  - component: {fileID: 2131493202}
   m_Layer: 13
   m_Name: PreventLeavingCutscene
   m_TagString: Untagged
@@ -31448,6 +31449,7 @@ MonoBehaviour:
   - rid: 4394132614771638276
   - rid: 4394132614771638277
   - rid: 4394132614771638280
+  - rid: 4394132631411752965
   - rid: 4394132614771638278
   - rid: 4394132614771638279
   - rid: 4394132614771638286
@@ -31458,6 +31460,7 @@ MonoBehaviour:
   disableIfConditionsMet:
   - {fileID: 11400000, guid: 296c4311c2089c044afa66bfa9c30b24, type: 2}
   enableOnlyIfConditionsMet: []
+  cutsceneId: Starting_town_PreventLeavingCutscene
   references:
     version: 2
     RefIds:
@@ -31554,6 +31557,12 @@ MonoBehaviour:
         waitForCompletion: 1
         go: {fileID: 1513414935}
         position: {x: -2.5, y: 11.5}
+    - rid: 4394132631411752965
+      type: {class: WalkToTileAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: WalkToTileAction
+        waitForCompletion: 1
+        targetTile: {x: 0, y: 13}
 --- !u!4 &2131493201
 Transform:
   m_ObjectHideFlags: 0
@@ -31569,6 +31578,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2131493202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131493198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 913f7bac-cc2a-4514-92d1-37fa6ae1fa68
 --- !u!1001 &1094294549735392408
 PrefabInstance:
   m_ObjectHideFlags: 0

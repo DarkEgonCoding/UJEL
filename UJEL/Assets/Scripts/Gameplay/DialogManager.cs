@@ -27,25 +27,28 @@ public class DialogManager : MonoBehaviour
     Dialog dialog;
     public bool isTyping;
     public bool skippingDialog;
+    public bool fromCutscene = false;
 
     public bool IsShowing { get; private set; }
 
-    public void ShowDialog(Dialog dialog, Action onFinished = null){
-            OnShowDialog?.Invoke();
+    public void ShowDialog(Dialog dialog, Action onFinished = null, bool fromCutscene = false){
+        this.fromCutscene = fromCutscene;
 
-            IsShowing = true;
-            this.dialog = dialog;
-            onDialogFinished = onFinished;
-            dialogBox.SetActive(true);
-            dialogText.text = dialog.Lines[0];
-            dialogCoroutine = StartCoroutine(TypeDialog(dialog.Lines[0]));
+        OnShowDialog?.Invoke();
+
+        IsShowing = true;
+        this.dialog = dialog;
+        onDialogFinished = onFinished;
+        dialogBox.SetActive(true);
+        dialogText.text = dialog.Lines[0];
+        dialogCoroutine = StartCoroutine(TypeDialog(dialog.Lines[0]));
     }
     
     public IEnumerator ShowDialogCoroutine(Dialog dialog)
     {
         bool isFinished = false;
 
-        ShowDialog(dialog, () => isFinished = true);
+        ShowDialog(dialog, () => isFinished = true, fromCutscene: true);
 
         yield return new WaitUntil(() => isFinished);
     }

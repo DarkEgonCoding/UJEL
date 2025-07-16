@@ -54,6 +54,19 @@ public class CutsceneEditor : Editor
             {
                 cutscene.AddAction(new FadeOutAction());
             }
+            else if (GUILayout.Button("Walk To Tile"))
+            {
+                cutscene.AddAction(new WalkToTileAction());
+            }
+        }
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Cutscene ID", cutscene.Id, EditorStyles.helpBox);
+
+        if (GUILayout.Button("Copy Cutscene ID to Clipboard"))
+        {
+            EditorGUIUtility.systemCopyBuffer = cutscene.Id;
+            Debug.Log($"Copied Cutscene ID to clipboard: {cutscene.Id}");
         }
     }
 }

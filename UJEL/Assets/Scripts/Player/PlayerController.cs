@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour, ISavable
     public bool canSwim = false;
     public bool onBridge = false;
     [SerializeField] PlayerSprite playerSprite = PlayerSprite.imposter;
+    public Vector2Int CurrentTilePos => new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
     public Character character;
     private void Awake()
     {
@@ -66,15 +67,13 @@ public class PlayerController : MonoBehaviour, ISavable
         SetPositionAndSnapToTile(transform.position);
 
         DialogManager.Instance.OnShowDialog += () => {
-            if (GameController.instance.state == GameState.Cutscene) GameController.instance.previousState = GameState.Cutscene;
             GameController.instance.state = GameState.Dialog;
         };
 
         DialogManager.Instance.OnCloseDialog += () => {
-            if (GameController.instance.previousState == GameState.Cutscene)
+            if (DialogManager.Instance.fromCutscene)
             {
                 GameController.instance.state = GameState.Cutscene;
-                GameController.instance.previousState = GameState.Dialog;
             }
             else if (GameController.instance.state != GameState.Battle)
             {
