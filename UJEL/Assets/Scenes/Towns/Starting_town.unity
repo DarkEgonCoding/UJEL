@@ -19109,6 +19109,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1513414935 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2345704622308824517, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
+  m_PrefabInstance: {fileID: 1809360730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1535286553
 GameObject:
   m_ObjectHideFlags: 0
@@ -31301,7 +31306,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2368575169110248111, guid: 0cdea4de0abb0c94bb908f9cb0ca9fb8, type: 3}
   m_PrefabInstance: {fileID: 1809360730}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1513414935}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c66406b7aac532e46a54b1d0334f580e, type: 3}
@@ -31448,7 +31453,11 @@ MonoBehaviour:
   - rid: 4394132614771638286
   - rid: 4394132614771638285
   - rid: 4394132614771638283
-  - rid: 4394132614771638287
+  - rid: 4394132626492882944
+  disableAfterTrigger: 0
+  disableIfConditionsMet:
+  - {fileID: 11400000, guid: 296c4311c2089c044afa66bfa9c30b24, type: 2}
+  enableOnlyIfConditionsMet: []
   references:
     version: 2
     RefIds:
@@ -31538,12 +31547,13 @@ MonoBehaviour:
           isPlayer: 0
           character: {fileID: 1809360731}
         direction: 3
-    - rid: 4394132614771638287
-      type: {class: FadeOutAction, ns: , asm: Assembly-CSharp}
+    - rid: 4394132626492882944
+      type: {class: TeleportObjectAction, ns: , asm: Assembly-CSharp}
       data:
-        name: FadeOutAction
+        name: TeleportObjectAction
         waitForCompletion: 1
-        duration: 1
+        go: {fileID: 1513414935}
+        position: {x: -2.5, y: 11.5}
 --- !u!4 &2131493201
 Transform:
   m_ObjectHideFlags: 0

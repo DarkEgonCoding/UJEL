@@ -8,6 +8,36 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
     [SerializeReference]
     [SerializeField] List<CutsceneAction> actions;
 
+    [Header("Disable Settings")]
+    [SerializeField] bool disableAfterTrigger = false;
+    [SerializeField] List<CutsceneCondition> disableIfConditionsMet;
+    [SerializeField] List<CutsceneCondition> enableOnlyIfConditionsMet;
+    private bool isActive = true;
+
+    private void Start()
+    {
+        if (enableOnlyIfConditionsMet.Count > 0)
+        {
+            foreach (var condition in enableOnlyIfConditionsMet)
+            {
+                if (!condition.IsConditionMet())
+                {
+                    DisableTrigger();
+                    return;
+                }
+            }
+        }
+
+        foreach (var condition in disableIfConditionsMet)
+        {
+            if (condition.IsConditionMet())
+            {
+                DisableTrigger();
+                break;
+            }
+        }
+    }
+
     public IEnumerator Play()
     {
         GameController.instance.StartCutsceneState();
@@ -22,6 +52,9 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
         }
 
         GameController.instance.StartFreeRoamState();
+
+        if (disableAfterTrigger)
+            DisableTrigger();
     }
 
     public void AddAction(CutsceneAction action)
@@ -36,7 +69,32 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     public void OnPlayerTriggered(PlayerController player)
     {
+        if (!isActive) return;
+
         player.animator.SetBool("isMoving", false);
         StartCoroutine(Play());
+    }
+
+    public void StartCutscene()
+    {
+        if (!isActive) return;
+
+        PlayerController.Instance.animator.SetBool("isMoving", false);
+        StartCoroutine(Play());
+    }
+
+    public void DisableTrigger()
+    {
+        isActive = false;
+        
+        var collider = GetComponent<Collider2D>();
+        if (collider) collider.enabled = false;
+    }
+
+    public void EnableTrigger()
+    {
+        isActive = true;
+        var collider = GetComponent<Collider2D>();
+        if (collider) collider.enabled = true;
     }
 }
