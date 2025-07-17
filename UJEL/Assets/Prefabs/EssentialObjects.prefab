@@ -574,8 +574,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.55626, y: 67.54999}
-  m_SizeDelta: {x: 799.9, y: 135.11}
+  m_AnchoredPosition: {x: -0.55626, y: 51.666992}
+  m_SizeDelta: {x: 799.9, y: 103.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3948415111548974864
 CanvasRenderer:
@@ -684,7 +684,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -231, y: 164}
+  m_AnchoredPosition: {x: -231, y: 131}
   m_SizeDelta: {x: 290.74, y: 95.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2604500420329197065
@@ -1073,7 +1073,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3881,7 +3881,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3994,6 +3994,7 @@ MonoBehaviour:
   lettersPerSecond: 45
   isTyping: 0
   skippingDialog: 0
+  fromCutscene: 0
 --- !u!114 &646240518175654642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4011,8 +4012,6 @@ MonoBehaviour:
   worldCamera: {fileID: 7996305377751016373}
   battleCamera: {fileID: 6245236278213933204}
   wildBattleMusic: {fileID: 8300000, guid: ee8427fe622a95b44aeab90ebaec07e2, type: 3}
-  state: 0
-  previousState: 0
   menu: {fileID: 2008445473128298784}
   menuItems:
   - {fileID: 5609846009563994417}
@@ -5852,7 +5851,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6312,7 +6311,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -6580,7 +6579,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -6651,6 +6650,10 @@ PrefabInstance:
     - target: {fileID: 4334575785768224104, guid: eea3b2a75b2e01f49b21ddc08da4cd26, type: 3}
       propertyPath: m_Name
       value: PartyScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334575785768224104, guid: eea3b2a75b2e01f49b21ddc08da4cd26, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5531324092793868369, guid: eea3b2a75b2e01f49b21ddc08da4cd26, type: 3}
       propertyPath: m_Pivot.x
@@ -7052,6 +7055,10 @@ PrefabInstance:
     - target: {fileID: 4969006936780631962, guid: 798db11df46664d4da06421c36712257, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323461031795193863, guid: 798db11df46664d4da06421c36712257, type: 3}
+      propertyPath: m_Name
+      value: Bag UI
       objectReference: {fileID: 0}
     - target: {fileID: 5803986850257702527, guid: 798db11df46664d4da06421c36712257, type: 3}
       propertyPath: m_AnchorMax.y
