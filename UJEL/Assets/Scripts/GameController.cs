@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ using UnityEngine.Video;
 
 public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene}
 
-public enum MenuState { Main, Pokemon, Bag}
+public enum MenuState { Main, Pokemon, Bag, PartyOption}
 
 public class GameController : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class GameController : MonoBehaviour
     [SerializeField] Canvas UICanvas;
     int selectedMenuItem = 0;
     int currentPartyMember;
+    private string pressed;
 
     private void Awake()
     {
@@ -245,8 +247,13 @@ public class GameController : MonoBehaviour
 
             if (controls.Main.Interact.WasPerformedThisFrame())
             {
-                // Switch around pokemon and stuff
-                Debug.Log("you haven't done this yet...");
+                // Show the context menu
+                SwitchPokemon();
+                /*
+                var slotPos = settingsPartyScreen.GetSlotPosition(currentPartyMember);
+                settingsPartyScreen.contextMenu.Show(slotPos, OnPartyOptionSelected);
+                menuState = MenuState.PartyOption;
+                */
             }
             if (controls.Main.Run.WasPerformedThisFrame())
             {
@@ -255,6 +262,28 @@ public class GameController : MonoBehaviour
                 menu.SetActive(true);
                 UpdateItemSelection();
             }
+        }
+        
+        if (menuState == MenuState.PartyOption)
+        {
+            if (controls.Main.Interact.WasPerformedThisFrame())
+            {
+                pressed = "z";
+            }
+            if (controls.Main.Run.WasPerformedThisFrame())
+            {
+                pressed = "x";
+            }
+            else if (controls.Main.Down.WasPerformedThisFrame())
+            {
+                pressed = "down";
+            }
+            else if (controls.Main.Up.WasPerformedThisFrame())
+            {
+                pressed = "up";
+            }
+
+            settingsPartyScreen.contextMenu.HandleUpdate(pressed);
         }
 
         // Bag Update
@@ -273,6 +302,60 @@ public class GameController : MonoBehaviour
                 menu.SetActive(true);
                 UpdateItemSelection();
             }
+        }
+    }
+
+    void OnPartyOptionSelected(int selectedIndex)
+    {
+        settingsPartyScreen.contextMenu.Hide();
+
+        switch (selectedIndex)
+        {
+            case 0: // Move
+                //isSwitchingPokemon = true;
+                //pokemonToSwitch = currentPartyMember;
+                break;
+
+            case 1: // Give Item
+                Debug.Log("TODO: Give item UI");
+                break;
+
+            case 2: // Cancel
+                break;
+        }
+
+        menuState = MenuState.Pokemon;
+    }
+
+    private int switchSourceIndex = -1; // -1 means no source selected
+    private void SwitchPokemon()
+    {
+        if (switchSourceIndex == -1)
+        {
+            // First selection
+            switchSourceIndex = currentPartyMember;
+            Debug.Log($"Selected {playerParty.Pokemons[switchSourceIndex].Base.Name} for switching.");
+        }
+        else if (switchSourceIndex == currentPartyMember)
+        {
+            // Cancel if the same is selected again
+            Debug.Log("Cancelled switch.");
+            switchSourceIndex = -1;
+        }
+        else
+        {
+            // Perform switch
+            var temp = playerParty.Pokemons[switchSourceIndex];
+            playerParty.Pokemons[switchSourceIndex] = playerParty.Pokemons[currentPartyMember];
+            playerParty.Pokemons[currentPartyMember] = temp;
+
+            Debug.Log($"Switched {playerParty.Pokemons[currentPartyMember].Base.Name} with {playerParty.Pokemons[switchSourceIndex].Base.Name}");
+
+            // Refresh UI
+            settingsPartyScreen.SetPartyData(playerParty.Pokemons);
+            settingsPartyScreen.UpdateMemberSelection(currentPartyMember);
+
+            switchSourceIndex = -1;
         }
     }
 

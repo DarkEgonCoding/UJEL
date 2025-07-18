@@ -7,22 +7,34 @@ public class PartyScreen : MonoBehaviour
 {
     PartyMemberUI[] memberSlots;
     List<Pokemon> pokemons;
+    [SerializeField] public PartyContextMenu contextMenu;
 
-   public void Init(){
-        if(memberSlots == null){
+   public void Init()
+    {
+        if (memberSlots == null)
+        {
             memberSlots = GetComponentsInChildren<PartyMemberUI>();
         }
     }
+    
+    public Vector3 GetSlotPosition(int index)
+    {
+        return memberSlots[index].transform.position;
+    }
 
-    public void SetPartyData(List<Pokemon> pokemons){
+    public void SetPartyData(List<Pokemon> pokemons)
+    {
         this.pokemons = pokemons;
 
-        for (int i = 0; i < memberSlots.Length; i++){
-            if (i < pokemons.Count){
+        for (int i = 0; i < memberSlots.Length; i++)
+        {
+            if (i < pokemons.Count)
+            {
                 memberSlots[i].SetData(pokemons[i]);
                 memberSlots[i].gameObject.SetActive(true);
             }
-            else{
+            else
+            {
                 memberSlots[i].gameObject.SetActive(false);
             }
         }
