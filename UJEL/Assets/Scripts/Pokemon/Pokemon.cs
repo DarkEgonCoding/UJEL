@@ -33,18 +33,24 @@ public class Pokemon
     public List<Move> Moves {get; set;}
     public int Exp { get; set; }
 
-    public void Init(){
+    public event System.Action OnHPChanged;
+
+    public void Init()
+    {
         HP = MaxHp;
 
         Exp = Base.GetExpForLevel(Level);
 
         // Generate Moves
         Moves = new List<Move>();
-        foreach (var move in Base.LearnableMoves){
-            if (move.Level <= Level){
+        foreach (var move in Base.LearnableMoves)
+        {
+            if (move.Level <= Level)
+            {
                 Moves.Add(new Move(move.Base));
             }
-            if (Moves.Count >= PokemonBase.MaxNumOfMoves){
+            if (Moves.Count >= PokemonBase.MaxNumOfMoves)
+            {
                 break;
             }
         }

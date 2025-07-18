@@ -289,20 +289,17 @@ public class GameController : MonoBehaviour
         // Bag Update
         if (menuState == MenuState.Bag)
         {
-            inventoryUI.HandleBagUpdate();
-            if (controls.Main.Interact.WasPerformedThisFrame())
-            {
-                Debug.Log("you haven't done this yet...");
-            }
-            if (controls.Main.Run.WasPerformedThisFrame())
-            {
-                UICanvas.gameObject.SetActive(true);
-                inventoryUI.gameObject.SetActive(false);
-                menuState = MenuState.Main;
-                menu.SetActive(true);
-                UpdateItemSelection();
-            }
+            inventoryUI.HandleBagUpdate(BagReturn);
         }
+    }
+
+    void BagReturn()
+    {
+        UICanvas.gameObject.SetActive(true);
+            inventoryUI.gameObject.SetActive(false);
+            menuState = MenuState.Main;
+            menu.SetActive(true);
+            UpdateItemSelection();
     }
 
     void OnPartyOptionSelected(int selectedIndex)
@@ -352,7 +349,7 @@ public class GameController : MonoBehaviour
             Debug.Log($"Switched {playerParty.Pokemons[currentPartyMember].Base.Name} with {playerParty.Pokemons[switchSourceIndex].Base.Name}");
 
             // Refresh UI
-            settingsPartyScreen.SetPartyData(playerParty.Pokemons);
+            settingsPartyScreen.SetPartyData();
             settingsPartyScreen.UpdateMemberSelection(currentPartyMember);
 
             switchSourceIndex = -1;
@@ -366,7 +363,7 @@ public class GameController : MonoBehaviour
             // Party
             playerParty = playerController.GetComponent<PokemonParty>();
             settingsPartyScreen.Init();
-            settingsPartyScreen.SetPartyData(playerParty.Pokemons);
+            settingsPartyScreen.SetPartyData();
             settingsPartyScreen.gameObject.SetActive(true);
             yield return new WaitForEndOfFrame();
             menuState = MenuState.Pokemon;
@@ -376,6 +373,7 @@ public class GameController : MonoBehaviour
             // Bag
             UICanvas.gameObject.SetActive(true);
             inventoryUI.gameObject.SetActive(true);
+            inventoryUI.justOpenedBag = true;
             menuState = MenuState.Bag;
         }
         else if (selectedItem == 2)

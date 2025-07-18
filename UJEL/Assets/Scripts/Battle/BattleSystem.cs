@@ -157,7 +157,7 @@ public class BattleSystem : MonoBehaviour
     private void OpenPartyScreen(){
         dialogBox.EnableActionSelector(false);
         state = BattleState.PartyScreen;
-        partyScreen.SetPartyData(playerParty.Pokemons);
+        partyScreen.SetPartyData();
         partyScreen.gameObject.SetActive(true);
     }
 
