@@ -332,6 +332,11 @@ public class PlayerController : MonoBehaviour, ISavable
         }
     }
 
+    public Vector2 GetFacingDirection()
+    {
+        return new Vector2(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
+    }
+
 // LEDGE JUMP Mechanics
     Ledge CheckForLedge(Vector3 targetPos){
         var collider = Physics2D.OverlapCircle(targetPos, 0.3f, GameLayers.i.ledgeLayer);
