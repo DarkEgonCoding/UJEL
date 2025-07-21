@@ -169,13 +169,14 @@ public class GameController : MonoBehaviour
 
     public void PauseGame(bool pause, GameState? resumeState = null)
     {
-        if (pause)
+        if (pause) // If pausing the game, set to pause
         {
             stateBeforePause = state;
             state = GameState.Pause;
         }
         else
         {
+            // If there is a resume state, do it. Else, go to the state before pausing.
             state = resumeState ?? stateBeforePause;
         }
     }

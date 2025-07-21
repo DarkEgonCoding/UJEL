@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/BeginningScenes/Home.unity
     guid: 35fbc41fa473a9b4e91bf94f3f19308d
   - enabled: 1
+    path: Assets/Scenes/Towns/Starting_town.unity
+    guid: 1fe93427c76b75c46948ed017a6b352d
+  - enabled: 1
     path: Assets/Scenes/TemplateScene.unity
     guid: af7cb8a0a73bbcd428717dd7a7f48270
   - enabled: 1

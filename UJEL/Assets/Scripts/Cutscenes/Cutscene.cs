@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -38,10 +40,17 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable, ISavable
     private void OnValidate()
     {
     #if UNITY_EDITOR
-        if (string.IsNullOrWhiteSpace(cutsceneId))
+        if (PrefabUtility.IsPartOfPrefabAsset(this))
+            return;
+
+        // Only auto-generate if it's still the default prefab value
+        if (cutsceneId == "_CutscenePrefab" || string.IsNullOrWhiteSpace(cutsceneId))
         {
-            cutsceneId = gameObject.scene.name + "_" + gameObject.name;
-            EditorUtility.SetDirty(this); // Mark scene dirty so Unity knows it changed
+            string newId = gameObject.scene.name + "_" + gameObject.name;
+            cutsceneId = newId;
+
+            // Mark it dirty so Unity saves the change
+            EditorUtility.SetDirty(this);
         }
     #endif
     }
@@ -74,6 +83,12 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable, ISavable
             DisableTrigger();
             return;
         }
+    }
+
+    public static Cutscene FindById(string id)
+    {
+        var allCutscenes = FindObjectsOfType<Cutscene>();
+        return allCutscenes.FirstOrDefault(c => c.Id == id);
     }
 
     public IEnumerator Play()
