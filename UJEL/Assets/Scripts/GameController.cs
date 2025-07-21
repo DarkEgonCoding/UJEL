@@ -11,7 +11,7 @@ using UnityEngine.Video;
 
 public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene}
 
-public enum MenuState { Main, Pokemon, Bag, PartyOption}
+public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex }
 
 public class GameController : MonoBehaviour
 {
@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
     [SerializeField] PartyScreen settingsPartyScreen;
     PokemonParty playerParty;
     [SerializeField] InventoryUI inventoryUI;
+    [SerializeField] PokedexUIManager pokedexUIManager;
     [SerializeField] Canvas UICanvas;
     int selectedMenuItem = 0;
     int currentPartyMember;
@@ -264,7 +265,7 @@ public class GameController : MonoBehaviour
                 UpdateItemSelection();
             }
         }
-        
+
         if (menuState == MenuState.PartyOption)
         {
             if (controls.Main.Interact.WasPerformedThisFrame())
@@ -292,15 +293,29 @@ public class GameController : MonoBehaviour
         {
             inventoryUI.HandleBagUpdate(BagReturn);
         }
+
+        if (menuState == MenuState.Pokedex)
+        {
+            pokedexUIManager.HandleUpdate(PokedexReturn);
+        }
+    }
+
+    void PokedexReturn()
+    {
+        UICanvas.gameObject.SetActive(false);
+        pokedexUIManager.gameObject.SetActive(false);
+        menuState = MenuState.Main;
+        menu.SetActive(true);
+        UpdateItemSelection();   
     }
 
     void BagReturn()
     {
-        UICanvas.gameObject.SetActive(true);
-            inventoryUI.gameObject.SetActive(false);
-            menuState = MenuState.Main;
-            menu.SetActive(true);
-            UpdateItemSelection();
+        UICanvas.gameObject.SetActive(false);
+        inventoryUI.gameObject.SetActive(false);
+        menuState = MenuState.Main;
+        menu.SetActive(true);
+        UpdateItemSelection();
     }
 
     void OnPartyOptionSelected(int selectedIndex)
@@ -369,7 +384,14 @@ public class GameController : MonoBehaviour
             yield return new WaitForEndOfFrame();
             menuState = MenuState.Pokemon;
         }
-        else if (selectedItem == 1)
+        else if (selectedItem == 1) // Pokedex
+        {
+            UICanvas.gameObject.SetActive(true);
+            pokedexUIManager.gameObject.SetActive(true);
+            pokedexUIManager.justOpenedPokedex = true;
+            menuState = MenuState.Pokedex;
+        }
+        else if (selectedItem == 2)
         {
             // Bag
             UICanvas.gameObject.SetActive(true);
@@ -377,13 +399,13 @@ public class GameController : MonoBehaviour
             inventoryUI.justOpenedBag = true;
             menuState = MenuState.Bag;
         }
-        else if (selectedItem == 2)
+        else if (selectedItem == 3)
         {
             // Save
             Save();
             state = GameState.FreeRoam;
         }
-        else if (selectedItem == 3)
+        else if (selectedItem == 4)
         {
             // Load
             Load();

@@ -11,6 +11,8 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int pokedexNumber;
     [TextArea]
     [SerializeField] string description;
+    [Tooltip("The locations where you can find this pokemon. Ex) Route 1, 4...")]
+    [SerializeField] string foundLocations;
     [SerializeField] Sprite frontSprite;
     [SerializeField] Sprite backSprite;
     [SerializeField] public PokemonType type1;
@@ -104,6 +106,7 @@ public class PokemonBase : ScriptableObject
     }
     public int CatchRate => catchRate;
     public int PokedexNumber => pokedexNumber;
+    public string FoundLocations => foundLocations;
 
     public int ExpYield => expYield;
     public GrowthRate GrowthRate => growthRate;
