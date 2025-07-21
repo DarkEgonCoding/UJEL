@@ -8,6 +8,7 @@ using UnityEngine;
 public class PokemonBase : ScriptableObject
 {
     [SerializeField] string name;
+    [SerializeField] int pokedexNumber;
     [TextArea]
     [SerializeField] string description;
     [SerializeField] Sprite frontSprite;
@@ -102,6 +103,7 @@ public class PokemonBase : ScriptableObject
         get { return learnableMoves;}
     }
     public int CatchRate => catchRate;
+    public int PokedexNumber => pokedexNumber;
 
     public int ExpYield => expYield;
     public GrowthRate GrowthRate => growthRate;

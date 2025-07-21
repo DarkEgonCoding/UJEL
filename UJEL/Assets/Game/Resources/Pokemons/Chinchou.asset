@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Chinchou
   m_EditorClassIdentifier: 
   name: Chinchou
+  pokedexNumber: 2
   description: 
   frontSprite: {fileID: 21300000, guid: 3f49fa1d77e3eb645a0b7783d916c8bd, type: 3}
   backSprite: {fileID: 21300000, guid: adf466980eb338541bc4c5e68a1f3e92, type: 3}
