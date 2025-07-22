@@ -475,7 +475,7 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(0.75f);
 
             // Set caught to true in the pokedex
-            PokedexUIManager.instance.SetCaughtStatus(enemyUnit.Pokemon.Base, true);
+            PokedexManager.instance.SetCaughtStatus(enemyUnit.Pokemon.Base, true);
 
             yield return GainExperience();
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();

@@ -12,6 +12,25 @@ public class SavableEntity : MonoBehaviour
 
     public string UniqueId => uniqueId;
 
+    private void Awake()
+    {
+        if (string.IsNullOrEmpty(uniqueId))
+        {
+            // Check PlayerPrefs for previously assigned ID
+            string key = gameObject.name + "_uniqueId";
+            if (PlayerPrefs.HasKey(key))
+            {
+                uniqueId = PlayerPrefs.GetString(key);
+            }
+            else
+            {
+                uniqueId = Guid.NewGuid().ToString();
+                PlayerPrefs.SetString(key, uniqueId);
+                PlayerPrefs.Save();
+            }
+        }
+    }
+
     // Used to capture state of the gameobject on which the savableEntity is attached
     public object CaptureState()
     {

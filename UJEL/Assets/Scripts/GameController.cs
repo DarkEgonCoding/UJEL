@@ -389,6 +389,7 @@ public class GameController : MonoBehaviour
             UICanvas.gameObject.SetActive(true);
             pokedexUIManager.gameObject.SetActive(true);
             pokedexUIManager.justOpenedPokedex = true;
+            pokedexUIManager.RefreshPokedex();
             menuState = MenuState.Pokedex;
         }
         else if (selectedItem == 2)

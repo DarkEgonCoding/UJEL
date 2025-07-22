@@ -27,6 +27,8 @@ public class PokedexUIManager : MonoBehaviour
     private List<PokedexEntry> pokedex; // Pokedex directly from PokedexManager.
     private List<PokedexElementUI> pokedexUIList; // Links a pokedexEntry to its UI.
 
+    public List<PokedexElementUI> PokedexUIList => pokedexUIList;
+
     private PokedexUIState state; // Stores the state of the menu.
     private int selectedItem;
 
@@ -51,13 +53,13 @@ public class PokedexUIManager : MonoBehaviour
 
     public void Start()
     {
-        pokedex = PokedexManager.instance.Pokedex;
-
         RefreshPokedex();
     }
 
     public void RefreshPokedex()
     {
+        pokedex = PokedexManager.instance.Pokedex;
+
         // Clear anything previously in the UI
         foreach (Transform child in contentParent)
             Destroy(child.gameObject);
@@ -76,20 +78,6 @@ public class PokedexUIManager : MonoBehaviour
         }
 
         UpdateItemSelection();
-    }
-
-    public void SetCaughtStatus(PokemonBase pokemon, bool caught)
-    {
-        int index = pokedex.FindIndex(e => e.pokemon == pokemon);
-        if (index != -1)
-        {
-            pokedex[index].SetCaught(caught);
-
-            if (index < pokedexUIList.Count)
-            {
-                pokedexUIList[index].SetData(pokedex[index]);
-            }
-        }
     }
 
     public void HandleUpdate(Action onBack)

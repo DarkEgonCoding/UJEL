@@ -1014,7 +1014,6 @@ GameObject:
   - component: {fileID: 4377522391057492967}
   - component: {fileID: 7420104292007659138}
   - component: {fileID: 8476031279660218122}
-  - component: {fileID: 179044647496637188}
   - component: {fileID: 8763170581844072469}
   m_Layer: 0
   m_Name: Pokedex
@@ -1081,18 +1080,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &179044647496637188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126287587909829181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ac59b9717464a04bbf6541c949c8691, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8763170581844072469
 MonoBehaviour:
   m_ObjectHideFlags: 0

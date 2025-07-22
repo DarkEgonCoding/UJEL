@@ -21,3 +21,10 @@ public class PokedexEntry
         haveCaught = caught;
     }
 }
+
+[System.Serializable]
+public class PokedexEntrySaveData
+{
+    public string pokemonName;
+    public bool haveCaught;
+}
