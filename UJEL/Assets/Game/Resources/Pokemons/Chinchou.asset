@@ -16,7 +16,7 @@ MonoBehaviour:
   pokedexNumber: 2
   description: On the dark ocean floor, its only means of communication is its constantly
     flashing lights.
-  foundLocations: 
+  foundLocations: Route 7
   frontSprite: {fileID: 21300000, guid: 3f49fa1d77e3eb645a0b7783d916c8bd, type: 3}
   backSprite: {fileID: 21300000, guid: adf466980eb338541bc4c5e68a1f3e92, type: 3}
   type1: 3

@@ -10,6 +10,7 @@ public class PokedexElementUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI numberText;
     [SerializeField] private string descriptionText;
+    [SerializeField] private string locationText;
 
     RectTransform rectTransform;
 
@@ -23,11 +24,13 @@ public class PokedexElementUI : MonoBehaviour
     public TextMeshProUGUI NameText => nameText;
     public TextMeshProUGUI NumberText => numberText;
     public string DescriptionText => descriptionText;
+    public string LocationText => locationText;
 
     public void SetData(PokedexEntry entry)
     {
         numberText.text = $"#{entry.entryNumber:D3}";
         pokemonImage.sprite = entry.pokemon.FrontSprite;
+        locationText = entry.pokemon.FoundLocations;
 
         if (entry.haveCaught)
         {

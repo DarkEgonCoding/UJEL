@@ -15,7 +15,7 @@ MonoBehaviour:
   name: DG Blaziken
   pokedexNumber: 3
   description: A Pokemon that seems to be infuzed with impossible dual-types.
-  foundLocations: 
+  foundLocations: ???
   frontSprite: {fileID: 21300000, guid: 2c5e3cf79193d084a80af02f78cbf764, type: 3}
   backSprite: {fileID: 0}
   type1: 16

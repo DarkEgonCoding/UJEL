@@ -15,6 +15,7 @@ public class PokedexUIManager : MonoBehaviour
     [SerializeField] private Image largePokemonImage;
     [SerializeField] private TextMeshProUGUI largePokemonNameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI locationText;
     [SerializeField] private GameObject upArrow;
     [SerializeField] private GameObject downArrow;
     [SerializeField] private RectTransform itemListRect;
@@ -28,7 +29,17 @@ public class PokedexUIManager : MonoBehaviour
 
     private PokedexUIState state; // Stores the state of the menu.
     private int selectedItem;
-    const int itemsInViewport = 8;
+
+    // Holding keys
+    float inputRepeatDelay = 0.1f; // 10 times per second
+    private float initialDelay = 0.7f;
+    private bool isHoldingKey = false;
+    private float keyHoldTimer = 0f;
+    private int holdDirection = 0; // -1 for up, 1 for down
+
+
+    // Items for setting the scroll
+    const int itemsInViewport = 6;
 
     private void Awake()
     {
@@ -83,6 +94,7 @@ public class PokedexUIManager : MonoBehaviour
 
     public void HandleUpdate(Action onBack)
     {
+        // Fix input bugs
         if (justOpenedPokedex)
         {
             justOpenedPokedex = false;
@@ -94,20 +106,87 @@ public class PokedexUIManager : MonoBehaviour
         {
             int prevSelection = selectedItem;
 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+        // Read directional key states
+        bool keyDown = Input.GetKey(KeyCode.DownArrow);
+        bool keyUp = Input.GetKey(KeyCode.UpArrow);
+        bool keyLeft = Input.GetKey(KeyCode.LeftArrow);
+        bool keyRight = Input.GetKey(KeyCode.RightArrow);
+
+        int direction = 0;
+        int skipAmount = 1; // The number of inputs to jump
+
+            // --- Up/Down Input (Priority) ---
+            if (Input.GetKeyDown(KeyCode.DownArrow)) // Pressing down
             {
-                ++selectedItem;
+                direction = 1;
+                skipAmount = 1;
+                isHoldingKey = true;
+                keyHoldTimer = Time.time + initialDelay;
+                holdDirection = direction;
             }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            else if (Input.GetKeyDown(KeyCode.UpArrow)) // Pressing up
             {
-                --selectedItem;
+                direction = -1;
+                skipAmount = 1;
+                isHoldingKey = true;
+                keyHoldTimer = Time.time + initialDelay;
+                holdDirection = direction;
+            }
+            else if (isHoldingKey && (keyDown || keyUp)) // Holding down or up
+            {
+                if (Time.time >= keyHoldTimer)
+                {
+                    direction = holdDirection;
+                    skipAmount = 1;
+                    keyHoldTimer = Time.time + inputRepeatDelay;
+                }
+            }
+            else if (!keyDown && !keyUp) // Not pressing up or down
+            {
+                isHoldingKey = false;
+
+                // --- Left/Right Input (only if Up/Down not held) ---
+                if (Input.GetKeyDown(KeyCode.RightArrow)) // Press right
+                {
+                    direction = 1;
+                    skipAmount = 10;
+                    isHoldingKey = true;
+                    keyHoldTimer = Time.time + initialDelay;
+                    holdDirection = direction;
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftArrow)) // Press left
+                {
+                    direction = -1;
+                    skipAmount = 10;
+                    isHoldingKey = true;
+                    keyHoldTimer = Time.time + initialDelay;
+                    holdDirection = direction;
+                }
+                else if ((keyLeft || keyRight) && isHoldingKey) // Hold left or right
+                {
+                    if (Time.time >= keyHoldTimer)
+                    {
+                        direction = holdDirection;
+                        skipAmount = 10;
+                        keyHoldTimer = Time.time + inputRepeatDelay;
+                    }
+                }
+                else if (!keyLeft && !keyRight) // Not pressing any keys
+                {
+                    isHoldingKey = false;
+                }
             }
 
-            selectedItem = Mathf.Clamp(selectedItem, 0, pokedex.Count - 1);
-
-            if (prevSelection != selectedItem)
+            // Apply direction change
+            if (direction != 0)
             {
-                UpdateItemSelection();
+                selectedItem += direction * skipAmount;
+                selectedItem = Mathf.Clamp(selectedItem, 0, pokedex.Count - 1);
+
+                if (selectedItem != prevSelection)
+                {
+                    UpdateItemSelection();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.X))
@@ -135,6 +214,7 @@ public class PokedexUIManager : MonoBehaviour
 
         largePokemonNameText.text = $"{pokedexUIList[selectedItem].NameText.text}";
         descriptionText.text = $"{pokedexUIList[selectedItem].DescriptionText}";
+        locationText.text = $"Locations: {pokedexUIList[selectedItem].LocationText}";
 
         HandleScrolling();
     }
