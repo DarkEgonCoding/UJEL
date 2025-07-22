@@ -19,6 +19,8 @@ public class PokedexUIManager : MonoBehaviour
     [SerializeField] private GameObject downArrow;
     [SerializeField] private RectTransform itemListRect;
 
+    public static PokedexUIManager instance;
+
     public bool justOpenedPokedex = false;
 
     private List<PokedexEntry> pokedex; // Pokedex directly from PokedexManager.
@@ -27,6 +29,14 @@ public class PokedexUIManager : MonoBehaviour
     private PokedexUIState state; // Stores the state of the menu.
     private int selectedItem;
     const int itemsInViewport = 8;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }   
+    }
 
     public void Start()
     {
@@ -55,6 +65,20 @@ public class PokedexUIManager : MonoBehaviour
         }
 
         UpdateItemSelection();
+    }
+
+    public void SetCaughtStatus(PokemonBase pokemon, bool caught)
+    {
+        int index = pokedex.FindIndex(e => e.pokemon == pokemon);
+        if (index != -1)
+        {
+            pokedex[index].SetCaught(caught);
+
+            if (index < pokedexUIList.Count)
+            {
+                pokedexUIList[index].SetData(pokedex[index]);
+            }
+        }
     }
 
     public void HandleUpdate(Action onBack)

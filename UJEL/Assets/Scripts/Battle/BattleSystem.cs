@@ -473,6 +473,10 @@ public class BattleSystem : MonoBehaviour
             // Pokemon is Caught
             yield return dialogBox.StartDialog($"You caught a {enemyUnit.Pokemon.Base.Name}!");
             yield return new WaitForSeconds(0.75f);
+
+            // Set caught to true in the pokedex
+            PokedexUIManager.instance.SetCaughtStatus(enemyUnit.Pokemon.Base, true);
+
             yield return GainExperience();
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
             Destroy(pokeball);

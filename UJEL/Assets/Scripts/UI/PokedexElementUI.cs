@@ -42,7 +42,7 @@ public class PokedexElementUI : MonoBehaviour
             descriptionText = "Unknown Pokemon.";
         }
     }
-    
+
     public void SetHighlighted(bool highlighted)
     {
         nameText.color = highlighted ? Color.blue : Color.black;

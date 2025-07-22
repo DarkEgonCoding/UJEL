@@ -15,4 +15,9 @@ public class PokedexEntry
     public bool haveCaught;
     public string description;
     public int entryNumber;
+
+    public void SetCaught(bool caught)
+    {
+        haveCaught = caught;
+    }
 }
