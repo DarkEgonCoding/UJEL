@@ -15,6 +15,8 @@ public class PartyScreen : MonoBehaviour
 
     int selection = 0;
 
+    public Pokemon SelectedMember => pokemons[selection];
+
     public void Init()
     {
         if (memberSlots == null)
@@ -41,7 +43,7 @@ public class PartyScreen : MonoBehaviour
         {
             if (i < pokemons.Count)
             {
-                memberSlots[i].SetData(pokemons[i]);
+                memberSlots[i].Init(pokemons[i]);
                 memberSlots[i].gameObject.SetActive(true);
             }
             else

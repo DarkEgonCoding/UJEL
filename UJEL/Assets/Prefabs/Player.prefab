@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 
+  uniqueId: 71fd2ef4-9607-477e-90a7-54c1b2fee8e7
 --- !u!114 &6460027224889694956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +387,14 @@ MonoBehaviour:
     count: 4
   - item: {fileID: 11400000, guid: 60caaf4f1cc6cad4bb0cd6ab49571f6c, type: 2}
     count: 4
+  pokeballSlots:
+  - item: {fileID: 11400000, guid: 8d1725051d4870347bcd43e95ac7ca82, type: 2}
+    count: 5
+  - item: {fileID: 11400000, guid: 88db15ac09fb21a48bc8eaa22c5c57cc, type: 2}
+    count: 7
+  - item: {fileID: 11400000, guid: 349d88981b00a3842ab47fff1f452aaa, type: 2}
+    count: 3
+  tmSlots: []
 --- !u!1001 &4487099918915280518
 PrefabInstance:
   m_ObjectHideFlags: 0

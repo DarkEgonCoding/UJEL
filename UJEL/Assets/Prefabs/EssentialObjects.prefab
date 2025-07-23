@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 
+  uniqueId: 82ad666f-cd75-4ac3-b243-9f7723c7f69a
 --- !u!1 &128604126034048875
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 
+  uniqueId: 7835b8a9-c721-4a0b-b70c-f55fd3999d23
 --- !u!1 &171505187901958913
 GameObject:
   m_ObjectHideFlags: 0
@@ -3506,7 +3506,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4124019896976480109}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3516,7 +3516,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 17.317, y: 202}
+  m_AnchoredPosition: {x: 17.316956, y: 202}
   m_SizeDelta: {x: 1772.343, y: 224.458}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1450242275426918460
@@ -4051,6 +4051,8 @@ MonoBehaviour:
   dialogBox: {fileID: 4124019896976480109}
   dialogText: {fileID: 3124164799532795141}
   lettersPerSecond: 45
+  dialogBoxUI: {fileID: 8726483038090829897}
+  dialogTextUI: {fileID: 7587780500234695366}
   isTyping: 0
   skippingDialog: 0
   fromCutscene: 0
@@ -7594,6 +7596,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea84695b3ce97144a8e5bc5fe01dbde2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7587780500234695366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8623964585907360228, guid: 798db11df46664d4da06421c36712257, type: 3}
+  m_PrefabInstance: {fileID: 2225706412654289698}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7878530263979720215 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8337682129521319221, guid: 798db11df46664d4da06421c36712257, type: 3}
@@ -7605,6 +7618,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65f2e989382ddb4b9736d096ec95069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8726483038090829897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7492298895132803947, guid: 798db11df46664d4da06421c36712257, type: 3}
+  m_PrefabInstance: {fileID: 2225706412654289698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3556294997523374007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7652,6 +7670,10 @@ PrefabInstance:
     - target: {fileID: 2565333728093669931, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3521094896781968196, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: uniqueId
+      value: 71fd2ef4-9607-477e-90a7-54c1b2fee8e7
       objectReference: {fileID: 0}
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: pokemons.Array.size

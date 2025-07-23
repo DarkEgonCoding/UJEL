@@ -47,6 +47,8 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         UpdateItemList();
+
+        inventory.OnUpdated += UpdateItemList;
     }
 
     void UpdateItemList()
@@ -119,7 +121,7 @@ public class InventoryUI : MonoBehaviour
             // Handle Party Selection
             Action onSelected = () =>
             {
-                // Use item on selected Pokemon
+                StartCoroutine(UseItem());
             };
 
             Action onBackPartyScreen = () =>
@@ -129,6 +131,20 @@ public class InventoryUI : MonoBehaviour
 
             partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
         }
+    }
+
+    IEnumerator UseItem()
+    {
+        state = InventoryUIState.Busy;
+
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember);
+        if (usedItem != null)
+        {
+            yield return DialogManager.Instance.ShowDialogText($"The player used {usedItem.Name}.");
+        }
+        else yield return DialogManager.Instance.ShowDialogText($"You can't use that item here.");
+
+        ClosePartyScreen();
     }
 
     void ClosePartyScreen()
@@ -159,6 +175,8 @@ public class InventoryUI : MonoBehaviour
             }
             else slotUIList[i].NameText.color = Color.black;
         }
+
+        selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
 
         var slot = inventory.Slots[selectedItem].Item;
         itemIcon.sprite = slot.Icon;

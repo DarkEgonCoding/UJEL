@@ -143,9 +143,8 @@ public class Pokemon
         float d = (a * move.Base.Power * (float)attack / defense / 50) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
 
-        HP -= damage;
-        if (HP <= 0){
-            HP = 0;
+        if (ReduceHP(damage))
+        {
             damageDetails.Fainted = true;
             return damageDetails;
         }
@@ -154,7 +153,27 @@ public class Pokemon
         return damageDetails;
     }
 
-    public Move GetRandomMove(){
+    public bool ReduceHP(int damage)
+    {
+        HP -= damage;
+        OnHPChanged?.Invoke();
+
+        if (HP <= 0)
+        {
+            HP = 0;
+            return true; // The pokemon fainted
+        }
+        else return false; // The pokemon did not faint
+    }
+
+    public void IncreaseHP(int heal)
+    {
+        HP = Mathf.Clamp(HP + heal, 0, MaxHp);
+        OnHPChanged?.Invoke();
+    }
+
+    public Move GetRandomMove()
+    {
         int r = UnityEngine.Random.Range(0, Moves.Count);
         return Moves[r];
     }
