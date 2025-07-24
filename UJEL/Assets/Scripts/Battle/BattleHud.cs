@@ -7,23 +7,75 @@ using DG.Tweening;
 
 public class BattleHud : MonoBehaviour
 {
+    [Header("Game Objects")]
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI levelText;
+    [SerializeField] TextMeshProUGUI statusText;
+    [SerializeField] TextMeshProUGUI HPText;
+
+    [SerializeField] Image statusBKG;
     [SerializeField] HPBar hpBar;
     [SerializeField] GameObject expBar;
-    Pokemon _pokemon;
 
-    public void SetData(Pokemon pokemon){
+    [Header("Status Colors")]
+    [SerializeField] Color noStatusClr;
+    [SerializeField] Color psnColor;
+    [SerializeField] Color brnColor;
+    [SerializeField] Color slpColor;
+    [SerializeField] Color parColor;
+    [SerializeField] Color frzColor;
+
+    Pokemon _pokemon;
+    Dictionary<ConditionID, Color> statusColors;
+
+    public void SetData(Pokemon pokemon)
+    {
         _pokemon = pokemon;
 
         nameText.text = pokemon.Base.Name;
         SetLevel();
-        hpBar.SetHP((float) pokemon.HP / pokemon.MaxHp);
+        hpBar.SetHP((float)pokemon.HP / pokemon.MaxHp);
+        SetHPText();
         SetExp();
+
+        statusColors = new Dictionary<ConditionID, Color>()
+        {
+            {ConditionID.psn, psnColor },
+            {ConditionID.brn, brnColor },
+            {ConditionID.slp, slpColor },
+            {ConditionID.par, parColor },
+            {ConditionID.frz, frzColor },
+        };
+
+        SetStatusText();
+        _pokemon.OnStatusChanged += SetStatusText;
     }
 
-    public IEnumerator UpdateHP(){
-        yield return hpBar.SetHPSmooth((float) _pokemon.HP / _pokemon.MaxHp);
+    void SetHPText()
+    {
+        HPText.text = $"{_pokemon.HP} / {_pokemon.MaxHp}";
+    }
+
+    void SetStatusText()
+    {
+        if (_pokemon.Status == null)
+        {
+            statusText.text = "";
+            //statusText.color = Color.black;
+            statusBKG.color = noStatusClr;
+        }
+        else
+        {
+            statusText.text = _pokemon.Status.Id.ToString().ToUpper();
+            //statusText.color = statusColors[_pokemon.Status.Id];
+            statusBKG.color = statusColors[_pokemon.Status.Id];
+        }
+    }
+
+    public IEnumerator UpdateHP()
+    {
+        yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHp);
+        SetHPText();
     }
 
     public void SetExp(){

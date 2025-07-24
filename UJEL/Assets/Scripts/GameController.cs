@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour
         menuItems = menu.GetComponentsInChildren<TextMeshProUGUI>().ToList();
         PokemonDB.Init();
         MoveDB.Init();
+        ConditionsDB.Init();
     }
 
     private void OnEnable()
