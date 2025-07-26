@@ -15,7 +15,9 @@ public class RecoveryItem : ItemBase
     [SerializeField] bool restoreAllMoves;
     [SerializeField] bool restoreMaxPP;
 
-    // Status positions
+    [Header("Status")]
+    [SerializeField] ConditionID status;
+    [SerializeField] bool recoverAllStatus;
 
     [Header("Revive")]
     [SerializeField] bool revive;
@@ -62,7 +64,27 @@ public class RecoveryItem : ItemBase
             }
         }
 
-        // Recover Status ***FOR LATER***
+        // Recover Status
+        if (recoverAllStatus || status != ConditionID.none)
+        {
+            if (pokemon.Status == null)
+            {
+                return false;
+            }
+
+            if (recoverAllStatus)
+            {
+                pokemon.CureStatus();
+            }
+            else
+            {
+                if (pokemon.Status.Id == status)
+                {
+                    pokemon.CureStatus();
+                }
+                else return false;
+            }
+        }
 
         // Restore PP
         if (restoreMaxPP)

@@ -72,7 +72,7 @@ public class Pokemon
             hp = HP,
             level = Level,
             exp = Exp,
-            // Add Status?
+            statusId = Status?.Id,
             moves = Moves.Select(m => m.GetSaveData()).ToList()
         };
 
@@ -86,7 +86,12 @@ public class Pokemon
         level = saveData.level;
         Exp = saveData.exp;
 
-        // Status?
+        if (saveData.statusId != null)
+        {
+            Status = ConditionsDB.Conditions[saveData.statusId.Value];
+        }
+        else Status = null;
+
         // Calculate Stats?
 
         Moves = saveData.moves.Select(s => new Move(s)).ToList();
@@ -237,8 +242,6 @@ public class PokemonSaveData
     public int hp;
     public int level;
     public int exp;
-
-    // Status Effects?
-
+    public ConditionID? statusId;
     public List<MoveSaveData> moves;
 }
