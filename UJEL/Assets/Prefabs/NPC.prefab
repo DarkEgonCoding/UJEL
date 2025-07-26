@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6227132711258769528}
   - component: {fileID: 7964642097869334254}
   - component: {fileID: 1241480122690673999}
+  - component: {fileID: 2368575169110248111}
+  - component: {fileID: 4187634099955041844}
   m_Layer: 8
   m_Name: NPC
   m_TagString: Untagged
@@ -55,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 347479467
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 1148791261, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -173,11 +175,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
     lines:
-    - We're no strangers to love
-    - You know the rules and so do I
-    - A full commitment's what I'm thinking of
-    - You wouldn't get this from any other guy
-    - I just wanna tell you how I'm feeling, Gotta make you understand
-    - Never gonna give you up, Never gonna let you down
-    - Never gonna run around and desert you, Never gonna make you cry
-    - Never gonna say goodbye, Never gonna tell a lie and hurt you
+    - Don't forget to change this
+  movementPattern: []
+  timeBetweenPattern: 2
+--- !u!114 &2368575169110248111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345704622308824517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66406b7aac532e46a54b1d0334f580e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  moveSpeed: 5
+--- !u!114 &4187634099955041844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345704622308824517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fd11dacd073d64e912bd7c8de3eddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkDownSprites:
+  - {fileID: 1148791261, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: -877939042, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: 979921598, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: -27465258, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  walkUpSprites:
+  - {fileID: 1137115577, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: -430024190, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: -1118760313, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: -214806067, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  walkRightSprites:
+  - {fileID: 1596691331, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: -1129385937, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: -1061991310, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: 1874817513, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  walkLeftSprites:
+  - {fileID: 1047393128, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: 405516001, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: -952690985, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  - {fileID: 1863100752, guid: c79007d56d26c074392c39c52fbb98e4, type: 3}
+  defaultDirection: 1

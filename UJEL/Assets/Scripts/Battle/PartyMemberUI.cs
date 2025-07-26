@@ -14,21 +14,30 @@ public class PartyMemberUI : MonoBehaviour
 
     Pokemon _pokemon;
 
-    public void SetData(Pokemon pokemon){
+    public void Init(Pokemon pokemon){
         _pokemon = pokemon;
+        UpdateData();
 
-        image.sprite = pokemon.Base.FrontSprite;
-        nameText.text = pokemon.Base.Name;
-        levelText.text = "Lvl " + pokemon.Level;
-        hpBar.SetHP((float) pokemon.HP / pokemon.MaxHp);
+        _pokemon.OnHPChanged += UpdateData;
     }
 
-    public void SetSelected(bool selected){
-        if (selected){
-            nameText.color = highlightedColor;
+    void UpdateData()
+    {
+        image.sprite = _pokemon.Base.FrontSprite;
+        nameText.text = _pokemon.Base.Name;
+        levelText.text = "Lvl " + _pokemon.Level;
+        hpBar.SetHP((float) _pokemon.HP / _pokemon.MaxHp);
+    }
+
+    public void SetSelected(bool selected)
+    {
+        if (selected)
+        {
+            nameText.faceColor = highlightedColor;
         }
-        else{
-            nameText.color = Color.black;
+        else
+        {
+            nameText.faceColor = Color.black;
         }
     }
 }
