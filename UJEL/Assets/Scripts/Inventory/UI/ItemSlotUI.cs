@@ -23,7 +23,7 @@ public class ItemSlotUI : MonoBehaviour
 
     public void SetData(ItemSlot itemSlot)
     {
-        nameText.text = itemSlot.Item.name;
+        nameText.text = itemSlot.Item.Name;
         countText.text = $"X {itemSlot.Count}";
     }
 }

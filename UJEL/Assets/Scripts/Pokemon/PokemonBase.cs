@@ -30,6 +30,7 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int expYield;
     [SerializeField] GrowthRate growthRate;
     [SerializeField] List<LearnableMove> learnableMoves;
+    [SerializeField] List<MoveBase> learnableByItems;
     public static int MaxNumOfMoves { get; set; } = 4;
 
     public int GetExpForLevel(int level){
@@ -107,6 +108,7 @@ public class PokemonBase : ScriptableObject
     public int CatchRate => catchRate;
     public int PokedexNumber => pokedexNumber;
     public string FoundLocations => foundLocations;
+    public List<MoveBase> LearnableByItems => learnableByItems;
 
     public int ExpYield => expYield;
     public GrowthRate GrowthRate => growthRate;
