@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c574d278f44481e45a577d9a0cdad016, type: 3}
-  m_Name: Bulbasaur
+  m_Name: Ivysaur
   m_EditorClassIdentifier: 
-  name: Bulbasaur
-  pokedexNumber: 1
-  description: There is a plant seed on its back right from the day this Pokemon
-    is born. The seed slowly grows larger.
-  foundLocations: Route 2, Route 8
-  frontSprite: {fileID: 21300000, guid: cfda033db0bc6cf4da92ae044fc644b3, type: 3}
-  backSprite: {fileID: 21300000, guid: c4cdb6b2b5774f44a9ea4b1d27675137, type: 3}
+  name: Ivysaur
+  pokedexNumber: 4
+  description: Bigger bulb
+  foundLocations: None
+  frontSprite: {fileID: 21300000, guid: d2ebc5d5170163b4ea0d0069d9e8d218, type: 3}
+  backSprite: {fileID: 21300000, guid: 3c0a1fef80378744881547d7adbbe091, type: 3}
   type1: 5
   type2: 8
-  maxHp: 45
-  attack: 49
-  defense: 49
-  spAttack: 65
-  spDefense: 65
-  speed: 45
+  maxHp: 55
+  attack: 66
+  defense: 77
+  spAttack: 88
+  spDefense: 99
+  speed: 100
   catchRate: 1000
   expYield: 800
   growthRate: 0
@@ -42,6 +41,4 @@ MonoBehaviour:
   - moveBase: {fileID: 11400000, guid: 60ac823cf683b604283eabbaf063a981, type: 2}
     level: 13
   learnableByItems: []
-  evolutions:
-  - evolvesInto: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    requiredLevel: 13
+  evolutions: []

@@ -207,6 +207,17 @@ public class Pokemon
         return Moves.Count(m => m.Base == moveToCheck) > 0;
     }
 
+    public Evolution CheckForEvolution()
+    {
+        return Base.Evolutions.FirstOrDefault(e => e.RequiredLevel == level);
+    }
+
+    public void Evolve(Evolution evolution)
+    {
+        _base = evolution.EvolvesInto;
+        Debug.LogError("The stats have not changed for the new pokemon. You haven't fixed this yet.");
+    }
+
     public Move GetRandomMove()
     {
         int r = UnityEngine.Random.Range(0, Moves.Count);
