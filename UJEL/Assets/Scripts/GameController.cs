@@ -11,7 +11,7 @@ using UnityEngine.Video;
 
 public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene}
 
-public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex }
+public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex, Map }
 
 public class GameController : MonoBehaviour
 {
@@ -44,6 +44,7 @@ public class GameController : MonoBehaviour
     [SerializeField] InventoryUI inventoryUI;
     [SerializeField] PokedexUIManager pokedexUIManager;
     [SerializeField] Canvas UICanvas;
+    [SerializeField] MapController mapController;
     int selectedMenuItem = 0;
     int currentPartyMember;
     private string pressed;
@@ -302,6 +303,17 @@ public class GameController : MonoBehaviour
         {
             pokedexUIManager.HandleUpdate(PokedexReturn);
         }
+
+        if (menuState == MenuState.Map)
+        {
+            mapController.HandleUpdate(() =>
+            {
+                menuState = MenuState.Main;
+                UICanvas.gameObject.SetActive(false);
+                mapController.gameObject.SetActive(false);
+                menu.SetActive(true);
+            });
+        }
     }
 
     void PokedexReturn()
@@ -406,11 +418,18 @@ public class GameController : MonoBehaviour
         }
         else if (selectedItem == 3)
         {
+            // Map
+            menuState = MenuState.Map;
+            UICanvas.gameObject.SetActive(true);
+            mapController.gameObject.SetActive(true);
+        }
+        else if (selectedItem == 4)
+        {
             // Save
             Save();
             state = GameState.FreeRoam;
         }
-        else if (selectedItem == 4)
+        else if (selectedItem == 5)
         {
             // Load
             Load();
