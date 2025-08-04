@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene}
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution }
 
 public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex, Map }
 
@@ -81,6 +81,9 @@ public class GameController : MonoBehaviour
         //Save and Load --- TEMPORARY
         //controls.Main.Save.performed += ctx => Save();
         //controls.Main.Load.performed += ctx => Load();
+
+        EvolutionManager.instance.OnStartEvolution += () => state = GameState.Evolution;
+        EvolutionManager.instance.OnCompleteEvolution += () => state = GameState.FreeRoam;
     }
 
     void EndBattle(bool won)

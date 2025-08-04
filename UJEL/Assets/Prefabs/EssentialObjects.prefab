@@ -2703,6 +2703,7 @@ GameObject:
   - component: {fileID: 309560227406838143}
   - component: {fileID: 1571092516961370920}
   - component: {fileID: 5959354910611561686}
+  - component: {fileID: 3717447144234956745}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2840,6 +2841,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightedColor: {r: 0.1882353, g: 0.4117647, b: 0.8745098, a: 1}
+--- !u!114 &3717447144234956745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164724522529123066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae5c02c44a6928469e146cce52b8863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  evolutionUI: {fileID: 696930739455082245}
+  pokemonImage: {fileID: 3767597764883406155}
+  UICanvas: {fileID: 3236495773347155168}
 --- !u!1 &5375773690928310743
 GameObject:
   m_ObjectHideFlags: 0
@@ -6349,11 +6365,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798db11df46664d4da06421c36712257, type: 3}
+--- !u!1 &696930739455082245 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1677787536385399847, guid: 798db11df46664d4da06421c36712257, type: 3}
+  m_PrefabInstance: {fileID: 2225706412654289698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!223 &3236495773347155168 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 3605443705902231490, guid: 798db11df46664d4da06421c36712257, type: 3}
   m_PrefabInstance: {fileID: 2225706412654289698}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3767597764883406155 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3074408251362590313, guid: 798db11df46664d4da06421c36712257, type: 3}
+  m_PrefabInstance: {fileID: 2225706412654289698}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4341867661976004382 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2495598455754622012, guid: 798db11df46664d4da06421c36712257, type: 3}

@@ -59,15 +59,11 @@ public class PokemonParty : MonoBehaviour
             var evolution = pokemon.CheckForEvolution();
             if (evolution != null)
             {
-                Dialog dialog = new Dialog($"{pokemon.Base.Name} evolved into {evolution.EvolvesInto.Name}!");
-                DialogManager.Instance.ShowDialog(dialog, () => { });
-                pokemon.Evolve(evolution);
+                yield return EvolutionManager.instance.Evolve(pokemon, evolution);
             }
         }
 
         OnUpdated?.Invoke();
-
-        yield return null;
     }
 
     public static PokemonParty GetPlayerParty()

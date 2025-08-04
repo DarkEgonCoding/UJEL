@@ -209,13 +209,13 @@ public class Pokemon
 
     public Evolution CheckForEvolution()
     {
-        return Base.Evolutions.FirstOrDefault(e => e.RequiredLevel == level);
+        return Base.Evolutions.FirstOrDefault(e => e.RequiredLevel <= level);
     }
 
     public void Evolve(Evolution evolution)
     {
         _base = evolution.EvolvesInto;
-        Debug.LogError("The stats have not changed for the new pokemon. You haven't fixed this yet.");
+        Debug.LogWarning("Idk if the stats for the new pokemon are correct. - Evan");
     }
 
     public Move GetRandomMove()
