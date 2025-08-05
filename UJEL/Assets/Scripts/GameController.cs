@@ -110,6 +110,10 @@ public class GameController : MonoBehaviour
         {
             MenuHandleUpdate();
         }
+        else if (state == GameState.PC)
+        {
+            PCBox.instance.HandlePCUpdate();
+        }
     }
 
     public void StartCutsceneState()
@@ -311,12 +315,18 @@ public class GameController : MonoBehaviour
         {
             mapController.HandleUpdate(() =>
             {
-                menuState = MenuState.Main;
-                UICanvas.gameObject.SetActive(false);
-                mapController.gameObject.SetActive(false);
-                menu.SetActive(true);
+                StartCoroutine(LeaveMap());
             });
         }
+    }
+
+    IEnumerator LeaveMap()
+    {
+        menuState = MenuState.Main;
+        yield return new WaitForEndOfFrame();
+        UICanvas.gameObject.SetActive(false);
+        mapController.gameObject.SetActive(false);
+        menu.SetActive(true);
     }
 
     void PokedexReturn()

@@ -26,7 +26,9 @@ public class PCBox : MonoBehaviour
     public static PCBox instance;
 
     [Header("Slots")]
-    [SerializeField] private ImageSlot[] slotImages;
+    [SerializeField] private List<BoxStorageSlotUI> boxStorageSlots;
+    [SerializeField] private List<BoxPartySlotUI> boxPartySlots;
+
     private Vector2Int gridCursorPos = new Vector2Int(0, 0);
 
     [Header("Sorting")]
@@ -36,18 +38,26 @@ public class PCBox : MonoBehaviour
     [Header("Boxes")]
     [SerializeField] TextMeshProUGUI boxName;
 
+    [Header("Hovered Pokemon")]
+    [SerializeField] HoveredPokemonUI hoveredPokemonUI;
+
     // Layers
     private int currentLayer = 1;
     // 0   -> Box Navigation
     // 1-5 -> Grid
     // 6   -> Sorting Layer
+    // 7   -> Party Layer
 
     const int BOX_NAVIGATION_LAYER = 0;
     const int GRID_LAYER_MIN = 1;
     const int GRID_LAYER_MAX = 5;
     const int SORTING_LAYER = 6;
+    const int PARTY_LAYER = 7;
+
+    private float delaySwitchBox;
 
     private int currentBoxIndex = 0;
+    private int partyCursor = 0;
     private List<string> boxNames = new List<string>
     {
         "Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6", "Box 7",
@@ -57,13 +67,14 @@ public class PCBox : MonoBehaviour
 
     const int GRID_COLS = 7;
     const int GRID_ROWS = 5;
+    const int MAX_PARTY_SIZE = 6;
 
     private void Awake()
     {
         if (instance == null) instance = this;
     }
 
-    void Update()
+    public void HandlePCUpdate()
     {
         if (Input.GetKeyDown(KeyCode.A)) SortPC(currentSort);
         else if (Input.GetKeyDown(KeyCode.X)) ClosePCBox();
@@ -80,6 +91,42 @@ public class PCBox : MonoBehaviour
         {
             HandleSortMode();
         }
+        else if (currentLayer == PARTY_LAYER)
+        {
+            HandlePartyNavigation();
+        }
+    }
+
+    private void HandlePartyNavigation()
+    {
+        int prevIndex = partyCursor;
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (partyCursor < MAX_PARTY_SIZE - 1)
+            {
+                partyCursor++;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (partyCursor > 0)
+            {
+                partyCursor--;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            // Go back to grid
+            boxPartySlots[prevIndex].ImageSlot.OnSelectionChanged(false);
+            gridCursorPos = new Vector2Int(0, 0);
+            ChangeLayer(GRID_LAYER_MIN);
+            return;
+        }
+        else return;
+
+        boxPartySlots[prevIndex].ImageSlot.OnSelectionChanged(false);
+        boxPartySlots[partyCursor].ImageSlot.OnSelectionChanged(true);
     }
 
     private void HandleBoxNavigation()
@@ -94,7 +141,8 @@ public class PCBox : MonoBehaviour
             currentBoxIndex = (currentBoxIndex + 1) % boxNames.Count;
             UpdateBoxDisplay();
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)){
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
             ChangeLayer(GRID_LAYER_MIN);
         }
     }
@@ -117,15 +165,26 @@ public class PCBox : MonoBehaviour
         int prevIndex = GetGridIndex(gridCursorPos);
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            gridCursorPos.x = (gridCursorPos.x + 1) % GRID_COLS;
+        {
+            if (gridCursorPos.x < GRID_COLS - 1)
+                gridCursorPos.x += 1;
+        }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            gridCursorPos.x = (gridCursorPos.x - 1 + GRID_COLS) % GRID_COLS;
+        {
+            if (gridCursorPos.x == 0)
+            {
+                boxStorageSlots[prevIndex].ImageSlot.OnSelectionChanged(false);
+                ChangeLayer(PARTY_LAYER);
+                return;
+            }
+            gridCursorPos.x -= 1;
+        }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (gridCursorPos.y == 0)
             {
                 ChangeLayer(BOX_NAVIGATION_LAYER);
-                slotImages[prevIndex].OnSelectionChanged(false);
+                boxStorageSlots[prevIndex].ImageSlot.OnSelectionChanged(false);
                 return;
             }
             gridCursorPos.y = (gridCursorPos.y - 1 + GRID_ROWS) % GRID_ROWS;
@@ -134,8 +193,8 @@ public class PCBox : MonoBehaviour
         {
             if (gridCursorPos.y == GRID_ROWS - 1)
             {
+                boxStorageSlots[prevIndex].ImageSlot.OnSelectionChanged(false);
                 ChangeLayer(SORTING_LAYER);
-                slotImages[prevIndex].OnSelectionChanged(false);
                 return;
             }
             gridCursorPos.y = (gridCursorPos.y + 1) % GRID_ROWS;
@@ -154,8 +213,11 @@ public class PCBox : MonoBehaviour
     {
         int newIndex = GetGridIndex(gridCursorPos);
 
-        slotImages[previousIndex].OnSelectionChanged(false);
-        slotImages[newIndex].OnSelectionChanged(true);
+        boxStorageSlots[previousIndex].ImageSlot.OnSelectionChanged(false);
+        boxStorageSlots[newIndex].ImageSlot.OnSelectionChanged(true);
+
+        // Update the hoveredPokemonUI
+        hoveredPokemonUI.Show(boxStorageSlots[newIndex].ImageSlot.PokemonSlotUI);
     }
 
     private void HandleSortMode()
@@ -230,20 +292,42 @@ public class PCBox : MonoBehaviour
 
     private void ChangeLayer(int newLayer)
     {
+        ClearAllSlots();
+        hoveredPokemonUI.Hide();
+
         currentLayer = newLayer;
 
-        if (currentLayer == SORTING_LAYER)
+        if (currentLayer == SORTING_LAYER) // Switching into Sorting
             SortText.color = Color.blue;
         else SortText.color = Color.white;
 
         if (currentLayer >= GRID_LAYER_MIN && currentLayer <= GRID_LAYER_MAX)
         {
-            slotImages[GetGridIndex(gridCursorPos)].OnSelectionChanged(true); // Highlight when you switch into the grid
+            boxStorageSlots[GetGridIndex(gridCursorPos)].ImageSlot.OnSelectionChanged(true); // Highlight when you switch into the grid
+            hoveredPokemonUI.Show(boxStorageSlots[GetGridIndex(gridCursorPos)].ImageSlot.PokemonSlotUI);
         }
 
-        if (currentLayer == BOX_NAVIGATION_LAYER)
+        if (currentLayer == BOX_NAVIGATION_LAYER) // Switching into box
             boxName.color = Color.blue;
         else boxName.color = Color.white;
+
+        if (currentLayer == PARTY_LAYER) // Switching into party
+        {
+            partyCursor = 0;
+            boxPartySlots[partyCursor].ImageSlot.OnSelectionChanged(true);
+        }
+    }
+
+    private void ClearAllSlots()
+    {
+        foreach (var boxStorageSlot in boxStorageSlots)
+        {
+            boxStorageSlot.ImageSlot.Clear();
+        }
+        foreach (var partySlot in boxPartySlots)
+        {
+            partySlot.ImageSlot.Clear();
+        }
     }
 
     private void UpdateSortModeUI()
@@ -303,23 +387,56 @@ public class PCBox : MonoBehaviour
         GameController.instance.state = GameState.PC;
 
         // Reset colors
-        foreach (var slotImage in slotImages) {
-            slotImage.Clear();
-        }
+        ClearAllSlots();
         boxName.color = Color.white;
         SortText.color = Color.white;
+
+        // Initialize Pokemon Party Slots and Box Storage Slots
+        InitializePokemonParty();
+        InitializeBoxSlots();
 
         // Reset selection and image
         currentLayer = 1;
         gridCursorPos = new Vector2Int(0, 0);
-        slotImages[GetGridIndex(gridCursorPos)].OnSelectionChanged(true);
+        boxStorageSlots[GetGridIndex(gridCursorPos)].ImageSlot.OnSelectionChanged(true);
+        hoveredPokemonUI.Show(boxStorageSlots[GetGridIndex(gridCursorPos)].ImageSlot.PokemonSlotUI);
     }
 
     public void ClosePCBox()
     {
-        slotImages[GetGridIndex(gridCursorPos)].OnSelectionChanged(false);
+        boxStorageSlots[GetGridIndex(gridCursorPos)].ImageSlot.OnSelectionChanged(false);
         GameController.instance.SetUICanvas(false);
         pcObject.SetActive(false);
         GameController.instance.state = GameState.FreeRoam;
+    }
+
+    private void InitializePokemonParty()
+    {
+        var party = PlayerController.Instance.GetComponent<PokemonParty>().Pokemons;
+
+        for (int i = 0; i < boxPartySlots.Count; i++)
+        {
+            if (i < party.Count)
+            {
+                boxPartySlots[i].SetData(party[i]);
+            }
+            else
+                boxPartySlots[i].ClearData();
+        }
+    }
+
+    private void InitializeBoxSlots()
+    {
+        for (int i = 0; i < boxStorageSlots.Count; i++)
+        {
+            if (i < storedPokemon.Count)
+            {
+                boxStorageSlots[i].SetData(storedPokemon[i]);
+            }
+            else
+            {
+                boxStorageSlots[i].ClearData();
+            }
+        }
     }
 }

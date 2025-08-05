@@ -8,10 +8,13 @@ public class ImageSlot : MonoBehaviour
     [SerializeField] Image bgImage;
 
     [SerializeField] Color originalColor;
+    private IPokemonSlotUI pokemonSlotUI;
 
-    public void Init()
+    public IPokemonSlotUI PokemonSlotUI => pokemonSlotUI;
+
+    private void Awake()
     {
-        
+        pokemonSlotUI = GetComponent<IPokemonSlotUI>();
     }
 
     public void Clear()
