@@ -54,7 +54,8 @@ public class PCBox : MonoBehaviour
     const int SORTING_LAYER = 6;
     const int PARTY_LAYER = 7;
 
-    private float delaySwitchBox;
+    private float delaySwitchBox = 0.75f;
+    private float lastSwitchTime = -Mathf.Infinity;
 
     private int currentBoxIndex = 0;
     private int partyCursor = 0;
@@ -131,15 +132,19 @@ public class PCBox : MonoBehaviour
 
     private void HandleBoxNavigation()
     {
+        if (Time.time - lastSwitchTime < delaySwitchBox) return;
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             currentBoxIndex = (currentBoxIndex - 1 + boxNames.Count) % boxNames.Count;
             UpdateBoxDisplay();
+            lastSwitchTime = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             currentBoxIndex = (currentBoxIndex + 1) % boxNames.Count;
             UpdateBoxDisplay();
+            lastSwitchTime = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
