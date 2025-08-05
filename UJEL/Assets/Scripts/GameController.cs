@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution }
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution, PC }
 
 public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex, Map }
 
@@ -438,6 +438,12 @@ public class GameController : MonoBehaviour
             Load();
             state = GameState.FreeRoam;
         }
+    }
+
+    public void SetUICanvas(bool Active)
+    {
+        if (Active) UICanvas.gameObject.SetActive(true);
+        else UICanvas.gameObject.SetActive(false);
     }
 
     void UpdateItemSelection()

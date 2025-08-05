@@ -19,16 +19,25 @@ public enum SortMode
 
 public class PCBox : MonoBehaviour
 {
+    [Header("PC")]
+    [SerializeField] public GameObject pcObject;
     public List<Pokemon> storedPokemon = new List<Pokemon>(); // This is the PC Box
 
     public static PCBox instance;
+
+    [Header("Slots")]
+    [SerializeField] private ImageSlot[] slotImages;
+    private Vector2Int gridCursorPos = new Vector2Int(0, 0);
 
     [Header("Sorting")]
     [SerializeField] private SortMode currentSort = SortMode.Custom;
     [SerializeField] TextMeshProUGUI SortText;
 
+    [Header("Boxes")]
+    [SerializeField] TextMeshProUGUI boxName;
+
     // Layers
-    private int currentLayer = 6;
+    private int currentLayer = 1;
     // 0   -> Box Navigation
     // 1-5 -> Grid
     // 6   -> Sorting Layer
@@ -49,22 +58,104 @@ public class PCBox : MonoBehaviour
     const int GRID_COLS = 7;
     const int GRID_ROWS = 5;
 
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A)) SortPC(currentSort);
+        else if (Input.GetKeyDown(KeyCode.X)) ClosePCBox();
 
         if (currentLayer >= GRID_LAYER_MIN && currentLayer <= GRID_LAYER_MAX)
         {
-            //
+            HandleGridNavigation();
         }
         else if (currentLayer == BOX_NAVIGATION_LAYER)
         {
-            //
+            HandleBoxNavigation();
         }
         else if (currentLayer == SORTING_LAYER)
         {
             HandleSortMode();
         }
+    }
+
+    private void HandleBoxNavigation()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            currentBoxIndex = (currentBoxIndex - 1 + boxNames.Count) % boxNames.Count;
+            UpdateBoxDisplay();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            currentBoxIndex = (currentBoxIndex + 1) % boxNames.Count;
+            UpdateBoxDisplay();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow)){
+            ChangeLayer(GRID_LAYER_MIN);
+        }
+    }
+
+    private void UpdateBoxDisplay()
+    {
+        boxName.text = boxNames[currentBoxIndex];
+        // LoadBox(currentBoxIndex); // Optional - load the Pokémon data for this box
+    }
+
+    private void LoadBox(int index)
+    {
+        // Clear grid
+        // Populate grid with Pokémon from box[index]
+        // Reset selection cursor to top-left or previously selected slot if you're storing that per box
+    }
+
+    private void HandleGridNavigation()
+    {
+        int prevIndex = GetGridIndex(gridCursorPos);
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            gridCursorPos.x = (gridCursorPos.x + 1) % GRID_COLS;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            gridCursorPos.x = (gridCursorPos.x - 1 + GRID_COLS) % GRID_COLS;
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (gridCursorPos.y == 0)
+            {
+                ChangeLayer(BOX_NAVIGATION_LAYER);
+                slotImages[prevIndex].OnSelectionChanged(false);
+                return;
+            }
+            gridCursorPos.y = (gridCursorPos.y - 1 + GRID_ROWS) % GRID_ROWS;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (gridCursorPos.y == GRID_ROWS - 1)
+            {
+                ChangeLayer(SORTING_LAYER);
+                slotImages[prevIndex].OnSelectionChanged(false);
+                return;
+            }
+            gridCursorPos.y = (gridCursorPos.y + 1) % GRID_ROWS;
+        }
+        else return;
+
+        UpdateGridSelection(prevIndex);
+    }
+
+    private int GetGridIndex(Vector2Int pos)
+    {
+        return pos.y * GRID_COLS + pos.x;
+    }
+
+    private void UpdateGridSelection(int previousIndex)
+    {
+        int newIndex = GetGridIndex(gridCursorPos);
+
+        slotImages[previousIndex].OnSelectionChanged(false);
+        slotImages[newIndex].OnSelectionChanged(true);
     }
 
     private void HandleSortMode()
@@ -144,6 +235,15 @@ public class PCBox : MonoBehaviour
         if (currentLayer == SORTING_LAYER)
             SortText.color = Color.blue;
         else SortText.color = Color.white;
+
+        if (currentLayer >= GRID_LAYER_MIN && currentLayer <= GRID_LAYER_MAX)
+        {
+            slotImages[GetGridIndex(gridCursorPos)].OnSelectionChanged(true); // Highlight when you switch into the grid
+        }
+
+        if (currentLayer == BOX_NAVIGATION_LAYER)
+            boxName.color = Color.blue;
+        else boxName.color = Color.white;
     }
 
     private void UpdateSortModeUI()
@@ -193,5 +293,33 @@ public class PCBox : MonoBehaviour
         var leftovers = storedPokemon.Except(livingDexSorted).ToList();
 
         return livingDexSorted.Concat(leftovers).ToList();
+    }
+
+    public void OpenPCBox()
+    {
+        // Turn on objects
+        GameController.instance.SetUICanvas(true);
+        pcObject.SetActive(true);
+        GameController.instance.state = GameState.PC;
+
+        // Reset colors
+        foreach (var slotImage in slotImages) {
+            slotImage.Clear();
+        }
+        boxName.color = Color.white;
+        SortText.color = Color.white;
+
+        // Reset selection and image
+        currentLayer = 1;
+        gridCursorPos = new Vector2Int(0, 0);
+        slotImages[GetGridIndex(gridCursorPos)].OnSelectionChanged(true);
+    }
+
+    public void ClosePCBox()
+    {
+        slotImages[GetGridIndex(gridCursorPos)].OnSelectionChanged(false);
+        GameController.instance.SetUICanvas(false);
+        pcObject.SetActive(false);
+        GameController.instance.state = GameState.FreeRoam;
     }
 }
