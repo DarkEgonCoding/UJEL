@@ -33,6 +33,12 @@ public class BoxData
         pokemons[index] = pokemon;
     }
 
+    public void ClearPokemonAt(int index)
+    {
+        if (index < 0 || index >= BoxSize) return;
+        pokemons[index] = null;
+    }
+
     public Pokemon[] GetAllPokemons()
     {
         return pokemons;

@@ -6,6 +6,6 @@ public class PCLoader : MonoBehaviour, Interactable
 {
     public void Interact(Transform initiator)
     {
-        PCBox.instance.OpenPCBox();
+        StartCoroutine(PCBox.instance.OpenPCBox());
     }
 }

@@ -99,6 +99,8 @@ public class PlayerController : MonoBehaviour, ISavable
 
         //Bike
         controls.Main.Bike.performed += ctx => {
+            if (GameController.instance.state != GameState.FreeRoam) return;
+
             //Switch bike on and off
             isBiking = !isBiking;
             
