@@ -2898,6 +2898,78 @@ MonoBehaviour:
     level: 8
   - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
     level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+    level: 9
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+    level: 15
+  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
+    level: 13
+  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
+    level: 13
+  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
+    level: 13
+  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
+    level: 13
+  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
+    level: 13
+  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
+    level: 13
+  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
+    level: 13
+  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
+    level: 13
   boxStorageSlots:
   - {fileID: 6325368913522355229}
   - {fileID: 7093579181810691861}
@@ -2944,6 +3016,7 @@ MonoBehaviour:
   currentSort: 6
   SortText: {fileID: 5071259692101381718}
   boxName: {fileID: 9073221071062117094}
+  boxes: []
   hoveredPokemonUI: {fileID: 4887370188232806377}
 --- !u!1 &5375773690928310743
 GameObject:

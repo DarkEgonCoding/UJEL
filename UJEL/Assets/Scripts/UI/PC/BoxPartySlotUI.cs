@@ -12,9 +12,11 @@ public class BoxPartySlotUI : MonoBehaviour, IPokemonSlotUI
     Pokemon storedPokemon;
 
     ImageSlot imageSlot;
+    private int partyIndex;
 
     public Pokemon StoredPokemon => storedPokemon;
     public ImageSlot ImageSlot => imageSlot;
+    public int PartyIndex => partyIndex;
 
     public void Awake()
     {
@@ -30,6 +32,11 @@ public class BoxPartySlotUI : MonoBehaviour, IPokemonSlotUI
         storedPokemon = pokemon;
     }
 
+    public void SetPartyIndex(int index)
+    {
+        partyIndex = index;
+    }
+
     public void ClearData()
     {
         nameText.text = "";
@@ -37,5 +44,6 @@ public class BoxPartySlotUI : MonoBehaviour, IPokemonSlotUI
         image.sprite = null;
         image.color = new Color(255, 255, 255, 0);
         storedPokemon = null;
+        partyIndex = -1;
     }
 }

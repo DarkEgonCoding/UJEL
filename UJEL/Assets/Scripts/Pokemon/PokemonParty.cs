@@ -51,6 +51,14 @@ public class PokemonParty : MonoBehaviour
         }
     }
 
+    public void RemovePokemon(int index)
+    {
+        if (pokemons.Count > 1 && index >= 0 && index < pokemons.Count)
+        {
+            pokemons.RemoveAt(index);
+        }
+    }
+
     public IEnumerator CheckForEvolutions()
     {
         foreach (var pokemon in pokemons)

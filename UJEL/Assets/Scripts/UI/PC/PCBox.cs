@@ -66,6 +66,10 @@ public class PCBox : MonoBehaviour
     private float delaySwitchBox = 0.3f;
     private float lastSwitchTime = -Mathf.Infinity;
     private int partyCursor = 0;
+    private Pokemon selectedPartyPokemon = null;
+    private BoxPartySlotUI selectedPartySlot = null;
+    private bool isPartyTransferMode = false;
+    private bool lockGrid = false;
 
     const int GRID_COLS = 7;
     const int GRID_ROWS = 5;
@@ -100,8 +104,7 @@ public class PCBox : MonoBehaviour
 
     public void HandlePCUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.A)) SortPC(currentSort);
-        else if (Input.GetKeyDown(KeyCode.X)) ClosePCBox();
+        if (Input.GetKeyDown(KeyCode.X)) ClosePCBox();
 
         if (currentLayer >= GRID_LAYER_MIN && currentLayer <= GRID_LAYER_MAX)
         {
@@ -114,6 +117,7 @@ public class PCBox : MonoBehaviour
         else if (currentLayer == SORTING_LAYER)
         {
             HandleSortMode();
+            if (Input.GetKeyDown(KeyCode.A)) SortPC(currentSort);
         }
         else if (currentLayer == PARTY_LAYER)
         {
@@ -147,10 +151,40 @@ public class PCBox : MonoBehaviour
             ChangeLayer(GRID_LAYER_MIN);
             return;
         }
+        else if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SelectPartyPokemon();
+        }
         else return;
 
         boxPartySlots[prevIndex].ImageSlot.OnSelectionChanged(false);
         boxPartySlots[partyCursor].ImageSlot.OnSelectionChanged(true);
+    }
+
+    private void SelectPartyPokemon()
+    {
+        // If there is only 1 pokemon in the party, don't allow selection
+        var pokemonParty = PokemonParty.GetPlayerParty();
+        if (pokemonParty.Pokemons.Count <= 1)
+            return;
+
+        // If there is no pokemon in the slot, return
+        var partyMon = boxPartySlots[partyCursor].StoredPokemon;
+        if (partyMon == null)
+            return;
+
+        // Select the pokemon
+        selectedPartyPokemon = partyMon;
+        selectedPartySlot = boxPartySlots[partyCursor];
+        isPartyTransferMode = true;
+        lockGrid = true;
+
+        Debug.Log($"Pokemon: {partyMon} at Party Slot {selectedPartySlot} at Party Index {selectedPartySlot.PartyIndex} was selected.");
+
+        // Change layer to grid
+        boxPartySlots[partyCursor].ImageSlot.OnSelectionChanged(false);
+        gridCursorPos = new Vector2Int(0, 0);
+        ChangeLayer(GRID_LAYER_MIN);
     }
 
     private void HandleBoxNavigation()
@@ -194,6 +228,8 @@ public class PCBox : MonoBehaviour
         {
             if (gridCursorPos.x == 0)
             {
+                if (lockGrid) return;
+
                 boxStorageSlots[prevIndex].ImageSlot.OnSelectionChanged(false);
                 ChangeLayer(PARTY_LAYER);
                 return;
@@ -204,6 +240,8 @@ public class PCBox : MonoBehaviour
         {
             if (gridCursorPos.y == 0)
             {
+                if (lockGrid) return;
+
                 ChangeLayer(BOX_NAVIGATION_LAYER);
                 boxStorageSlots[prevIndex].ImageSlot.OnSelectionChanged(false);
                 return;
@@ -214,11 +252,52 @@ public class PCBox : MonoBehaviour
         {
             if (gridCursorPos.y == GRID_ROWS - 1)
             {
+                if (lockGrid) return;
+
                 boxStorageSlots[prevIndex].ImageSlot.OnSelectionChanged(false);
                 ChangeLayer(SORTING_LAYER);
                 return;
             }
             gridCursorPos.y = (gridCursorPos.y + 1) % GRID_ROWS;
+        }
+        else if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (isPartyTransferMode) // Switching PokemonParty to Grid
+            {
+                var boxPokemon = CurrentBox.GetPokemonAt(GetGridIndex(gridCursorPos));
+                var playerParty = PokemonParty.GetPlayerParty();
+
+                if (selectedPartyPokemon == null || selectedPartySlot == null)
+                {
+                    Debug.LogWarning("No selected party Pokemon to move");
+                    return;
+                }
+
+                if (boxPokemon != null) // Swap pokemon
+                {
+                    // Update the stored list and party pokemon
+                    RemovePokemonFromPC(boxPokemon);
+                    AddPokemonToPC(selectedPartyPokemon);
+
+                    // Swap in UI
+                    CurrentBox.SetPokemonAt(GetGridIndex(gridCursorPos), selectedPartyPokemon);
+                    playerParty.Pokemons[selectedPartySlot.PartyIndex] = boxPokemon;
+                }
+                else // Move party into empty slot
+                {
+                    // Update stored list
+                    AddPokemonToPC(selectedPartyPokemon);
+                    playerParty.RemovePokemon(selectedPartySlot.PartyIndex);
+
+                    // Update UI
+                    CurrentBox.SetPokemonAt(GetGridIndex(gridCursorPos), selectedPartyPokemon);
+                }
+
+                ResetPartySelection();
+
+                InitializePokemonParty();
+                RefreshCurrentBoxUI();
+            }
         }
         else return;
 
@@ -415,8 +494,9 @@ public class PCBox : MonoBehaviour
         pcObject.SetActive(true);
         GameController.instance.state = GameState.PC;
 
-        // Reset colors and text
+        // Reset colors, text, data
         ClearAllSlots();
+        ResetPartySelection();
         boxName.color = Color.white;
         SortText.color = Color.white;
         currentSort = SortMode.Custom;
@@ -455,6 +535,7 @@ public class PCBox : MonoBehaviour
             if (i < party.Count)
             {
                 boxPartySlots[i].SetData(party[i]);
+                boxPartySlots[i].SetPartyIndex(i);
             }
             else
                 boxPartySlots[i].ClearData();
@@ -520,6 +601,7 @@ public class PCBox : MonoBehaviour
         var sortedByType = storedPokemon
             .OrderBy(p => p.Base.type1)
             .ThenBy(p => p.Base.type2)
+            .ThenByDescending(p => p.Level)
             .ToList();
 
         int currentBox = 0;
@@ -587,6 +669,26 @@ public class PCBox : MonoBehaviour
                 slotUI.SetData(pokemon);
             else
                 slotUI.ClearData();
+        }
+    }
+
+    private void ResetPartySelection()
+    {
+        selectedPartyPokemon = null;
+        selectedPartySlot = null;
+        isPartyTransferMode = false;
+        lockGrid = false;
+    }
+    
+    public void RemovePokemonFromPC(Pokemon pokemon)
+    {
+        if (storedPokemon.Contains(pokemon))
+        {
+            storedPokemon.Remove(pokemon);
+        }
+        else
+        {
+            Debug.LogWarning("Tried to remove a Pokémon from PC that wasn't stored.");
         }
     }
 }
