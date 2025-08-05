@@ -7,9 +7,7 @@ public class BoxData
 {
     private int BoxSize = PCBox.instance.boxSize;
     private Pokemon[] pokemons;
-    private string name;
-
-    public string Name => name;
+    public string name;
 
     public BoxData()
     {
@@ -17,10 +15,10 @@ public class BoxData
         name = "";
     }
 
-    public BoxData(string name)
+    public BoxData(string name = "")
     {
         pokemons = new Pokemon[BoxSize];
-        this.name = name;
+        this.name = name == "" ? "Unnamed Box" : name;
     }
 
     public Pokemon GetPokemonAt(int index)

@@ -22,6 +22,7 @@ public class PCBox : MonoBehaviour
     [Header("PC")]
     [SerializeField] public GameObject pcObject;
     public List<Pokemon> storedPokemon = new List<Pokemon>(); // This is the PC Box
+    private List<Pokemon> sortedPokemon = new List<Pokemon>();
 
     public static PCBox instance;
 
@@ -40,15 +41,9 @@ public class PCBox : MonoBehaviour
     [SerializeField] private List<BoxData> boxes = new List<BoxData>();
 
     private const int BOX_SIZE = 35;
-    private const int MAX_BOXES = 20;
+    private const int MAX_BOXES = 25;
     private int currentBoxIndex = 0;
     public BoxData CurrentBox => boxes[currentBoxIndex];
-    private List<string> boxNames = new List<string>
-    {
-        "Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6", "Box 7",
-        "Box 8", "Box 9", "Box 10", "Box 11", "Box 12", "Box 13",
-        "Box 14", "Box 15", "Box 16", "Box 17", "Box 18", "Box 19", "Box 20"
-    };
 
     [Header("Hovered Pokemon")]
     [SerializeField] HoveredPokemonUI hoveredPokemonUI;
@@ -68,7 +63,7 @@ public class PCBox : MonoBehaviour
 
     public int boxSize => BOX_SIZE;
 
-    private float delaySwitchBox = 0.75f;
+    private float delaySwitchBox = 0.3f;
     private float lastSwitchTime = -Mathf.Infinity;
     private int partyCursor = 0;
 
@@ -81,12 +76,25 @@ public class PCBox : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    private void InitializeBoxes()
+    private void InitializeBoxes(bool sortedByType = false)
     {
         boxes.Clear();
-        for (int i = 0; i < MAX_BOXES; i++)
+
+        if (!sortedByType)
         {
-            boxes.Add(new BoxData($"Box: {i + 1}"));
+            for (int i = 0; i < MAX_BOXES; i++)
+            {
+                boxes.Add(new BoxData($"Box: {i + 1}"));
+            }
+            return;
+        }
+        else
+        {
+            // If sorting by type, assign names later
+            for (int i = 0; i < MAX_BOXES; i++)
+            {
+                boxes.Add(new BoxData());
+            }
         }
     }
 
@@ -151,13 +159,13 @@ public class PCBox : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            currentBoxIndex = (currentBoxIndex - 1 + boxNames.Count) % boxNames.Count;
+            currentBoxIndex = (currentBoxIndex - 1 + MAX_BOXES) % MAX_BOXES;
             UpdateBoxDisplay();
             lastSwitchTime = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            currentBoxIndex = (currentBoxIndex + 1) % boxNames.Count;
+            currentBoxIndex = (currentBoxIndex + 1) % MAX_BOXES;
             UpdateBoxDisplay();
             lastSwitchTime = Time.time;
         }
@@ -169,7 +177,7 @@ public class PCBox : MonoBehaviour
 
     private void UpdateBoxDisplay()
     {
-        boxName.text = boxNames[currentBoxIndex];
+        boxName.text = boxes[currentBoxIndex].name;
         RefreshCurrentBoxUI();
     }
 
@@ -353,24 +361,32 @@ public class PCBox : MonoBehaviour
         switch (mode)
         {
             case SortMode.AZ:
-                storedPokemon = storedPokemon.OrderBy(p => p.Base.Name).ToList();
+                sortedPokemon = storedPokemon.OrderBy(p => p.Base.Name).ToList();
+                SetPokemonInBoxes(sortedPokemon);
                 break;
             case SortMode.ZA:
-                storedPokemon = storedPokemon.OrderByDescending(p => p.Base.Name).ToList();
+                sortedPokemon = storedPokemon.OrderByDescending(p => p.Base.Name).ToList();
+                SetPokemonInBoxes(sortedPokemon);
                 break;
             case SortMode.DexNumber:
-                storedPokemon = storedPokemon.OrderBy(p => p.Base.PokedexNumber).ToList();
+                sortedPokemon = storedPokemon.OrderBy(p => p.Base.PokedexNumber).ToList();
+                SetPokemonInBoxes(sortedPokemon);
                 break;
             case SortMode.Type:
-                storedPokemon = storedPokemon.OrderBy(p => p.Base.type1).ThenBy(p => p.Base.type2).ToList();
+                SortByTypeToBoxes();
                 break;
             case SortMode.Level:
-                storedPokemon = storedPokemon.OrderByDescending(p => p.Level).ToList();
+                sortedPokemon = storedPokemon.OrderByDescending(p => p.Level).ToList();
+                SetPokemonInBoxes(sortedPokemon);
                 break;
             case SortMode.LivingDex:
-                storedPokemon = GetLivingDexSortedList();
+                sortedPokemon = GetLivingDexSortedList();
+                SetPokemonInBoxes(sortedPokemon);
                 break;
         }
+
+        RefreshCurrentBoxUI();
+        UpdateBoxDisplay();
     }
 
     private List<Pokemon> GetLivingDexSortedList()
@@ -461,6 +477,8 @@ public class PCBox : MonoBehaviour
             else
                 boxStorageSlots[i].ClearData();
         }
+
+        UpdateBoxDisplay();
     }
 
     public void AddPokemonToPC(Pokemon pokemon)
@@ -488,10 +506,17 @@ public class PCBox : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sorts all Pokémon in storage by primary type and distributes them across boxes.
+    /// Boxes are dynamically named by type (e.g., "Box 3: Fire", "Box 4: Fire (2)").
+    /// This function overrides all existing box contents and names.
+    /// </summary>
     public void SortByTypeToBoxes()
     {
-        InitializeBoxes(); // clear all boxes first
+        // Clear all boxes and reset
+        InitializeBoxes(sortedByType: true);
 
+        // Sort all pokemon by primary type first, then secondary type
         var sortedByType = storedPokemon
             .OrderBy(p => p.Base.type1)
             .ThenBy(p => p.Base.type2)
@@ -501,21 +526,44 @@ public class PCBox : MonoBehaviour
         int slot = 0;
         PokemonType? lastType = null;
 
+        // Tracks the # of boxes created for a type
+        Dictionary<PokemonType, int> typeCounts = new Dictionary<PokemonType, int>();
+
+        // Go through each Pokémon in the sorted list and place it in the appropriate box
         foreach (var p in sortedByType)
         {
-            var type = p.Base.type1;
+            var type = p.Base.type1; // Get the primary type of this Pokémon
 
+            // If we're on a new type or the current box is full, move to the next box
             if (lastType == null || lastType != type || slot >= BOX_SIZE)
             {
-                currentBox++;
+                if (currentBox >= MAX_BOXES) break; // Stop if we've reached the max number of available boxes
+
+                if (!typeCounts.ContainsKey(type))
+                    typeCounts[type] = 1;
+                else
+                    typeCounts[type]++;
+
+                string suffix = typeCounts[type] > 1 ? $" ({typeCounts[type]})" : "";
+                boxes[currentBox].name = $"Box {currentBox + 1}: {type}{suffix}";
+
                 slot = 0;
                 lastType = type;
+                currentBox++;
             }
 
-            if (currentBox >= MAX_BOXES) break;
+            // Place the Pokémon into the current box and move to the next slot
+            if (currentBox > 0 && currentBox <= MAX_BOXES)
+            {
+                boxes[currentBox - 1].SetPokemonAt(slot, p);
+                slot++;
+            }
+        }
 
-            boxes[currentBox].SetPokemonAt(slot, p);
-            slot++;
+        // Assign default names to any remaining unused boxes
+        for (int i = currentBox; i < MAX_BOXES; i++)
+        {
+            boxes[i].name = $"Box: {i + 1}";
         }
 
         RefreshCurrentBoxUI();
