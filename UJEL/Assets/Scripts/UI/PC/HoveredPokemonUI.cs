@@ -12,6 +12,10 @@ public class HoveredPokemonUI : MonoBehaviour
     [SerializeField] public TextMeshProUGUI largeLevel;
     [SerializeField] public TextMeshProUGUI type1;
     [SerializeField] public TextMeshProUGUI type2;
+    [SerializeField] public TextMeshProUGUI move1;
+    [SerializeField] public TextMeshProUGUI move2;
+    [SerializeField] public TextMeshProUGUI move3;
+    [SerializeField] public TextMeshProUGUI move4;
 
     public void Show(IPokemonSlotUI slotUI)
     {
@@ -28,6 +32,11 @@ public class HoveredPokemonUI : MonoBehaviour
         pokemonName.text = pokemon.Base.Name;
         largeLevel.text = "Lv. " + pokemon.Level;
 
+        move1.text = GetMoveName(pokemon, 0);
+        move2.text = GetMoveName(pokemon, 1);
+        move3.text = GetMoveName(pokemon, 2);
+        move4.text = GetMoveName(pokemon, 3);
+
         type1.text = pokemon.Base.type1.ToString();
         if (pokemon.Base.type2 != PokemonType.None)
         {
@@ -40,6 +49,18 @@ public class HoveredPokemonUI : MonoBehaviour
         }
 
         gameObject.SetActive(true);
+    }
+
+    private string GetMoveName(Pokemon pokemon, int index)
+    {
+        if (pokemon.Moves == null || pokemon.Moves.Count <= index)
+            return "";
+
+        var move = pokemon.Moves[index];
+        if (move == null || move.Base == null)
+            return "";
+
+        return move.Base.Name;
     }
 
     public void Hide()

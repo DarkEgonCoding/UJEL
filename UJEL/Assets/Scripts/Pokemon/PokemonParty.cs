@@ -47,8 +47,7 @@ public class PokemonParty : MonoBehaviour
         }
         else
         {
-            // TODO: Add to the PC
-            Debug.Log("add to pc");
+            PCBox.instance.AddPokemonToPC(newPokemon);
         }
     }
 

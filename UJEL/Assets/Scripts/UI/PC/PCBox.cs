@@ -37,6 +37,18 @@ public class PCBox : MonoBehaviour
 
     [Header("Boxes")]
     [SerializeField] TextMeshProUGUI boxName;
+    [SerializeField] private List<BoxData> boxes = new List<BoxData>();
+
+    private const int BOX_SIZE = 35;
+    private const int MAX_BOXES = 20;
+    private int currentBoxIndex = 0;
+    public BoxData CurrentBox => boxes[currentBoxIndex];
+    private List<string> boxNames = new List<string>
+    {
+        "Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6", "Box 7",
+        "Box 8", "Box 9", "Box 10", "Box 11", "Box 12", "Box 13",
+        "Box 14", "Box 15", "Box 16", "Box 17", "Box 18", "Box 19", "Box 20"
+    };
 
     [Header("Hovered Pokemon")]
     [SerializeField] HoveredPokemonUI hoveredPokemonUI;
@@ -54,17 +66,11 @@ public class PCBox : MonoBehaviour
     const int SORTING_LAYER = 6;
     const int PARTY_LAYER = 7;
 
+    public int boxSize => BOX_SIZE;
+
     private float delaySwitchBox = 0.75f;
     private float lastSwitchTime = -Mathf.Infinity;
-
-    private int currentBoxIndex = 0;
     private int partyCursor = 0;
-    private List<string> boxNames = new List<string>
-    {
-        "Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6", "Box 7",
-        "Box 8", "Box 9", "Box 10", "Box 11", "Box 12", "Box 13",
-        "Box 14", "Box 15", "Box 16", "Box 17", "Box 18", "Box 19", "Box 20"
-    };
 
     const int GRID_COLS = 7;
     const int GRID_ROWS = 5;
@@ -73,6 +79,15 @@ public class PCBox : MonoBehaviour
     private void Awake()
     {
         if (instance == null) instance = this;
+    }
+
+    private void InitializeBoxes()
+    {
+        boxes.Clear();
+        for (int i = 0; i < MAX_BOXES; i++)
+        {
+            boxes.Add(new BoxData($"Box: {i + 1}"));
+        }
     }
 
     public void HandlePCUpdate()
@@ -155,14 +170,7 @@ public class PCBox : MonoBehaviour
     private void UpdateBoxDisplay()
     {
         boxName.text = boxNames[currentBoxIndex];
-        // LoadBox(currentBoxIndex); // Optional - load the Pokémon data for this box
-    }
-
-    private void LoadBox(int index)
-    {
-        // Clear grid
-        // Populate grid with Pokémon from box[index]
-        // Reset selection cursor to top-left or previously selected slot if you're storing that per box
+        RefreshCurrentBoxUI();
     }
 
     private void HandleGridNavigation()
@@ -391,13 +399,17 @@ public class PCBox : MonoBehaviour
         pcObject.SetActive(true);
         GameController.instance.state = GameState.PC;
 
-        // Reset colors
+        // Reset colors and text
         ClearAllSlots();
         boxName.color = Color.white;
         SortText.color = Color.white;
+        currentSort = SortMode.Custom;
+        UpdateSortModeUI();
 
         // Initialize Pokemon Party Slots and Box Storage Slots
+        currentBoxIndex = 0;
         InitializePokemonParty();
+        SetPokemonInBoxes(storedPokemon);
         InitializeBoxSlots();
 
         // Reset selection and image
@@ -415,6 +427,9 @@ public class PCBox : MonoBehaviour
         GameController.instance.state = GameState.FreeRoam;
     }
 
+    // <summary>
+    // Initializes the player's pokemon party into the UI slots for the PC
+    // </summary>
     private void InitializePokemonParty()
     {
         var party = PlayerController.Instance.GetComponent<PokemonParty>().Pokemons;
@@ -430,18 +445,100 @@ public class PCBox : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// One-time setup function that links each slot in the UI with the corresponding
+    /// BoxStorageSlotUI script. This is called once during initialization.
+    /// </summary>
     private void InitializeBoxSlots()
     {
+        var box = CurrentBox;
+
         for (int i = 0; i < boxStorageSlots.Count; i++)
         {
-            if (i < storedPokemon.Count)
-            {
-                boxStorageSlots[i].SetData(storedPokemon[i]);
-            }
+            var pokemon = box.GetPokemonAt(i);
+            if (pokemon != null)
+                boxStorageSlots[i].SetData(pokemon);
             else
-            {
                 boxStorageSlots[i].ClearData();
+        }
+    }
+
+    public void AddPokemonToPC(Pokemon pokemon)
+    {
+        storedPokemon.Add(pokemon);
+    }
+
+    // <summary>
+    // Sets the pokemon in boxes just by putting 35 pokemon per box.
+    // </summary>
+    public void SetPokemonInBoxes(List<Pokemon> sortedList)
+    {
+        InitializeBoxes();
+        int index = 0;
+
+        foreach (var pokemon in sortedList)
+        {
+            int boxIndex = index / BOX_SIZE;
+            int slotIndex = index % BOX_SIZE;
+
+            if (boxIndex >= MAX_BOXES) break;
+
+            boxes[boxIndex].SetPokemonAt(slotIndex, pokemon);
+            index++;
+        }
+    }
+
+    public void SortByTypeToBoxes()
+    {
+        InitializeBoxes(); // clear all boxes first
+
+        var sortedByType = storedPokemon
+            .OrderBy(p => p.Base.type1)
+            .ThenBy(p => p.Base.type2)
+            .ToList();
+
+        int currentBox = 0;
+        int slot = 0;
+        PokemonType? lastType = null;
+
+        foreach (var p in sortedByType)
+        {
+            var type = p.Base.type1;
+
+            if (lastType == null || lastType != type || slot >= BOX_SIZE)
+            {
+                currentBox++;
+                slot = 0;
+                lastType = type;
             }
+
+            if (currentBox >= MAX_BOXES) break;
+
+            boxes[currentBox].SetPokemonAt(slot, p);
+            slot++;
+        }
+
+        RefreshCurrentBoxUI();
+    }
+
+    /// <summary>
+    /// Called whenever the currently viewed PC box is changed, or whenever
+    /// the data in the current box is updated (e.g., Pokémon added/removed).
+    /// This function updates all the UI slots to reflect the Pokémon in the active box.
+    /// </summary>
+    private void RefreshCurrentBoxUI()
+    {
+        var currentBox = boxes[currentBoxIndex];
+
+        for (int i = 0; i < boxStorageSlots.Count; i++)
+        {
+            var slotUI = boxStorageSlots[i];
+            var pokemon = currentBox.GetPokemonAt(i);
+
+            if (pokemon != null)
+                slotUI.SetData(pokemon);
+            else
+                slotUI.ClearData();
         }
     }
 }

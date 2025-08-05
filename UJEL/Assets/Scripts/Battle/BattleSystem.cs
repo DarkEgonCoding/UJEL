@@ -30,6 +30,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] GameObject pokeballSprite;
     [SerializeField] MoveSelectionUI moveSelectionUI;
 
+    PokeballItem templatePokeball;
+
     BattleState state;
     int currentAction;
     int currentMove;
@@ -382,7 +384,8 @@ public class BattleSystem : MonoBehaviour
                 dialogBox.EnableActionSelector(false);
                 
                 Debug.LogWarning("Pokeballs are currently disabled because the function requires an input of what kind of pokeball was thrown.");
-                //StartCoroutine(ThrowPokeball());
+                templatePokeball = new PokeballItem();
+                StartCoroutine(ThrowPokeball(templatePokeball));
             }
             else if (currentAction == 2)
             {
