@@ -2705,6 +2705,7 @@ GameObject:
   - component: {fileID: 5959354910611561686}
   - component: {fileID: 3717447144234956745}
   - component: {fileID: 2307767977177684881}
+  - component: {fileID: 6348495808737649931}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2871,105 +2872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pcObject: {fileID: 2344469379960756692}
-  storedPokemon:
-  - _base: {fileID: 11400000, guid: 1d5821be2798fba42b3dc597655b156a, type: 2}
-    level: 3
-  - _base: {fileID: 11400000, guid: 1d5821be2798fba42b3dc597655b156a, type: 2}
-    level: 4
-  - _base: {fileID: 11400000, guid: 1d5821be2798fba42b3dc597655b156a, type: 2}
-    level: 5
-  - _base: {fileID: 11400000, guid: 1d5821be2798fba42b3dc597655b156a, type: 2}
-    level: 6
-  - _base: {fileID: 11400000, guid: 1d5821be2798fba42b3dc597655b156a, type: 2}
-    level: 7
-  - _base: {fileID: 11400000, guid: 1d5821be2798fba42b3dc597655b156a, type: 2}
-    level: 8
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 3
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 4
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 5
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 6
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 7
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 8
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 9
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    level: 15
-  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    level: 13
-  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    level: 13
-  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    level: 13
-  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    level: 13
-  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    level: 13
-  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    level: 13
-  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    level: 13
-  - _base: {fileID: 11400000, guid: 0f6c0a4488acb754a94efff049bb36c2, type: 2}
-    level: 13
+  storedPokemon: []
   boxStorageSlots:
   - {fileID: 6325368913522355229}
   - {fileID: 7093579181810691861}
@@ -3018,6 +2921,19 @@ MonoBehaviour:
   boxName: {fileID: 9073221071062117094}
   boxes: []
   hoveredPokemonUI: {fileID: 4887370188232806377}
+--- !u!114 &6348495808737649931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164724522529123066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: e23def34-8e7c-4a4a-9ec9-bf5209858656
 --- !u!1 &5375773690928310743
 GameObject:
   m_ObjectHideFlags: 0

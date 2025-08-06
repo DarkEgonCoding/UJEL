@@ -18,7 +18,7 @@ public enum SortMode
     Custom
 }
 
-public class PCBox : MonoBehaviour
+public class PCBox : MonoBehaviour, ISavable
 {
     [Header("PC")]
     [SerializeField] public GameObject pcObject;
@@ -404,7 +404,7 @@ public class PCBox : MonoBehaviour
         boxStorageSlots[newIndex].ImageSlot.OnSelectionChanged(true);
 
         // Update the hoveredPokemonUI
-        if(currentLayer != PARTY_LAYER) hoveredPokemonUI.Show(boxStorageSlots[newIndex].ImageSlot.PokemonSlotUI);
+        if (currentLayer != PARTY_LAYER) hoveredPokemonUI.Show(boxStorageSlots[newIndex].ImageSlot.PokemonSlotUI);
     }
 
     private void HandleSortMode()
@@ -780,7 +780,7 @@ public class PCBox : MonoBehaviour
         lockParty = false;
         selectedGridPokemonPos = new Vector2Int(-1, -1);
     }
-    
+
     public void RemovePokemonFromPC(Pokemon pokemon)
     {
         if (storedPokemon.Contains(pokemon))
@@ -792,4 +792,33 @@ public class PCBox : MonoBehaviour
             Debug.LogWarning("Tried to remove a Pokémon from PC that wasn't stored.");
         }
     }
+
+    public object CaptureState()
+    {
+        var saveData = new PCSaveData
+        {
+            pokemons = storedPokemon
+                .Where(p => p != null) // filter null pokemon
+                .Select(p => p.GetSaveData())
+                .ToList()
+        };
+
+        return saveData;
+    }
+
+    public void RestoreState(object state)
+    {
+        var saveData = (PCSaveData)state;
+        storedPokemon = saveData.pokemons
+            .Where(p => p != null)
+            .Select(p => new Pokemon(p))
+            .ToList();
+    }
+}
+
+
+[Serializable]
+public class PCSaveData
+{
+    public List<PokemonSaveData> pokemons;
 }
