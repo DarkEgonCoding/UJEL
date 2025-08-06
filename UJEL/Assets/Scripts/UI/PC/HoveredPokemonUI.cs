@@ -20,6 +20,7 @@ public class HoveredPokemonUI : MonoBehaviour
     public void Show(IPokemonSlotUI slotUI)
     {
         if (slotUI == null) return;
+        if (PCBox.instance.IsPartyTransferMode) return;
 
         var pokemon = slotUI.StoredPokemon;
         if (pokemon == null)
