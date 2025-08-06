@@ -45,6 +45,7 @@ public class GameController : MonoBehaviour
     [SerializeField] PokedexUIManager pokedexUIManager;
     [SerializeField] Canvas UICanvas;
     [SerializeField] MapController mapController;
+    [SerializeField] public EncounterZone legendaryEncounter;
     int selectedMenuItem = 0;
     int currentPartyMember;
     private string pressed;

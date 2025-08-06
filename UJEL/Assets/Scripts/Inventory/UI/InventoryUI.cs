@@ -198,8 +198,18 @@ public class InventoryUI : MonoBehaviour
         {
             if (usedItem is RecoveryItem)
                 yield return DialogManager.Instance.ShowDialogText($"The player used {usedItem.Name}.");
+            else if (usedItem is LureItem)
+                yield return DialogManager.Instance.ShowDialogText($"The player used {usedItem.Name}.");
         }
-        else yield return DialogManager.Instance.ShowDialogText($"You can't use that item here.");
+        else
+        {
+            if (usedItem is LureItem)
+                yield return DialogManager.Instance.ShowDialogText($"A lure is already active.");
+            else
+            {
+                yield return DialogManager.Instance.ShowDialogText($"You can't use that item here.");
+            }
+        }
 
         ClosePartyScreen();
     }

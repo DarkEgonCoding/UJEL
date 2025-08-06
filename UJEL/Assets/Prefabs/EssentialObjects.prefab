@@ -2778,6 +2778,7 @@ MonoBehaviour:
   pokedexUIManager: {fileID: 7457473932030475063}
   UICanvas: {fileID: 3236495773347155168}
   mapController: {fileID: 4341867661976004382}
+  legendaryEncounter: {fileID: 11400000, guid: 878877db12f005d4a86cc76c48c08da8, type: 2}
   currentEncounterZone: {fileID: 0}
 --- !u!114 &309560227406838143
 MonoBehaviour:
