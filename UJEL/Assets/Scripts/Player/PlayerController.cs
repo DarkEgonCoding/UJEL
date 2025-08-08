@@ -8,6 +8,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.TextCore.Text;
 
@@ -415,8 +416,9 @@ public class PlayerController : MonoBehaviour, ISavable
     {
         var saveData = new PlayerSavaData()
         {
-            position = new float[] {transform.position.x, transform.position.y},
-            pokemons = GetComponent<PokemonParty>().Pokemons.Select(p => p.GetSaveData()).ToList()
+            position = new float[] { transform.position.x, transform.position.y },
+            pokemons = GetComponent<PokemonParty>().Pokemons.Select(p => p.GetSaveData()).ToList(),
+            sceneIndex = SceneManager.GetActiveScene().buildIndex
         };
 
         return saveData;
@@ -426,9 +428,17 @@ public class PlayerController : MonoBehaviour, ISavable
     {
         var saveData = (PlayerSavaData)state;
 
-        // Restore Position
-        var pos = saveData.position;
-        transform.position = new Vector3(pos[0], pos[1]);
+        if (SceneManager.GetActiveScene().buildIndex != saveData.sceneIndex)
+        {
+            // Start coroutine to load correct scene
+            var targetPos = new Vector2(saveData.position[0], saveData.position[1]);
+            StartCoroutine(SceneWarp.instance.Warp(saveData.sceneIndex, targetPos));
+        }
+        else
+        {
+            // Already in correct scene
+            transform.position = new Vector3(saveData.position[0], saveData.position[1]);
+        }
 
         // Restore Party
         GetComponent<PokemonParty>().Pokemons = saveData.pokemons.Select(s => new Pokemon(s)).ToList();
@@ -447,4 +457,5 @@ public class PlayerSavaData
 {
     public float[] position;
     public List<PokemonSaveData> pokemons;
+    public int sceneIndex;
 }

@@ -71,7 +71,8 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
+        if (instance == null) instance = this;
+        mapController = MapController.instance;
         playerController.OnEncountered.AddListener(() => StartCoroutine(StartBattle()));
         battleSystem.OnBattleOver.AddListener(EndBattle);
         UICanvas.gameObject.SetActive(false);
@@ -185,6 +186,8 @@ public class GameController : MonoBehaviour
     {
         if (pause) // If pausing the game, set to pause
         {
+            if (state == GameState.Pause) return;
+
             stateBeforePause = state;
             state = GameState.Pause;
         }
@@ -194,6 +197,7 @@ public class GameController : MonoBehaviour
             state = resumeState ?? stateBeforePause;
         }
     }
+    
     public void OpenMenu()
     {
         if (state == GameState.FreeRoam)
@@ -328,6 +332,12 @@ public class GameController : MonoBehaviour
         UICanvas.gameObject.SetActive(false);
         mapController.gameObject.SetActive(false);
         menu.SetActive(true);
+    }
+
+    public void DisableMap()
+    {
+        UICanvas.gameObject.SetActive(false);
+        mapController.gameObject.SetActive(false);
     }
 
     void PokedexReturn()

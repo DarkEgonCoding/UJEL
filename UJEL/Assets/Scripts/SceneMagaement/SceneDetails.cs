@@ -21,8 +21,13 @@ public class SceneDetails : MonoBehaviour
         LoadScene();
     }
 
-    public void LoadScene(){
-        if (!isLoaded){
+    /// <summary>
+    /// Restores all savable entities in the scene
+    /// </summary>
+    public void LoadScene()
+    {
+        if (!isLoaded)
+        {
             isLoaded = true;
 
             savableEntities = GetSavableEntitiesInScene();
@@ -30,8 +35,14 @@ public class SceneDetails : MonoBehaviour
         }
     }
 
-    public void UnloadScene(){
-        if (isLoaded){
+    /// <summary>
+    /// This scene marks a scene as unloaded and
+    /// saves all savable entities in the scene
+    /// </summary>
+    public void UnloadScene()
+    {
+        if (isLoaded)
+        {
             savableEntities = GetSavableEntitiesInScene();
             SavingSystem.i.CaptureEntityStates(savableEntities);
 

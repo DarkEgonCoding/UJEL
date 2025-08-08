@@ -888,14 +888,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7297908231502514440}
-  - component: {fileID: 2495598455754622012}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7297908231502514440
 Transform:
   m_ObjectHideFlags: 0
@@ -917,23 +916,6 @@ Transform:
   - {fileID: 7046202856691258779}
   m_Father: {fileID: 6836754177018177025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2495598455754622012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319508185116866486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea1ff45edf9bba74dbb6c318a6e63ecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cursor: {fileID: 7579822760028151827}
-  moveDistance: 3
-  initialDelay: 0.15
-  inputRepeatDelay: 0.025
-  cursorSize: {x: 20, y: 20}
 --- !u!1 &1332504839814127906
 GameObject:
   m_ObjectHideFlags: 0
@@ -9370,6 +9352,10 @@ PrefabInstance:
       propertyPath: pointName
       value: Starting Town
       objectReference: {fileID: 0}
+    - target: {fileID: 7218735467597946920, guid: 084b8c8331d6fd945b56892cc97f955f, type: 3}
+      propertyPath: sceneToLoad
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12824,6 +12810,10 @@ PrefabInstance:
       propertyPath: pointName
       value: Town 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7218735467597946920, guid: 084b8c8331d6fd945b56892cc97f955f, type: 3}
+      propertyPath: sceneToLoad
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14601,6 +14591,10 @@ PrefabInstance:
     - target: {fileID: 7218735467597946920, guid: 084b8c8331d6fd945b56892cc97f955f, type: 3}
       propertyPath: pointName
       value: Gym 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218735467597946920, guid: 084b8c8331d6fd945b56892cc97f955f, type: 3}
+      propertyPath: sceneToLoad
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

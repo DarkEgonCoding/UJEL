@@ -17,6 +17,13 @@ public class MapController : MonoBehaviour
     [SerializeField] float inputRepeatDelay = 0.1f;
     [SerializeField] Vector2 cursorSize = new Vector2(20f, 20f);
 
+    public static MapController instance;
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
+
     public void HandleUpdate(Action onBack)
     {
         HandleCursorMovement();
@@ -97,17 +104,19 @@ public class MapController : MonoBehaviour
             var flightPoint = hit.GetComponent<FlightPoint>();
             if (flightPoint != null)
             {
-                //yield return StartCoroutine(DialogManager.Instance.ShowDialogText($"Flying to {flightPoint.pointName}!", true));
-                Debug.Log($"Flying to {flightPoint.pointName}!");
-                //StartCoroutine(FlyToLocation(flightPoint));
+                Debug.Log($"Flying to {flightPoint.pointName} with index {flightPoint.sceneToLoad} and position {flightPoint.spawnPosition}!");
+
+                FlyToLocation(flightPoint);
+                
+                GameController.instance.DisableMap();
             }
         }
 
         yield return null;
     }
 
-    IEnumerator FlyToLocation(FlightPoint point)
+    void FlyToLocation(FlightPoint point)
     {
-        yield return null;
+        StartCoroutine(SceneWarp.instance.Warp(point.sceneToLoad, point.spawnPosition));
     }
 }
