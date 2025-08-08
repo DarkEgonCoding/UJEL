@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: LakeTile
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -683000713, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
+  - {fileID: 207932153, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
+  - {fileID: 928012242, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
+  - {fileID: 404818544, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
+  - {fileID: -17589901, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
+  - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
+  - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
+  - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
+  m_MinSpeed: 1.5
+  m_MaxSpeed: 1.5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0
