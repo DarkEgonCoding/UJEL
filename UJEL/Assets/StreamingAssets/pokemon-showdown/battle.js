@@ -11,10 +11,6 @@ stream = new Sim.BattleStream();
     }
 })();
 
-stream.write(`>start {"formatid":"gen7randombattle"}`);
-stream.write(`>player p1 {"name":"Alice"}`);
-stream.write(`>player p2 {"name":"Bob"}`);
-
 var rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
@@ -26,5 +22,3 @@ var rl = readline.createInterface({
 		stream.write(line);
 	}
 })();
-
-console.log("Exiting");

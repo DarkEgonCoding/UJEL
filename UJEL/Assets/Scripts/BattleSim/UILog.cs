@@ -23,6 +23,8 @@ public class UILog : MonoBehaviour
 
         if (content == null || viewport == null)
             Debug.LogError("StableSingleTextLog: ScrollRect must have content and viewport assigned.");
+
+        logText.text = "";
     }
 
     /// <summary>

@@ -8,20 +8,19 @@ public class ButtonController : MonoBehaviour
     public void StartBattle()
     {
         Debug.Log("Battle Started");
+        MainBattleSimController.instance.BattleStart();
     }
 
-    public void DoMove(int move)
+    public void DoMoveBtn(int move)
     {
         var player = PlayerSwitchController.instance.SelectedPlayer;
-
-        Debug.Log($"Move chosen by player {player} with index {move}.");
+        MainBattleSimController.instance.DoMove(move, player);
     }
 
-    public void DoSwitch(int switchIndex)
+    public void DoSwitchBtn(int switchIndex)
     {
         var player = PlayerSwitchController.instance.SelectedPlayer;
-
-        Debug.Log($"Switch chosen by player {player} with index {switchIndex}.");
+        MainBattleSimController.instance.DoSwitch(switchIndex, player);
     }
 
 }

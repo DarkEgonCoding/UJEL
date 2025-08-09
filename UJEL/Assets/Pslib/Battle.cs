@@ -50,8 +50,10 @@ namespace PsLib
             UnityEngine.Debug.Log(args.Data);
         }
 
-        private void OnError(object sender, DataReceivedEventArgs args) {
-            UnityEngine.Debug.Log(args.Data);
+        private void OnError(object sender, DataReceivedEventArgs args)
+        {
+            if (!string.IsNullOrEmpty(args.Data))
+                UnityEngine.Debug.LogError($"Node error: {args.Data}");
         }
 
         public void Start(string p1spec, string p2spec) {
@@ -64,21 +66,36 @@ namespace PsLib
             _battle.StartInfo.RedirectStandardInput = true;
             _battle.StartInfo.RedirectStandardOutput = true;
             _battle.StartInfo.RedirectStandardError = true;
+            _battle.StartInfo.CreateNoWindow = true;
             _battle.Start();
             _battle.OutputDataReceived += OnData;
             _battle.ErrorDataReceived += OnError;
             _battle.BeginOutputReadLine();
             _battle.BeginErrorReadLine();
 
-            _battle.StandardInput.WriteLine(">start {\"formatid\":\"gen7randombattle\"}");
-            _battle.StandardInput.WriteLine(">player p1 " + "");
-            _battle.StandardInput.WriteLine(">player p2 " + "");
+            _battle.StandardInput.WriteLine(">start {\"formatid\":\"gen7ou\"}");
+            _battle.StandardInput.WriteLine($">player p1 {{\"name\":\"Player1\",\"team\":\"{p1spec}\"}}");
+            _battle.StandardInput.WriteLine($">player p2 {{\"name\":\"Player2\",\"team\":\"{p2spec}\"}}");
+            _battle.StandardInput.WriteLine(">p1 team 123456");
+            _battle.StandardInput.WriteLine(">p2 team 123456");
 
             _msgQ = new ConcurrentQueue<Sim.Message>();
             _simStream = new ConcurrentQueue<string>();
         }
 
-        ~Battle() {
+        public void WriteLine(string line)
+        {
+            if (_battle == null || _battle.HasExited)
+            {
+                UnityEngine.Debug.LogWarning("Tried to write to battle process after it exited.");
+                return;
+            }
+
+            _battle.StandardInput.WriteLine(line);
+        }
+
+        ~Battle()
+        {
             if (_battle != null) { _battle.Kill(); }
         }
     }
