@@ -5,10 +5,10 @@ using UnityEngine;
 public class ItemBase : ScriptableObject
 {
     [SerializeField] string name;
-    [SerializeField] string description;
+    [SerializeField] [TextArea] string description;
     [SerializeField] Sprite icon;
 
-    public string Name => name;
+    public virtual string Name => name;
     public string Description => description;
     public Sprite Icon => icon;
 
@@ -16,4 +16,6 @@ public class ItemBase : ScriptableObject
     {
         return false;
     }
+
+    public virtual bool IsReusable => false;
 }

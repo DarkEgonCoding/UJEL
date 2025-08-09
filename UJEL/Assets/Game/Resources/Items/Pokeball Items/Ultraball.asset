@@ -15,3 +15,4 @@ MonoBehaviour:
   name: Ultraball
   description: A ball with a very high chance to capture Pokemon.
   icon: {fileID: -1364742278, guid: e312d695124c6b1468f31fc1f0dfc897, type: 3}
+  catchRateModifier: 2

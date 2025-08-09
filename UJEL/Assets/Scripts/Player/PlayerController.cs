@@ -8,14 +8,18 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.TextCore.Text;
 
 public enum PlayerSprite { boy, girl, imposter }
 public class PlayerController : MonoBehaviour, ISavable
 {
+    // Sprites and Data
     [SerializeField] Sprite sprite;
     [SerializeField] string name;
+
+    // Speeds and movement
     [SerializeField] public float OriginalMoveSpeed = 5f;
     public float moveSpeed;
     [SerializeField] public float runSpeed = 9f;
@@ -31,6 +35,8 @@ public class PlayerController : MonoBehaviour, ISavable
     public bool isBiking = false;
     public bool canBike = true;
     public bool isSwimming = false;
+
+    // Controls
     public PlayerControls controls;
     public Animator animator;
     bool UpisPressed;
@@ -41,8 +47,18 @@ public class PlayerController : MonoBehaviour, ISavable
     public bool inJump = false;
     public bool canSwim = false;
     public bool onBridge = false;
+
+    // Item Values
+    public float lureCounter = 0;
+    public float lureEncounterChance = -1;
+
+    // Visuals
     [SerializeField] PlayerSprite playerSprite = PlayerSprite.imposter;
+
+    // Getters and Setters
     public Vector2Int CurrentTilePos => new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+
+    // Components
     public Character character;
     private void Awake()
     {
@@ -99,6 +115,8 @@ public class PlayerController : MonoBehaviour, ISavable
 
         //Bike
         controls.Main.Bike.performed += ctx => {
+            if (GameController.instance.state != GameState.FreeRoam) return;
+
             //Switch bike on and off
             isBiking = !isBiking;
             
@@ -303,16 +321,37 @@ public class PlayerController : MonoBehaviour, ISavable
         } 
     }
 
-    private void OnMoveOver(){
+    private void OnMoveOver()
+    {
         var colliders = Physics2D.OverlapCircleAll(transform.position, 0.2f, GameLayers.i.TriggerableLayers);
-        
-        foreach (var collider in colliders){
+
+        foreach (var collider in colliders)
+        {
             var triggerable = collider.GetComponent<IPlayerTriggerable>();
-            if (triggerable != null){
+            if (triggerable != null)
+            {
                 triggerable.OnPlayerTriggered(this);
                 break;
             }
         }
+
+        // Lures
+        if (lureCounter > 0)
+        {
+            lureCounter--;
+
+            // If the lure just wore out
+            if (lureCounter == 0)
+                RemoveLure();
+        }
+        
+    }
+
+    public void RemoveLure()
+    {
+        DialogManager.Instance.ShowDialog(new Dialog("The lure / repel has worn out."));
+        lureCounter = 0;
+        lureEncounterChance = -1;
     }
 
     void Interact(){
@@ -377,8 +416,9 @@ public class PlayerController : MonoBehaviour, ISavable
     {
         var saveData = new PlayerSavaData()
         {
-            position = new float[] {transform.position.x, transform.position.y},
-            pokemons = GetComponent<PokemonParty>().Pokemons.Select(p => p.GetSaveData()).ToList()
+            position = new float[] { transform.position.x, transform.position.y },
+            pokemons = GetComponent<PokemonParty>().Pokemons.Select(p => p.GetSaveData()).ToList(),
+            sceneIndex = SceneManager.GetActiveScene().buildIndex
         };
 
         return saveData;
@@ -388,9 +428,17 @@ public class PlayerController : MonoBehaviour, ISavable
     {
         var saveData = (PlayerSavaData)state;
 
-        // Restore Position
-        var pos = saveData.position;
-        transform.position = new Vector3(pos[0], pos[1]);
+        if (SceneManager.GetActiveScene().buildIndex != saveData.sceneIndex)
+        {
+            // Start coroutine to load correct scene
+            var targetPos = new Vector2(saveData.position[0], saveData.position[1]);
+            StartCoroutine(SceneWarp.instance.Warp(saveData.sceneIndex, targetPos));
+        }
+        else
+        {
+            // Already in correct scene
+            transform.position = new Vector3(saveData.position[0], saveData.position[1]);
+        }
 
         // Restore Party
         GetComponent<PokemonParty>().Pokemons = saveData.pokemons.Select(s => new Pokemon(s)).ToList();
@@ -409,4 +457,5 @@ public class PlayerSavaData
 {
     public float[] position;
     public List<PokemonSaveData> pokemons;
+    public int sceneIndex;
 }

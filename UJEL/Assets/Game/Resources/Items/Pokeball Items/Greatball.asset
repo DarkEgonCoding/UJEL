@@ -15,3 +15,4 @@ MonoBehaviour:
   name: Greatball
   description: A ball with a higher chance to capture Pokemon.
   icon: {fileID: 303677657, guid: e312d695124c6b1468f31fc1f0dfc897, type: 3}
+  catchRateModifier: 1.5

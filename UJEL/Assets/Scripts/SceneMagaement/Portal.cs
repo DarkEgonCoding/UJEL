@@ -33,8 +33,12 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
         yield return Fader.instance.FadeIn(0.5f);
         DontDestroyOnLoad(gameObject);
 
-        sceneDetails.UnloadScene();
-
+        if (sceneDetails != null)
+        {
+            sceneDetails.UnloadScene();
+        }
+        else Debug.LogError("There is no SceneDetails to unload!");
+        
         yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
         var destPortal = FindObjectsOfType<Portal>().First(x => x != this && x.destinationPortal == this.destinationPortal);

@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c574d278f44481e45a577d9a0cdad016, type: 3}
+  m_Name: Ivysaur
+  m_EditorClassIdentifier: 
+  name: Ivysaur
+  pokedexNumber: 4
+  description: Bigger bulb
+  foundLocations: None
+  frontSprite: {fileID: 21300000, guid: d2ebc5d5170163b4ea0d0069d9e8d218, type: 3}
+  backSprite: {fileID: 21300000, guid: 3c0a1fef80378744881547d7adbbe091, type: 3}
+  type1: 5
+  type2: 8
+  maxHp: 55
+  attack: 66
+  defense: 77
+  spAttack: 88
+  spDefense: 99
+  speed: 100
+  catchRate: 1000
+  expYield: 800
+  growthRate: 0
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: 6ee8f828e2b30514681df269fe78f922, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 50f6c8acf4d5d0946b287f2d6d31ebc0, type: 2}
+    level: 10
+  - moveBase: {fileID: 11400000, guid: d4ffa2251f3488a47a75609a7ec1f06c, type: 2}
+    level: 12
+  - moveBase: {fileID: 11400000, guid: fec6282d7e8ba224d956ab33a85c1db5, type: 2}
+    level: 3
+  - moveBase: {fileID: 11400000, guid: 60ac823cf683b604283eabbaf063a981, type: 2}
+    level: 13
+  learnableByItems: []
+  evolutions: []

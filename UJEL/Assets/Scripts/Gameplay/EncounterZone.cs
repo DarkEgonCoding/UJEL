@@ -17,6 +17,9 @@ public class EncounterZone : ScriptableObject
 
     [SerializeField] private List<EncounterEntry> wildEncounters;
 
+    [SerializeField] private float encounterRate = .077f;
+    public float EncounterRate => encounterRate;
+
     public Pokemon GetRandomWildPokemon()
     {
         if (wildEncounters == null || wildEncounters.Count == 0)

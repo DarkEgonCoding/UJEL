@@ -9,9 +9,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene}
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution, PC }
 
-public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex }
+public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex, Map }
 
 public class GameController : MonoBehaviour
 {
@@ -44,6 +44,8 @@ public class GameController : MonoBehaviour
     [SerializeField] InventoryUI inventoryUI;
     [SerializeField] PokedexUIManager pokedexUIManager;
     [SerializeField] Canvas UICanvas;
+    [SerializeField] MapController mapController;
+    [SerializeField] public EncounterZone legendaryEncounter;
     int selectedMenuItem = 0;
     int currentPartyMember;
     private string pressed;
@@ -69,7 +71,8 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
+        if (instance == null) instance = this;
+        mapController = MapController.instance;
         playerController.OnEncountered.AddListener(() => StartCoroutine(StartBattle()));
         battleSystem.OnBattleOver.AddListener(EndBattle);
         UICanvas.gameObject.SetActive(false);
@@ -80,6 +83,9 @@ public class GameController : MonoBehaviour
         //Save and Load --- TEMPORARY
         //controls.Main.Save.performed += ctx => Save();
         //controls.Main.Load.performed += ctx => Load();
+
+        EvolutionManager.instance.OnStartEvolution += () => state = GameState.Evolution;
+        EvolutionManager.instance.OnCompleteEvolution += () => state = GameState.FreeRoam;
     }
 
     void EndBattle(bool won)
@@ -87,6 +93,9 @@ public class GameController : MonoBehaviour
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);
+
+        var playerParty = playerController.GetComponent<PokemonParty>();
+        StartCoroutine(playerParty.CheckForEvolutions());
     }
 
     private void Update()
@@ -102,6 +111,10 @@ public class GameController : MonoBehaviour
         else if (state == GameState.Menu)
         {
             MenuHandleUpdate();
+        }
+        else if (state == GameState.PC)
+        {
+            PCBox.instance.HandlePCUpdate();
         }
     }
 
@@ -173,6 +186,8 @@ public class GameController : MonoBehaviour
     {
         if (pause) // If pausing the game, set to pause
         {
+            if (state == GameState.Pause) return;
+
             stateBeforePause = state;
             state = GameState.Pause;
         }
@@ -182,6 +197,7 @@ public class GameController : MonoBehaviour
             state = resumeState ?? stateBeforePause;
         }
     }
+    
     public void OpenMenu()
     {
         if (state == GameState.FreeRoam)
@@ -299,6 +315,29 @@ public class GameController : MonoBehaviour
         {
             pokedexUIManager.HandleUpdate(PokedexReturn);
         }
+
+        if (menuState == MenuState.Map)
+        {
+            mapController.HandleUpdate(() =>
+            {
+                StartCoroutine(LeaveMap());
+            });
+        }
+    }
+
+    IEnumerator LeaveMap()
+    {
+        menuState = MenuState.Main;
+        yield return new WaitForEndOfFrame();
+        UICanvas.gameObject.SetActive(false);
+        mapController.gameObject.SetActive(false);
+        menu.SetActive(true);
+    }
+
+    public void DisableMap()
+    {
+        UICanvas.gameObject.SetActive(false);
+        mapController.gameObject.SetActive(false);
     }
 
     void PokedexReturn()
@@ -403,16 +442,29 @@ public class GameController : MonoBehaviour
         }
         else if (selectedItem == 3)
         {
+            // Map
+            menuState = MenuState.Map;
+            UICanvas.gameObject.SetActive(true);
+            mapController.gameObject.SetActive(true);
+        }
+        else if (selectedItem == 4)
+        {
             // Save
             Save();
             state = GameState.FreeRoam;
         }
-        else if (selectedItem == 4)
+        else if (selectedItem == 5)
         {
             // Load
             Load();
             state = GameState.FreeRoam;
         }
+    }
+
+    public void SetUICanvas(bool Active)
+    {
+        if (Active) UICanvas.gameObject.SetActive(true);
+        else UICanvas.gameObject.SetActive(false);
     }
 
     void UpdateItemSelection()

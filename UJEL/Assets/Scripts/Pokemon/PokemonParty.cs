@@ -47,9 +47,30 @@ public class PokemonParty : MonoBehaviour
         }
         else
         {
-            // TODO: Add to the PC
-            Debug.Log("add to pc");
+            PCBox.instance.AddPokemonToPC(newPokemon);
         }
+    }
+
+    public void RemovePokemon(int index)
+    {
+        if (pokemons.Count > 1 && index >= 0 && index < pokemons.Count)
+        {
+            pokemons.RemoveAt(index);
+        }
+    }
+
+    public IEnumerator CheckForEvolutions()
+    {
+        foreach (var pokemon in pokemons)
+        {
+            var evolution = pokemon.CheckForEvolution();
+            if (evolution != null)
+            {
+                yield return EvolutionManager.instance.Evolve(pokemon, evolution);
+            }
+        }
+
+        OnUpdated?.Invoke();
     }
 
     public static PokemonParty GetPlayerParty()

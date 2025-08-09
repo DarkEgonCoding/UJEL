@@ -112,14 +112,14 @@ public class Pokemon
         return Base.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();
     }
 
-    public void LearnMove(LearnableMove moveToLearn)
+    public void LearnMove(MoveBase moveToLearn)
     {
         if (Moves.Count > PokemonBase.MaxNumOfMoves)
         {
             return;
         }
 
-        Moves.Add(new Move(moveToLearn.Base));
+        Moves.Add(new Move(moveToLearn));
     }
 
     public int Attack
@@ -200,6 +200,22 @@ public class Pokemon
     {
         HP = Mathf.Clamp(HP + heal, 0, MaxHp);
         OnHPChanged?.Invoke();
+    }
+
+    public bool HasMove(MoveBase moveToCheck)
+    {
+        return Moves.Count(m => m.Base == moveToCheck) > 0;
+    }
+
+    public Evolution CheckForEvolution()
+    {
+        return Base.Evolutions.FirstOrDefault(e => e.RequiredLevel <= level);
+    }
+
+    public void Evolve(Evolution evolution)
+    {
+        _base = evolution.EvolvesInto;
+        Debug.LogWarning("Idk if the stats for the new pokemon are correct. - Evan");
     }
 
     public Move GetRandomMove()

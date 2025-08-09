@@ -14,16 +14,12 @@ public class ItemSlotUI : MonoBehaviour
 
     RectTransform rectTransform;
 
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
-
     public float Height => rectTransform.rect.height;
 
     public void SetData(ItemSlot itemSlot)
     {
-        nameText.text = itemSlot.Item.name;
+        rectTransform = GetComponent<RectTransform>();
+        nameText.text = itemSlot.Item.Name;
         countText.text = $"X {itemSlot.Count}";
     }
 }
