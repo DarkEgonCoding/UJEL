@@ -34,7 +34,17 @@ public class GameController : MonoBehaviour
     }
 
     GameState stateBeforePause;
-    MenuState menuState;
+
+    MenuState visualMenuState;
+    MenuState menuState
+    { get => visualMenuState;
+        set
+        {
+            Debug.Log($"MenuState changed: {visualMenuState} → {value}");
+            visualMenuState = value;
+        }
+    }
+
     public PlayerControls controls;
     public static GameController instance;
     [SerializeField] GameObject menu;
@@ -44,7 +54,7 @@ public class GameController : MonoBehaviour
     [SerializeField] InventoryUI inventoryUI;
     [SerializeField] PokedexUIManager pokedexUIManager;
     [SerializeField] Canvas UICanvas;
-    [SerializeField] MapController mapController;
+    [SerializeField] GameObject MapUI;
     [SerializeField] public EncounterZone legendaryEncounter;
     int selectedMenuItem = 0;
     int currentPartyMember;
@@ -72,7 +82,6 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         if (instance == null) instance = this;
-        mapController = MapController.instance;
         playerController.OnEncountered.AddListener(() => StartCoroutine(StartBattle()));
         battleSystem.OnBattleOver.AddListener(EndBattle);
         UICanvas.gameObject.SetActive(false);
@@ -318,7 +327,7 @@ public class GameController : MonoBehaviour
 
         if (menuState == MenuState.Map)
         {
-            mapController.HandleUpdate(() =>
+            MapController.instance.HandleUpdate(() =>
             {
                 StartCoroutine(LeaveMap());
             });
@@ -330,14 +339,14 @@ public class GameController : MonoBehaviour
         menuState = MenuState.Main;
         yield return new WaitForEndOfFrame();
         UICanvas.gameObject.SetActive(false);
-        mapController.gameObject.SetActive(false);
+        MapUI.SetActive(false);
         menu.SetActive(true);
     }
 
     public void DisableMap()
     {
         UICanvas.gameObject.SetActive(false);
-        mapController.gameObject.SetActive(false);
+        MapUI.SetActive(false);
     }
 
     void PokedexReturn()
@@ -445,7 +454,7 @@ public class GameController : MonoBehaviour
             // Map
             menuState = MenuState.Map;
             UICanvas.gameObject.SetActive(true);
-            mapController.gameObject.SetActive(true);
+            MapUI.SetActive(true);
         }
         else if (selectedItem == 4)
         {
