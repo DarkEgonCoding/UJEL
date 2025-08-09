@@ -13,4 +13,13 @@ public class CameraFollow : MonoBehaviour
     {
         transform.position = player.transform.position + new Vector3(CameraX, CameraY, CameraZ);
     }
+
+    public float pixelsPerUnit = 16f;
+
+    void LateUpdate() {
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Round(pos.x * pixelsPerUnit) / pixelsPerUnit;
+        pos.y = Mathf.Round(pos.y * pixelsPerUnit) / pixelsPerUnit;
+        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+    }
 }

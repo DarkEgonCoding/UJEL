@@ -19,8 +19,8 @@ TagManager:
   - Ledges
   - Portal
   - WaterLayer
-  - 
-  - 
+  - Player
+  - Trigger
   - 
   - 
   - 
@@ -66,4 +66,7 @@ TagManager:
     locked: 0
   - name: Transition
     uniqueID: 2468135573
+    locked: 0
+  - name: Battle
+    uniqueID: 2955477503
     locked: 0

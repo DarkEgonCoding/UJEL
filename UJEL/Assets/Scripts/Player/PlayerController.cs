@@ -1,20 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.TextCore.Text;
 
-public class PlayerController : MonoBehaviour
+public enum PlayerSprite { boy, girl, imposter }
+public class PlayerController : MonoBehaviour, ISavable
 {
+    // Sprites and Data
+    [SerializeField] Sprite sprite;
+    [SerializeField] string name;
+
+    // Speeds and movement
     [SerializeField] public float OriginalMoveSpeed = 5f;
     public float moveSpeed;
     [SerializeField] public float runSpeed = 9f;
     public PlayerController player;
+    public static PlayerController Instance;
     public UnityEvent OnEncountered;
     [SerializeField] public float jumpSpeed = 5f;
     [SerializeField] public float swimSpeed = 3f;
@@ -25,17 +35,10 @@ public class PlayerController : MonoBehaviour
     public bool isBiking = false;
     public bool canBike = true;
     public bool isSwimming = false;
+
+    // Controls
     public PlayerControls controls;
     public Animator animator;
-    [SerializeField] public LayerMask solidObjectsLayer;
-    [SerializeField] public LayerMask grassLayer;
-    [SerializeField] public LayerMask interactableLayer;
-    [SerializeField] public LayerMask ledgeLayer;
-    [SerializeField] public LayerMask portalLayer;
-    [SerializeField] public LayerMask waterLayer;
-    public LayerMask TriggerableLayers {
-        get => grassLayer | portalLayer;
-    }
     bool UpisPressed;
     bool DownisPressed;
     bool LeftisPressed;
@@ -43,7 +46,27 @@ public class PlayerController : MonoBehaviour
     bool XisPressed;
     public bool inJump = false;
     public bool canSwim = false;
-    private void Awake(){
+    public bool onBridge = false;
+
+    // Item Values
+    public float lureCounter = 0;
+    public float lureEncounterChance = -1;
+
+    // Visuals
+    [SerializeField] PlayerSprite playerSprite = PlayerSprite.imposter;
+
+    // Getters and Setters
+    public Vector2Int CurrentTilePos => new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+
+    // Components
+    public Character character;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        character = GetComponent<Character>();
         controls = new PlayerControls();
     }
 
@@ -64,7 +87,14 @@ public class PlayerController : MonoBehaviour
         };
 
         DialogManager.Instance.OnCloseDialog += () => {
-            GameController.instance.state = GameState.FreeRoam;
+            if (DialogManager.Instance.fromCutscene)
+            {
+                GameController.instance.state = GameState.Cutscene;
+            }
+            else if (GameController.instance.state != GameState.Battle)
+            {
+                GameController.instance.state = GameState.FreeRoam;
+            }
         };
 
 
@@ -85,14 +115,16 @@ public class PlayerController : MonoBehaviour
 
         //Bike
         controls.Main.Bike.performed += ctx => {
+            if (GameController.instance.state != GameState.FreeRoam) return;
+
             //Switch bike on and off
             isBiking = !isBiking;
             
             //If you are click bike in water, set isBiking false
-            Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.3f, waterLayer);
+            Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.3f, GameLayers.i.waterLayer);
             if (collider != null)
             {
-                if ((waterLayer & (1 << collider.gameObject.layer)) != 0)
+                if ((GameLayers.i.waterLayer & (1 << collider.gameObject.layer)) != 0 && !onBridge)
                 {
                     isBiking = false;
                 }
@@ -134,36 +166,103 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool IsWalkable(Vector3 targetPos){
-        Collider2D collider = Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer | interactableLayer | ledgeLayer | waterLayer);
-        if(collider != null){ //if the player collides with something
-            if ((waterLayer & (1 << collider.gameObject.layer)) != 0 && !isBiking)
+    private void Update()
+    {
+        if (GameController.instance.state == GameState.Trainer)
+        {
+            animator.SetBool("isMoving", false);
+        }
+        if (GameController.instance.state == GameState.Menu)
+        {
+            animator.SetBool("isMoving", false);
+        }
+    }
+
+    private void AnimationInCutscene(Vector2 direction)
+    {
+        Vector2 normDir = direction.normalized;
+        if (normDir == Vector2.up)
+        {
+            animator.SetFloat("moveX", 0);
+            animator.SetFloat("moveY", 1);
+        }
+        else if (normDir == Vector2.down)
+        {
+            animator.SetFloat("moveX", 0);
+            animator.SetFloat("moveY", -1);
+        }
+        else if (normDir == Vector2.right)
+        {
+            animator.SetFloat("moveX", 1);
+            animator.SetFloat("moveY", 0);
+        }
+        else if (normDir == Vector2.left)
+        {
+            animator.SetFloat("moveX", -1);
+            animator.SetFloat("moveY", 0);
+        }
+    }
+
+    private bool IsWalkable(Vector3 targetPos)
+    {
+        Collider2D[] colliders = new Collider2D[5];
+        int hits = Physics2D.OverlapCircleNonAlloc(targetPos, 0.3f, colliders, GameLayers.i.solidObjectsLayer | GameLayers.i.interactableLayer | GameLayers.i.ledgeLayer | GameLayers.i.waterLayer);
+        if (hits > 0)
+        { //if the player collides with something
+            bool hitWater = false;
+            for (int i = 0; i < hits; i++)
             {
-                if(canSwim == true)
+                if ((GameLayers.i.waterLayer & (1 << colliders[i].gameObject.layer)) != 0) hitWater = true;
+                else
                 {
+                    animator.SetBool("isMoving", false);
+                    return false;
+                }
+            }
+            if (hitWater)
+            {
+                if (isBiking)
+                {
+                    if (onBridge)
+                    {
+                        return true;
+                    }
+                    animator.SetBool("isMoving", false);
+                    return false;
+                }
+                if (canSwim == true)
+                {
+                    if (onBridge)
+                    {
+                        return true; // if you are above water and can swim, return true, but do not set isSwimming to true
+                    }
                     isSwimming = true;
                     return true; //return true if you unlocked swim
                 }
                 else
                 {
+                    if (onBridge)
+                    { // if you are above water on a bridge and can't swim, still allow movement
+                        return true;
+                    }
                     return false; //return false if you cannot swim
-                } 
+                }
             }
-            else
-            {
-                animator.SetBool("isMoving", false);
-                return false;
-            }
-            
         }
         isSwimming = false;
         return true; //return true if it doesn't collide with anything
     }
 
-    IEnumerator DoMove(Vector2 direction){
+    public IEnumerator DoMove(Vector2 direction){
         isMoving = true;        
         animator.SetBool("isMoving", isMoving);
-        
+
+        if (GameController.instance.state == GameState.Cutscene)
+        {
+            AnimationInCutscene(direction);
+            moveSpeed = OriginalMoveSpeed;
+        }
+
         var targetPos = transform.position;
         targetPos += (Vector3)direction;
 
@@ -180,7 +279,7 @@ public class PlayerController : MonoBehaviour
         if(IsWalkable(targetPos)){
             
             // Changes Speed based on what type of moving you are doing
-            if(isSwimming && !isBiking){
+            if(isSwimming && !isBiking && onBridge == false){
                 animator.SetBool("isMoving", false);
                 animator.SetBool("isSwimming", true);
                 moveSpeed = swimSpeed;
@@ -222,17 +321,37 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
-    private void OnMoveOver(){
-        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.2f, TriggerableLayers);
-        
-        foreach (var collider in colliders){
+    private void OnMoveOver()
+    {
+        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.2f, GameLayers.i.TriggerableLayers);
+
+        foreach (var collider in colliders)
+        {
             var triggerable = collider.GetComponent<IPlayerTriggerable>();
-            if (triggerable != null){
-                animator.SetBool("isMoving", false);
+            if (triggerable != null)
+            {
                 triggerable.OnPlayerTriggered(this);
                 break;
             }
         }
+
+        // Lures
+        if (lureCounter > 0)
+        {
+            lureCounter--;
+
+            // If the lure just wore out
+            if (lureCounter == 0)
+                RemoveLure();
+        }
+        
+    }
+
+    public void RemoveLure()
+    {
+        DialogManager.Instance.ShowDialog(new Dialog("The lure / repel has worn out."));
+        lureCounter = 0;
+        lureEncounterChance = -1;
     }
 
     void Interact(){
@@ -245,16 +364,21 @@ public class PlayerController : MonoBehaviour
                 var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
                 var interactPos = transform.position + facingDir;
                 
-                var collider = Physics2D.OverlapCircle(interactPos, 0.3f, interactableLayer);
+                var collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.i.interactableLayer);
                 if (collider != null){
-                    collider.GetComponent<Interactable>()?.Interact();
+                    collider.GetComponent<Interactable>()?.Interact(transform);
                 }
         }
     }
 
+    public Vector2 GetFacingDirection()
+    {
+        return new Vector2(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
+    }
+
 // LEDGE JUMP Mechanics
     Ledge CheckForLedge(Vector3 targetPos){
-        var collider = Physics2D.OverlapCircle(targetPos, 0.3f, ledgeLayer);
+        var collider = Physics2D.OverlapCircle(targetPos, 0.3f, GameLayers.i.ledgeLayer);
         return collider?.GetComponent<Ledge>();
     }
 
@@ -287,4 +411,51 @@ public class PlayerController : MonoBehaviour
 
         transform.position = pos;
     }
+
+    public object CaptureState() // Save data
+    {
+        var saveData = new PlayerSavaData()
+        {
+            position = new float[] { transform.position.x, transform.position.y },
+            pokemons = GetComponent<PokemonParty>().Pokemons.Select(p => p.GetSaveData()).ToList(),
+            sceneIndex = SceneManager.GetActiveScene().buildIndex
+        };
+
+        return saveData;
+    }
+
+    public void RestoreState(object state) // Restore data in loading
+    {
+        var saveData = (PlayerSavaData)state;
+
+        if (SceneManager.GetActiveScene().buildIndex != saveData.sceneIndex)
+        {
+            // Start coroutine to load correct scene
+            var targetPos = new Vector2(saveData.position[0], saveData.position[1]);
+            StartCoroutine(SceneWarp.instance.Warp(saveData.sceneIndex, targetPos));
+        }
+        else
+        {
+            // Already in correct scene
+            transform.position = new Vector3(saveData.position[0], saveData.position[1]);
+        }
+
+        // Restore Party
+        GetComponent<PokemonParty>().Pokemons = saveData.pokemons.Select(s => new Pokemon(s)).ToList();
+    }
+
+    public string Name {
+        get => name;
+    }
+    public Sprite Sprite {
+        get => sprite;
+    }
+}
+
+[Serializable]
+public class PlayerSavaData
+{
+    public float[] position;
+    public List<PokemonSaveData> pokemons;
+    public int sceneIndex;
 }

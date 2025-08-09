@@ -8,8 +8,11 @@ using UnityEngine;
 public class PokemonBase : ScriptableObject
 {
     [SerializeField] string name;
+    [SerializeField] int pokedexNumber;
     [TextArea]
     [SerializeField] string description;
+    [Tooltip("The locations where you can find this pokemon. Ex) Route 1, 4...")]
+    [SerializeField] string foundLocations;
     [SerializeField] Sprite frontSprite;
     [SerializeField] Sprite backSprite;
     [SerializeField] public PokemonType type1;
@@ -22,45 +25,133 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int spAttack;
     [SerializeField] int spDefense;
     [SerializeField] int speed;
+    [SerializeField] int catchRate;
 
+    [SerializeField] int expYield;
+    [SerializeField] GrowthRate growthRate;
     [SerializeField] List<LearnableMove> learnableMoves;
+    [SerializeField] List<MoveBase> learnableByItems;
+    [SerializeField] List<Evolution> evolutions;
+    public static int MaxNumOfMoves { get; set; } = 4;
 
-    public string Name {
+    public int GetExpForLevel(int level)
+    {
+        if (growthRate == GrowthRate.Fast)
+        {
+            return 4 * (level * level * level) / 5;
+        }
+        if (growthRate == GrowthRate.MediumFast)
+        {
+            return level * level * level;
+        }
+        if (growthRate == GrowthRate.Erratic)
+        {
+            if (level < 50)
+            {
+                return (((level * level * level) * (100 - level)) / 50);
+            }
+            else if (level < 68)
+            {
+                return (((level * level * level) * (150 - level)) / 100);
+            }
+            else if (level < 100)
+            {
+                return (((level * level * level) * ((1911 - (10 * level)) / 3)) / 500);
+            }
+        }
+        if (growthRate == GrowthRate.MediumSlow)
+        {
+            return (6 / 5) * (level * level * level) - (15 * (level * level)) + (100 * level) - 140;
+        }
+        if (growthRate == GrowthRate.Slow)
+        {
+            return (5 * level * level * level) / 4;
+        }
+        if (growthRate == GrowthRate.Fluctuating)
+        {
+            if (level < 15)
+            {
+                return ((level * level * level) * (((level + 1) / 3) + 24)) / 50;
+            }
+            else if (level < 36)
+            {
+                return ((level * level * level) * (level + 14)) / 50;
+            }
+            else if (level < 100)
+            {
+                return ((level * level * level) * ((level / 2) + 32)) / 50;
+            }
+        }
+
+        return -1; // THIS IS AN ERROR, THE GROWTH RATE DOES NOT EXIST
+    }
+
+    public string Name
+    {
         get { return name; }
     }
-    public string Description {
+    public string Description
+    {
         get { return description; }
     }
-    public Sprite FrontSprite{
+    public Sprite FrontSprite
+    {
         get { return frontSprite; }
     }
-    public Sprite BackSprite {
+    public Sprite BackSprite
+    {
         get { return backSprite; }
     }
-    public int MaxHp {
+    public int MaxHp
+    {
         get { return maxHp; }
     }
-    public int Attack {
+    public int Attack
+    {
         get { return attack; }
     }
-    public int SpAttack {
+    public int SpAttack
+    {
         get { return spAttack; }
     }
-    public int Defense {
+    public int Defense
+    {
         get { return defense; }
     }
-    public int SpDefense {
+    public int SpDefense
+    {
         get { return spDefense; }
     }
-    public int Speed {
+    public int Speed
+    {
         get { return speed; }
     }
-    public List<LearnableMove> LearnableMoves {
-        get { return learnableMoves;}
+    public List<LearnableMove> LearnableMoves
+    {
+        get { return learnableMoves; }
     }
+    public int CatchRate => catchRate;
+    public int PokedexNumber => pokedexNumber;
+    public string FoundLocations => foundLocations;
+    public List<MoveBase> LearnableByItems => learnableByItems;
+    public List<Evolution> Evolutions => evolutions;
+
+    public int ExpYield => expYield;
+    public GrowthRate GrowthRate => growthRate;
 }
 
-public enum PokemonType{
+[System.Serializable]
+public class Evolution
+{
+    [SerializeField] PokemonBase evolvesInto;
+    [SerializeField] int requiredLevel;
+
+    public PokemonBase EvolvesInto => evolvesInto;
+    public int RequiredLevel => requiredLevel;
+}
+
+public enum PokemonType
+{
     None,
     Normal,
     Fire,
@@ -81,6 +172,15 @@ public enum PokemonType{
     Steel,
     Fairy,
     DarkMatter
+}
+
+public enum GrowthRate{
+    MediumFast,
+    Erratic,
+    Fluctuating,
+    MediumSlow,
+    Fast,
+    Slow,
 }
 
 public class TypeChart{
