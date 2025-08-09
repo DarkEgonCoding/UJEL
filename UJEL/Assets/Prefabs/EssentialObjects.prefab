@@ -2822,7 +2822,7 @@ MonoBehaviour:
   inventoryUI: {fileID: 7878530263979720215}
   pokedexUIManager: {fileID: 7457473932030475063}
   UICanvas: {fileID: 3236495773347155168}
-  mapController: {fileID: 0}
+  MapUI: {fileID: 913273619491918996}
   legendaryEncounter: {fileID: 11400000, guid: 878877db12f005d4a86cc76c48c08da8, type: 2}
   currentEncounterZone: {fileID: 0}
 --- !u!114 &309560227406838143
@@ -7504,6 +7504,11 @@ MonoBehaviour:
 --- !u!1 &696930739455082245 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1677787536385399847, guid: 798db11df46664d4da06421c36712257, type: 3}
+  m_PrefabInstance: {fileID: 2225706412654289698}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &913273619491918996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1319508185116866486, guid: 798db11df46664d4da06421c36712257, type: 3}
   m_PrefabInstance: {fileID: 2225706412654289698}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &937818639717051465 stripped
