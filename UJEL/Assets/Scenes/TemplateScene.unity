@@ -2134,7 +2134,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5
+      m_AnimationSpeed: 1.5000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: -8, z: 0}
@@ -2164,7 +2164,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5
+      m_AnimationSpeed: 1.5000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -11, y: -7, z: 0}
@@ -2224,7 +2224,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5000001
+      m_AnimationSpeed: 1.5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: -7, z: 0}
@@ -2254,7 +2254,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5
+      m_AnimationSpeed: 1.5000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -8, y: -6, z: 0}
@@ -2344,7 +2344,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5
+      m_AnimationSpeed: 1.5000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -9, y: -5, z: 0}
