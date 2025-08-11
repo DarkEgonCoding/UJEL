@@ -114,7 +114,7 @@ public class BattleSystem : MonoBehaviour
             enemyUnit.Setup(enemyPokemon);
             enemyHud.SetData(enemyUnit.Pokemon);
             enemyUnit.PlayEnterAnimation();
-            yield return dialogBox.StartDialog($"{trainer.Name} sent out {enemyPokemon.Base.Name}!");
+            yield return dialogBox.StartDialog($"{trainer.Name} sent out {enemyPokemon.Base.PokemonName}!");
             yield return new WaitForSeconds(1.3f);
             // Send out first pokemon of the player
             playerImage.gameObject.SetActive(false);
@@ -124,7 +124,7 @@ public class BattleSystem : MonoBehaviour
             playerUnit.Setup(playerPokemon);
             playerHud.SetData(playerUnit.Pokemon);
             playerUnit.PlayEnterAnimation();
-            yield return dialogBox.StartDialog($"Go {playerPokemon.Base.Name}!");
+            yield return dialogBox.StartDialog($"Go {playerPokemon.Base.PokemonName}!");
             dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
             yield return new WaitForSeconds(1.3f);
             yield return StartCoroutine(ActionSelection());
@@ -156,7 +156,7 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.PlayEnterAnimation();
         playerUnit.PlayEnterAnimation();
 
-        yield return dialogBox.StartDialog($"A wild {enemyUnit.Pokemon.Base.Name} appeared!");
+        yield return dialogBox.StartDialog($"A wild {enemyUnit.Pokemon.Base.PokemonName} appeared!");
         yield return new WaitForSeconds(1f);
 
         yield return StartCoroutine(ActionSelection());
@@ -167,7 +167,7 @@ public class BattleSystem : MonoBehaviour
         if (!dialogBox.actionSelector.activeInHierarchy || overrideActive)
         {
             state = BattleState.ActionSelection;
-            yield return dialogBox.StartDialog($"What should {playerUnit.Pokemon.Base.Name} do?");
+            yield return dialogBox.StartDialog($"What should {playerUnit.Pokemon.Base.PokemonName} do?");
             yield return new WaitForSeconds(0.5f);
             dialogBox.EnableActionSelector(true);
         }
@@ -198,7 +198,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.Busy;
 
         var move = playerUnit.Pokemon.Moves[currentMove];
-        dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} used {move.Base.Name}!");
+        dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} used {move.Base.Name}!");
 
         playerUnit.PlayAttackAnimation();
         yield return new WaitForSeconds(1f);
@@ -212,7 +212,7 @@ public class BattleSystem : MonoBehaviour
         {
             yield return enemyHud.UpdateHP();
             yield return ShowDamageDetails(damageDetails);
-            dialogBox.StartDialog($"{enemyUnit.Pokemon.Base.Name} fainted!");
+            dialogBox.StartDialog($"{enemyUnit.Pokemon.Base.PokemonName} fainted!");
             enemyUnit.PlayFaintAnimation();
 
             yield return new WaitForSeconds(2f);
@@ -253,7 +253,7 @@ public class BattleSystem : MonoBehaviour
         //Select Move
         var move = enemyUnit.Pokemon.GetRandomMove();
 
-        dialogBox.StartDialog($"Enemy {enemyUnit.Pokemon.Base.Name} used {move.Base.Name}!");
+        dialogBox.StartDialog($"Enemy {enemyUnit.Pokemon.Base.PokemonName} used {move.Base.Name}!");
         enemyUnit.PlayAttackAnimation();
         yield return new WaitForSeconds(1f);
 
@@ -266,7 +266,7 @@ public class BattleSystem : MonoBehaviour
         {
             yield return playerHud.UpdateHP();
             yield return ShowDamageDetails(damageDetails);
-            dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} fainted!");
+            dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} fainted!");
             playerUnit.PlayFaintAnimation();
 
             yield return new WaitForSeconds(2f);
@@ -492,7 +492,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (playerUnit.Pokemon.HP > 0)
         {
-            yield return dialogBox.StartDialog($"Come back {playerUnit.Pokemon.Base.Name}!");
+            yield return dialogBox.StartDialog($"Come back {playerUnit.Pokemon.Base.PokemonName}!");
             playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
         }
@@ -500,7 +500,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit.Setup(newPokemon);
         playerHud.SetData(newPokemon);
         dialogBox.SetMoveNames(newPokemon.Moves);
-        yield return dialogBox.StartDialog($"Go {newPokemon.Base.Name}!");
+        yield return dialogBox.StartDialog($"Go {newPokemon.Base.PokemonName}!");
         playerUnit.PlayEnterAnimation();
         yield return new WaitForSeconds(1f);
 
@@ -512,7 +512,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.Busy;
         enemyUnit.Setup(nextPokemon);
         enemyHud.SetData(nextPokemon);
-        yield return dialogBox.StartDialog($"{trainer.Name} sent out {nextPokemon.Base.Name}!");
+        yield return dialogBox.StartDialog($"{trainer.Name} sent out {nextPokemon.Base.PokemonName}!");
         enemyUnit.PlayEnterAnimation();
         yield return new WaitForSeconds(1f);
 
@@ -553,7 +553,7 @@ public class BattleSystem : MonoBehaviour
         if (shakeCount == 4)
         {
             // Pokemon is Caught
-            yield return dialogBox.StartDialog($"You caught a {enemyUnit.Pokemon.Base.Name}!");
+            yield return dialogBox.StartDialog($"You caught a {enemyUnit.Pokemon.Base.PokemonName}!");
             yield return new WaitForSeconds(0.75f);
 
             // Set caught to true in the pokedex
@@ -565,7 +565,7 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(.75f);
 
             playerParty.AddPokemon(enemyUnit.Pokemon);
-            yield return dialogBox.StartDialog($"{enemyUnit.Pokemon.Base.Name} has been added to your party.");
+            yield return dialogBox.StartDialog($"{enemyUnit.Pokemon.Base.PokemonName} has been added to your party.");
             yield return new WaitForSeconds(.5f);
 
             OnBattleOver.Invoke(true);
@@ -577,7 +577,7 @@ public class BattleSystem : MonoBehaviour
             pokeball.DOFade(0, 0.2f);
             yield return enemyUnit.PlayBreakOutAnimation();
 
-            yield return dialogBox.StartDialog($"{enemyUnit.Pokemon.Base.Name} broke free!");
+            yield return dialogBox.StartDialog($"{enemyUnit.Pokemon.Base.PokemonName} broke free!");
 
             Destroy(pokeball);
             yield return new WaitForSeconds(0.75f);
@@ -678,7 +678,7 @@ public class BattleSystem : MonoBehaviour
 
         int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / 7);
         playerUnit.Pokemon.Exp += expGain;
-        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} gained {expGain} exp.");
+        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} gained {expGain} exp.");
         yield return new WaitForSeconds(0.75f);
         yield return playerHud.SetExpSmooth();
         yield return new WaitForSeconds(0.25f);
@@ -687,7 +687,7 @@ public class BattleSystem : MonoBehaviour
         while (playerUnit.Pokemon.CheckForLevelUp())
         {
             playerHud.SetLevel();
-            yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} grew to level {playerUnit.Pokemon.Level}!");
+            yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} grew to level {playerUnit.Pokemon.Level}!");
             yield return new WaitForSeconds(0.85f);
 
             // Try to learn a new move
@@ -697,13 +697,13 @@ public class BattleSystem : MonoBehaviour
                 if (playerUnit.Pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
                 {
                     playerUnit.Pokemon.LearnMove(newMove.Base);
-                    yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} learned {newMove.Base.Name}!");
+                    yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} learned {newMove.Base.Name}!");
                     yield return new WaitForSeconds(0.85f);
                     dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
                 }
                 else
                 {
-                    yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} is trying to learn {newMove.Base.Name}.");
+                    yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} is trying to learn {newMove.Base.Name}.");
                     yield return new WaitForSeconds(0.5f);
                     yield return dialogBox.StartDialog($"But it cannot learn more than {PokemonBase.MaxNumOfMoves} moves.");
                     yield return new WaitForSeconds(0.5f);
@@ -711,7 +711,7 @@ public class BattleSystem : MonoBehaviour
                     yield return new WaitUntil(() => state != BattleState.MoveForget);
                     if (!didLearnMove)
                     {
-                        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} did not learn {moveToLearn.Name}.");
+                        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} did not learn {moveToLearn.Name}.");
                         yield return new WaitForSeconds(0.75f);
                     }
                     else if (didLearnMove)
@@ -724,7 +724,7 @@ public class BattleSystem : MonoBehaviour
                         yield return new WaitForSeconds(1f);
                         yield return dialogBox.StartDialog("Poof!");
                         yield return new WaitForSeconds(1f);
-                        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.Name} forgot {learnedMove.Name} and learned {moveToLearn.Name}!");
+                        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} forgot {learnedMove.Name} and learned {moveToLearn.Name}!");
                         yield return new WaitForSeconds(0.75f);
                     }
                     learnedMove = null;

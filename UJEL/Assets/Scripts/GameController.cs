@@ -64,7 +64,6 @@ public class GameController : MonoBehaviour
     {
         controls = new PlayerControls();
         menuItems = menu.GetComponentsInChildren<TextMeshProUGUI>().ToList();
-        PokemonDB.Init();
         MoveDB.Init();
         ConditionsDB.Init();
     }
@@ -396,7 +395,7 @@ public class GameController : MonoBehaviour
         {
             // First selection
             switchSourceIndex = currentPartyMember;
-            Debug.Log($"Selected {playerParty.Pokemons[switchSourceIndex].Base.Name} for switching.");
+            Debug.Log($"Selected {playerParty.Pokemons[switchSourceIndex].Base.PokemonName} for switching.");
         }
         else if (switchSourceIndex == currentPartyMember)
         {
@@ -411,7 +410,7 @@ public class GameController : MonoBehaviour
             playerParty.Pokemons[switchSourceIndex] = playerParty.Pokemons[currentPartyMember];
             playerParty.Pokemons[currentPartyMember] = temp;
 
-            Debug.Log($"Switched {playerParty.Pokemons[currentPartyMember].Base.Name} with {playerParty.Pokemons[switchSourceIndex].Base.Name}");
+            Debug.Log($"Switched {playerParty.Pokemons[currentPartyMember].Base.PokemonName} with {playerParty.Pokemons[switchSourceIndex].Base.PokemonName}");
 
             // Refresh UI
             settingsPartyScreen.SetPartyData();

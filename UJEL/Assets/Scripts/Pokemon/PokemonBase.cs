@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,8 +9,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new Pokemon")]
 public class PokemonBase : ScriptableObject
 {
-    [SerializeField] string name;
+    [SerializeField] string pokemonName;
     [SerializeField] int pokedexNumber;
+    [SerializeField] int universalDexNumber;
     [TextArea]
     [SerializeField] string description;
     [Tooltip("The locations where you can find this pokemon. Ex) Route 1, 4...")]
@@ -17,6 +20,11 @@ public class PokemonBase : ScriptableObject
     [SerializeField] Sprite backSprite;
     [SerializeField] public PokemonType type1;
     [SerializeField] public PokemonType type2;
+    Dictionary<string, string> abilityDictionary;
+    List<string> abilities;
+    double weightkg;
+    double heightm;
+    string color;
 
     // Base Stats
     [SerializeField] int maxHp;
@@ -25,7 +33,7 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int spAttack;
     [SerializeField] int spDefense;
     [SerializeField] int speed;
-    [SerializeField] int catchRate;
+    [SerializeField] int catchRate; // A value from 3-255 -> the higher it is the easier it is to catch
 
     [SerializeField] int expYield;
     [SerializeField] GrowthRate growthRate;
@@ -33,6 +41,69 @@ public class PokemonBase : ScriptableObject
     [SerializeField] List<MoveBase> learnableByItems;
     [SerializeField] List<Evolution> evolutions;
     public static int MaxNumOfMoves { get; set; } = 4;
+
+    /// <summary>
+    /// Init function called to set the values of a pokemonBase
+    /// </summary>
+    public void Init(int num, string name, List<string> types, int hp, int atk, int def, int spa, int spd, int spe, Dictionary<string, string> abilities, double heightm, double weightkg, string color)
+    {
+        this.universalDexNumber = num;
+        this.pokemonName = name;
+        SetTypes(types);
+        this.maxHp = hp;
+        this.attack = atk;
+        this.defense = def;
+        this.spAttack = spa;
+        this.spDefense = spd;
+        this.speed = spe;
+
+        // Abilities
+        this.abilityDictionary = abilities;
+        this.abilities = GetAbilityList(abilities);
+
+        growthRate = GrowthRateLoader.GetGrowthRate(this.universalDexNumber);
+        this.catchRate = CatchRatesLoader.GetCatchRate(this.universalDexNumber);
+        this.heightm = heightm;
+        this.weightkg = weightkg;
+        this.color = color;
+    }
+
+    public void SetTypes(List<string> types)
+    {
+        type1 = types.Count > 0 ? StringToPokemonType(types[0]) : PokemonType.None;
+        type2 = types.Count > 1 ? StringToPokemonType(types[1]) : PokemonType.None;
+    }
+
+    private List<string> GetAbilityList(Dictionary<string, string> abilities)
+    {
+        if (abilities == null) return new List<string>();
+        return new List<string>(abilities.Values);
+    }
+
+    public PokemonType StringToPokemonType(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            return PokemonType.None;
+
+        // Normalize casing
+        text = text.Trim();
+
+        // Special cases where input doesn't match enum exactly
+        switch (text.ToLower())
+        {
+            case "dark matter":
+            case "darkmatter":
+                return PokemonType.DarkMatter;
+        }
+
+        // Try parse ignoring case
+        if (Enum.TryParse<PokemonType>(text, true, out var type))
+            return type;
+
+        // If parsing fails, default to None
+        Debug.LogWarning($"Unknown Pokemon type string: '{text}'");
+        return PokemonType.None;
+    }
 
     public int GetExpForLevel(int level)
     {
@@ -86,9 +157,9 @@ public class PokemonBase : ScriptableObject
         return -1; // THIS IS AN ERROR, THE GROWTH RATE DOES NOT EXIST
     }
 
-    public string Name
+    public string PokemonName
     {
-        get { return name; }
+        get { return pokemonName; }
     }
     public string Description
     {
@@ -138,6 +209,8 @@ public class PokemonBase : ScriptableObject
 
     public int ExpYield => expYield;
     public GrowthRate GrowthRate => growthRate;
+    public int UniversalDexNumber => universalDexNumber;
+    public List<string> Abilities => abilities;
 }
 
 [System.Serializable]
@@ -174,7 +247,8 @@ public enum PokemonType
     DarkMatter
 }
 
-public enum GrowthRate{
+public enum GrowthRate
+{
     MediumFast,
     Erratic,
     Fluctuating,

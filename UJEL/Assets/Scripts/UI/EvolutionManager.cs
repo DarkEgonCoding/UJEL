@@ -28,13 +28,13 @@ public class EvolutionManager : MonoBehaviour
         evolutionUI.SetActive(true);
 
         pokemonImage.sprite = pokemon.Base.FrontSprite;
-        yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} is evolving!");
+        yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} is evolving!");
 
         var oldPokemon = pokemon.Base;
         pokemon.Evolve(evolution);
 
         pokemonImage.sprite = pokemon.Base.FrontSprite;
-        yield return DialogManager.Instance.ShowDialogText($"{oldPokemon.Name} evolved into {pokemon.Base.Name}!");
+        yield return DialogManager.Instance.ShowDialogText($"{oldPokemon.PokemonName} evolved into {pokemon.Base.PokemonName}!");
 
         UICanvas.gameObject.SetActive(false);
         evolutionUI.SetActive(false);

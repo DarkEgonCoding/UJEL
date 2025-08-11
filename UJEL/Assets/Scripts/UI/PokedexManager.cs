@@ -51,7 +51,7 @@ public class PokedexManager : MonoBehaviour, ISavable
             {
                 // Assign the data in the PokedexEntry
                 pokemon = currPokemon,
-                pokemonName = currPokemon.Name,
+                pokemonName = currPokemon.PokemonName,
                 pokemonSprite = currPokemon.FrontSprite,
                 location = currPokemon.FoundLocations,
                 entryNumber = i + 1,

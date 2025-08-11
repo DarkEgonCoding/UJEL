@@ -11,11 +11,16 @@ public class Pokemon
 {
     [SerializeField] PokemonBase _base;
     [SerializeField] int level;
+    Natures nature;
+    string ability;
 
     public Pokemon(PokemonBase pBase, int pLevel)
     {
         _base = pBase;
         level = pLevel;
+
+        nature = getRandomNature();
+        ability = getRandomAbility(pBase.Abilities);
 
         Init();
     }
@@ -62,6 +67,26 @@ public class Pokemon
                 break;
             }
         }
+    }
+
+    public string getRandomAbility(List<string> abilities)
+    {
+        if (abilities == null || abilities.Count == 0)
+        {
+            Debug.LogWarning("No ability list found.");
+            return null;
+        }
+
+        int index = UnityEngine.Random.Range(0, abilities.Count);
+        return abilities[index];
+    }
+
+    public Natures getRandomNature()
+    {
+        var values = Enum.GetValues(typeof(Natures));
+        var random = new System.Random();
+        int index = random.Next(values.Length);
+        return (Natures)values.GetValue(index);
     }
 
     public PokemonSaveData GetSaveData()
@@ -260,4 +285,33 @@ public class PokemonSaveData
     public int exp;
     public ConditionID? statusId;
     public List<MoveSaveData> moves;
+}
+
+public enum Natures
+{
+    adamant,
+    bashful,
+    bold,
+    brave,
+    calm,
+    careful,
+    docile,
+    gentle,
+    hardy,
+    hasty,
+    impish,
+    jolly,
+    lax,
+    lonely,
+    mild,
+    modest,
+    naive,
+    naughty,
+    quiet,
+    quirky,
+    rash,
+    relaxed,
+    sassy,
+    serious,
+    timid,
 }

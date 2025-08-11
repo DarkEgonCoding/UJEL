@@ -30,7 +30,7 @@ public class HoveredPokemonUI : MonoBehaviour
         }
 
         largePokemon.sprite = pokemon.Base.FrontSprite;
-        pokemonName.text = pokemon.Base.Name;
+        pokemonName.text = pokemon.Base.PokemonName;
         largeLevel.text = "Lv. " + pokemon.Level;
 
         move1.text = GetMoveName(pokemon, 0);

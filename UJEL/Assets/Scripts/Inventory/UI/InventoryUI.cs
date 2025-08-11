@@ -224,24 +224,24 @@ public class InventoryUI : MonoBehaviour
 
         if (pokemon.HasMove(tmItem.Move))
         {
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} already knows {tmItem.Move.Name}.");
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} already knows {tmItem.Move.Name}.");
             yield break;
         }
 
         if (!tmItem.CanBeTaught(pokemon))
         {
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} can't learn {tmItem.Move.Name}.");
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} can't learn {tmItem.Move.Name}.");
             yield break;
         }
 
         if (pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
         {
             pokemon.LearnMove(tmItem.Move);
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} learned {tmItem.Move.Name}!");
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} learned {tmItem.Move.Name}!");
         }
         else
         {
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} is trying to learn {tmItem.Move.Name}.");
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} is trying to learn {tmItem.Move.Name}.");
             yield return DialogManager.Instance.ShowDialogText($"But it cannot learn more than {PokemonBase.MaxNumOfMoves} moves.");
             yield return ChooseMoveToForget(pokemon, tmItem.Move);
             yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
@@ -323,14 +323,14 @@ public class InventoryUI : MonoBehaviour
         if (moveIndex == PokemonBase.MaxNumOfMoves)
         {
             // Don't learn the new move
-            yield return StartCoroutine(DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} did not learn {moveToLearn.Name}."));
+            yield return StartCoroutine(DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} did not learn {moveToLearn.Name}."));
         }
         else
         {
             // Forget selected move and learn the new move
             var selectedMove = pokemon.Moves[moveIndex].Base;
             pokemon.Moves[moveIndex] = new Move(moveToLearn);
-            yield return StartCoroutine(DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} forgot {selectedMove.Name} and learned {moveToLearn.Name}!"));
+            yield return StartCoroutine(DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} forgot {selectedMove.Name} and learned {moveToLearn.Name}!"));
         }
 
         moveToLearn = null;

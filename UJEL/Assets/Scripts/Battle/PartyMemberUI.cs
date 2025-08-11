@@ -24,7 +24,7 @@ public class PartyMemberUI : MonoBehaviour
     void UpdateData()
     {
         image.sprite = _pokemon.Base.FrontSprite;
-        nameText.text = _pokemon.Base.Name;
+        nameText.text = _pokemon.Base.PokemonName;
         levelText.text = "Lvl " + _pokemon.Level;
         hpBar.SetHP((float) _pokemon.HP / _pokemon.MaxHp);
     }

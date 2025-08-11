@@ -35,7 +35,7 @@ public class PokedexElementUI : MonoBehaviour
         if (entry.haveCaught)
         {
             pokemonImage.color = Color.white;
-            nameText.text = entry.pokemon.Name;
+            nameText.text = entry.pokemon.PokemonName;
             descriptionText = entry.pokemon.Description;
         }
         else
