@@ -495,6 +495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9078758092134089975}
   - component: {fileID: 1959573128402974575}
+  - component: {fileID: 7022530384016150381}
   m_Layer: 0
   m_Name: PokemonLoader
   m_TagString: Untagged
@@ -527,6 +528,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40d400984a98f2242af19e123af7a5ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrowthRatesLoaded: 0
+  CatchRatesLoaded: 0
+--- !u!114 &7022530384016150381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665298923115429609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a64f48d549ce514c9fbe6098c7fd967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1680549113845624080

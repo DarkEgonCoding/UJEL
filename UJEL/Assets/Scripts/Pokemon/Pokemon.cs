@@ -93,12 +93,14 @@ public class Pokemon
     {
         var saveData = new PokemonSaveData()
         {
-            name = Base.name,
+            name = Base.PokemonName,
             hp = HP,
             level = Level,
             exp = Exp,
             statusId = Status?.Id,
-            moves = Moves.Select(m => m.GetSaveData()).ToList()
+            moves = Moves.Select(m => m.GetSaveData()).ToList(),
+            nature = this.nature,
+            ability = this.ability,
         };
 
         return saveData;
@@ -110,6 +112,8 @@ public class Pokemon
         HP = saveData.hp;
         level = saveData.level;
         Exp = saveData.exp;
+        nature = saveData.nature;
+        ability = saveData.ability;
 
         if (saveData.statusId != null)
         {
@@ -285,6 +289,8 @@ public class PokemonSaveData
     public int exp;
     public ConditionID? statusId;
     public List<MoveSaveData> moves;
+    public Natures nature;
+    public string ability;
 }
 
 public enum Natures
