@@ -8,7 +8,7 @@ using System.IO;
 
 public class LearnsetLoader : MonoBehaviour
 {
-    static Dictionary<string, Dictionary<string, string[]>> LearnsetByPokemonDict;
+    static Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> LearnsetByPokemonDict;
 
     public static void LoadLearnsets()
     {
@@ -19,52 +19,13 @@ public class LearnsetLoader : MonoBehaviour
             return;
         }
 
-        LearnsetByPokemonDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string[]>>>(rawTextAsset.text);
+        LearnsetByPokemonDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>>(rawTextAsset.text);
 
-        DebugBulbasaurMoves();
-
+        foreach (KeyValuePair<string, List<string>> keyValuePair in LearnsetByPokemonDict["pikachu"]["learnset"])
+        {
+            Debug.Log(keyValuePair.Key);
+        }
+        
         //PokemonLoader.instance.LearnsetsLoaded = true;
-    }
-
-    public static void DebugBulbasaurMoves()
-    {
-        if (LearnsetByPokemonDict == null)
-        {
-            Debug.LogError("Learnsets not loaded yet! Call LoadLearnsets() first.");
-            return;
-        }
-
-        string targetName = "bulbasaur";
-        if (!TryFindKeyIgnoreCase(LearnsetByPokemonDict, targetName, out string foundKey))
-        {
-            Debug.LogError($"No learnset found for '{targetName}'");
-            return;
-        }
-
-        var moves = LearnsetByPokemonDict[foundKey];
-        Debug.Log($"--- Learnset for {foundKey} ---");
-
-        foreach (var moveEntry in moves)
-        {
-            Debug.Log($"Move: {moveEntry.Key}");
-            foreach (var code in moveEntry.Value)
-            {
-                Debug.Log($"   {code}");
-            }
-        }
-    }
-
-    private static bool TryFindKeyIgnoreCase(Dictionary<string, Dictionary<string, string[]>> dict, string target, out string foundKey)
-    {
-        foreach (var k in dict.Keys)
-        {
-            if (string.Equals(k, target, StringComparison.OrdinalIgnoreCase))
-            {
-                foundKey = k;
-                return true;
-            }
-        }
-        foundKey = null;
-        return false;
     }
 }
