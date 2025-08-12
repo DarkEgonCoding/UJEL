@@ -56,7 +56,7 @@ public class Pokemon
     public int HP { get; set; }
 
     // Old list of moves
-    // public List<Move> Moves { get; set; }
+    public List<Move> Moves { get; set; }
     public int Exp { get; set; }
 
     public Condition Status { get; private set; }

@@ -247,6 +247,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyMove()
     {
+        yield return null;
+/*
         if (dialogBox.isTyping) yield break;
         state = BattleState.PerformMove;
 
@@ -286,6 +288,7 @@ public class BattleSystem : MonoBehaviour
             yield return ShowDamageDetails(damageDetails);
             yield return StartCoroutine(ActionSelection());
         }
+*/
     }
 
     IEnumerator ShowDamageDetails(DamageDetails damageDetails)
@@ -696,18 +699,18 @@ public class BattleSystem : MonoBehaviour
             {
                 if (playerUnit.Pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
                 {
-                    playerUnit.Pokemon.LearnMove(newMove.Base);
-                    yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} learned {newMove.Base.Name}!");
+                    //playerUnit.Pokemon.LearnMove(newMove.Base);
+                    //yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} learned {newMove.Base.Name}!");
                     yield return new WaitForSeconds(0.85f);
                     dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
                 }
                 else
                 {
-                    yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} is trying to learn {newMove.Base.Name}.");
+                    //yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} is trying to learn {newMove.Base.Name}.");
                     yield return new WaitForSeconds(0.5f);
                     yield return dialogBox.StartDialog($"But it cannot learn more than {PokemonBase.MaxNumOfMoves} moves.");
                     yield return new WaitForSeconds(0.5f);
-                    yield return ChooseMoveToForget(playerUnit.Pokemon, newMove.Base);
+                    //yield return ChooseMoveToForget(playerUnit.Pokemon, newMove.Base);
                     yield return new WaitUntil(() => state != BattleState.MoveForget);
                     if (!didLearnMove)
                     {

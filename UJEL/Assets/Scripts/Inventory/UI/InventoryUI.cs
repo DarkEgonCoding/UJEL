@@ -222,7 +222,7 @@ public class InventoryUI : MonoBehaviour
 
         var pokemon = partyScreen.SelectedMember;
 
-        if (pokemon.HasMove(tmItem.Move))
+        if (pokemon.HasMove(tmItem.Move.Name))
         {
             yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} already knows {tmItem.Move.Name}.");
             yield break;
@@ -236,7 +236,7 @@ public class InventoryUI : MonoBehaviour
 
         if (pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
         {
-            pokemon.LearnMove(tmItem.Move);
+            pokemon.LearnMove(tmItem.Move.Name);
             yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.PokemonName} learned {tmItem.Move.Name}!");
         }
         else

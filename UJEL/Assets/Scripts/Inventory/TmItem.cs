@@ -22,6 +22,6 @@ public class TmItem : ItemBase
     public override bool Use(Pokemon pokemon)
     {
         // Learning move is handled from Inventory UI, if it was learned, then return true
-        return pokemon.HasMove(move);
+        return pokemon.HasMove(move.Name);
     }
 }
