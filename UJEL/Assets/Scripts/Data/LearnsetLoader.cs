@@ -30,6 +30,8 @@ public class LearnsetLoader : MonoBehaviour
 
         LevelUpMovesByPokemonDict = new Dictionary<string, List<MoveLearn>>();
 
+        HashSet<string> allMoves = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
         foreach (var kvp in RawLearnsetByPokemonDict)
         {
             string pokemonId = kvp.Key;
@@ -48,6 +50,8 @@ public class LearnsetLoader : MonoBehaviour
                 string moveName = moveEntry.Key;
                 List<string> methods = moveEntry.Value;
                 if (methods == null) continue;
+
+                allMoves.Add(moveName);
 
                 // Pick best level across multiple 'xL#' entries by smallest
                 int? bestLevel = null;
@@ -70,6 +74,20 @@ public class LearnsetLoader : MonoBehaviour
             levelUpMoves.Sort((a, b) => a.Level.CompareTo(b.Level));
             LevelUpMovesByPokemonDict[pokemonId] = levelUpMoves;
         }
+
+        /*
+        try
+        {
+            string movesString = string.Join(", ", allMoves.OrderBy(m => m, StringComparer.OrdinalIgnoreCase));
+            string path = Path.Combine(Application.dataPath, "AllMoves.txt");
+            File.WriteAllText(path, movesString);
+            Debug.Log($"All moves list saved to: {path}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to write all moves list: {ex}");
+        }
+        */
 
         Debug.Log($"Loaded learnsets: raw entries = {RawLearnsetByPokemonDict.Count}, filtered level-up entries = {LevelUpMovesByPokemonDict.Count}");
         PokemonLoader.instance.LearnsetsLoaded = true;

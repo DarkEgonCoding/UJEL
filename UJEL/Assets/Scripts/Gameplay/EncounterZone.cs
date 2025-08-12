@@ -9,9 +9,15 @@ public class EncounterZone : ScriptableObject
     [System.Serializable]
     public class EncounterEntry
     {
-        public PokemonBase baseData;
+        [Header("Text Entry Data")]
+        public PokemonTextEntry baseData;
+
+        [Header("Levels")]
+        [Tooltip("These levels override the Text Entry's level.")]
         public int minLevel = 2;
         public int maxLevel = 5;
+
+        [Header("Probability")]
         [Range(0f, 1f)] public float weight = 0.1f; // relative chance
     }
 
@@ -39,7 +45,8 @@ public class EncounterZone : ScriptableObject
             if (roll <= cumulative)
             {
                 int level = GetLevelWithBellCurve(entry.minLevel, entry.maxLevel);
-                var wildPokemon = new Pokemon(entry.baseData, level);
+                PokemonBase pb = PokemonTextEntryExtensions.PokemonEnumToPokemonBase(entry.baseData.PokemonEnum);
+                var wildPokemon = new Pokemon(pb, level);
                 return wildPokemon;
             }
         }

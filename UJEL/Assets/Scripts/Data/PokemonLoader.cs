@@ -96,7 +96,7 @@ public class PokemonLoader : MonoBehaviour
         }
 
         PokemonBase pb = PokemonDB.ConvertToPokemonBase(p);
-        tempPokemonsByName[pb.PokemonName.ToLower()] = pb;
+        tempPokemonsByName[PokemonDB.FixWeirdPokemonNames(pb.PokemonName.ToLower())] = pb;
         tempPokemonsByDexNum[pb.UniversalDexNumber] = pb;
         //Debug.Log($"Loaded Pokemon: {pb.PokemonName}, Num: {pb.UniversalDexNumber}");
 

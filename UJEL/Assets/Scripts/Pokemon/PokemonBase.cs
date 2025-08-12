@@ -39,7 +39,9 @@ public class PokemonBase : ScriptableObject
 
     [SerializeField] int expYield;
     [SerializeField] GrowthRate growthRate;
-    [SerializeField] List<LearnableMove> learnableMoves;
+
+    // OLD LEARNING MOVES
+    // [SerializeField] List<LearnableMove> learnableMoves;
     [SerializeField] List<MoveBase> learnableByItems;
     [SerializeField] List<Evolution> evolutions;
     public static int MaxNumOfMoves { get; set; } = 4;
@@ -286,10 +288,14 @@ public class PokemonBase : ScriptableObject
     {
         get { return speed; }
     }
+
+    /*
     public List<LearnableMove> LearnableMoves
     {
         get { return learnableMoves; }
     }
+    */
+    
     public int CatchRate => catchRate;
     public int PokedexNumber => pokedexNumber;
     public string FoundLocations => foundLocations;
@@ -360,7 +366,8 @@ public class TypeChart{
     static float[][] chart =
     {
         //                    NOR FIR WAT ELE GRA ICE FIG POI GRO FLY PSY BUG ROC GHO DRA DAR STE FAI DAM
-        /*NOR*/ new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 0.5f, 0f, 1f, 1f, 0.5f, 1f, 0f },
+        /*NOR*/
+    new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 0.5f, 0f, 1f, 1f, 0.5f, 1f, 0f },
         /*FIR*/ new float[] { 1f, 0.5f, 0.5f, 1f, 2f, 2f, 1f, 1f, 1f, 1f, 1f, 2f, 0.5f, 1f, 0.5f, 1f, 2f, 1f, 1f },
         /*WAT*/ new float[] { 1f, 2f, 0.5f, 1f, 0.5f, 1f, 1f, 1f, 2f, 1f, 1f, 1f, 2f, 1f, 0.5f, 1f, 1f, 1f, 1f },
         /*ELE*/ new float[] { 1f, 1f, 2f, 0.5f, 0.5f, 1f, 1f, 1f, 0f, 2f, 1f, 1f, 1f, 1f, 0.5f, 1f, 1f, 1f, 2f },

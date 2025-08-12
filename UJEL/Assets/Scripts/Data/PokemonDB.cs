@@ -45,6 +45,8 @@ public class PokemonDB
 
     public static PokemonBase GetPokemonByName(string name)
     {
+        name = FixWeirdPokemonNames(name);
+
         if (!pokemonsByName.TryGetValue(name.ToLower(), out var pb))
         {
             Debug.LogError($"Pokemon '{name}' not found!");

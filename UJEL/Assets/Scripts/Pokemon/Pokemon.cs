@@ -11,6 +11,8 @@ public class Pokemon
 {
     [SerializeField] PokemonBase _base;
     [SerializeField] int level;
+    List<string> pMoves;
+    public List<string> PMoves => pMoves;
     Natures nature;
     string ability;
 
@@ -18,6 +20,18 @@ public class Pokemon
     {
         _base = pBase;
         level = pLevel;
+
+        nature = getRandomNature();
+        ability = getRandomAbility(pBase.Abilities);
+
+        Init();
+    }
+
+    public Pokemon(PokemonBase pBase, int pLevel, List<string> pMoves)
+    {
+        _base = pBase;
+        level = pLevel;
+        this.pMoves = pMoves;
 
         nature = getRandomNature();
         ability = getRandomAbility(pBase.Abilities);
@@ -41,7 +55,8 @@ public class Pokemon
     }
     public int HP { get; set; }
 
-    public List<Move> Moves { get; set; }
+    // Old list of moves
+    // public List<Move> Moves { get; set; }
     public int Exp { get; set; }
 
     public Condition Status { get; private set; }
@@ -54,7 +69,24 @@ public class Pokemon
 
         Exp = Base.GetExpForLevel(Level);
 
-        // Generate Moves
+        // Auto generate possible moves if they don't exist
+        if (pMoves == null)
+        {
+            pMoves = new List<string>();
+            foreach (var moveLearn in Base.LevelUpMoves)
+            {
+                if (moveLearn.Level <= Level)
+                {
+                    pMoves.Add(moveLearn.Move);
+                }
+                if (pMoves.Count >= PokemonBase.MaxNumOfMoves) {
+                    break;
+                }
+            }
+        }
+
+        // OLD MOVE GENERATION
+        /*
         Moves = new List<Move>();
         foreach (var move in Base.LearnableMoves)
         {
@@ -67,6 +99,7 @@ public class Pokemon
                 break;
             }
         }
+        */
     }
 
     public string getRandomAbility(List<string> abilities)
@@ -98,7 +131,7 @@ public class Pokemon
             level = Level,
             exp = Exp,
             statusId = Status?.Id,
-            moves = Moves.Select(m => m.GetSaveData()).ToList(),
+            moves = pMoves,
             nature = this.nature,
             ability = this.ability,
         };
@@ -123,7 +156,7 @@ public class Pokemon
 
         // Calculate Stats?
 
-        Moves = saveData.moves.Select(s => new Move(s)).ToList();
+        pMoves = saveData.moves;
     }
 
     public bool CheckForLevelUp()
@@ -289,7 +322,8 @@ public class PokemonSaveData
     public int level;
     public int exp;
     public ConditionID? statusId;
-    public List<MoveSaveData> moves;
+    // public List<MoveSaveData> moves;
+    public List<string> moves;
     public Natures nature;
     public string ability;
 }
