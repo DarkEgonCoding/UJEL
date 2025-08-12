@@ -109,6 +109,8 @@ public class PokemonLoader : MonoBehaviour
 
             server.WriteLine("exit");
 
+            PokedexManager.instance.Init();
+
             // Debug tests
             var charmander = PokemonDB.GetPokemonByName("charmander");
             charmander.DebugEvolutions();

@@ -12,8 +12,8 @@ using UnityEngine.PlayerLoop;
 
 public class PokemonDB
 {
-    static Dictionary<string, PokemonBase> pokemonsByName;
-    static Dictionary<int, PokemonBase> pokemonsByDexNum;
+    public static Dictionary<string, PokemonBase> pokemonsByName;
+    public static Dictionary<int, PokemonBase> pokemonsByDexNum;
 
     public static void Init(Dictionary<string, PokemonBase> pokemonsByNameVar, Dictionary<int, PokemonBase> pokemonsByDexNumVar)
     {

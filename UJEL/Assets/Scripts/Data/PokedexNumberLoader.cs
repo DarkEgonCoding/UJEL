@@ -8,6 +8,13 @@ public static class PokedexNumberLoader
     public static Dictionary<int, string> dexNumToPokemonName;
 
     public static List<string> PJEL_Pokedex_Pokemon;
+    public static int PJEL_POKEDEX_NUM_OF_POKEMON
+    {
+        get
+        {
+            return PJEL_Pokedex_Pokemon?.Count ?? 0;
+        }
+    }
 
     public static void LoadDexNumbers()
     {
