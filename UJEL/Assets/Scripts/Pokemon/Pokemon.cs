@@ -284,6 +284,12 @@ public class Pokemon
         OnHPChanged?.Invoke();
     }
 
+    public void Heal()
+    {
+        HP = MaxHp;
+        CureStatus();
+    }
+
     /*
     public bool HasMove(MoveBase moveToCheck)
     {

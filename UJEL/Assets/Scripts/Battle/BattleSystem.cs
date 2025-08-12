@@ -248,47 +248,47 @@ public class BattleSystem : MonoBehaviour
     IEnumerator EnemyMove()
     {
         yield return null;
-/*
-        if (dialogBox.isTyping) yield break;
-        state = BattleState.PerformMove;
+        /*
+                if (dialogBox.isTyping) yield break;
+                state = BattleState.PerformMove;
 
-        //Select Move
-        var move = enemyUnit.Pokemon.GetRandomMove();
+                //Select Move
+                var move = enemyUnit.Pokemon.GetRandomMove();
 
-        dialogBox.StartDialog($"Enemy {enemyUnit.Pokemon.Base.PokemonName} used {move.Base.Name}!");
-        enemyUnit.PlayAttackAnimation();
-        yield return new WaitForSeconds(1f);
+                dialogBox.StartDialog($"Enemy {enemyUnit.Pokemon.Base.PokemonName} used {move.Base.Name}!");
+                enemyUnit.PlayAttackAnimation();
+                yield return new WaitForSeconds(1f);
 
-        playerUnit.PlayHitAnimation();
+                playerUnit.PlayHitAnimation();
 
-        var damageDetails = playerUnit.Pokemon.TakeDamage(move, enemyUnit.Pokemon);
-        move.PP--;
+                var damageDetails = playerUnit.Pokemon.TakeDamage(move, enemyUnit.Pokemon);
+                move.PP--;
 
-        if (damageDetails.Fainted)
-        {
-            yield return playerHud.UpdateHP();
-            yield return ShowDamageDetails(damageDetails);
-            dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} fainted!");
-            playerUnit.PlayFaintAnimation();
+                if (damageDetails.Fainted)
+                {
+                    yield return playerHud.UpdateHP();
+                    yield return ShowDamageDetails(damageDetails);
+                    dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} fainted!");
+                    playerUnit.PlayFaintAnimation();
 
-            yield return new WaitForSeconds(2f);
-            var nextPokemon = playerParty.GetHealthyPokemon();
-            if (nextPokemon != null)
-            {
-                OpenPartyScreen();
-            }
-            else
-            {
-                OnBattleOver.Invoke(false);
-            }
-        }
-        else if (damageDetails.Fainted == false)
-        {
-            yield return playerHud.UpdateHP();
-            yield return ShowDamageDetails(damageDetails);
-            yield return StartCoroutine(ActionSelection());
-        }
-*/
+                    yield return new WaitForSeconds(2f);
+                    var nextPokemon = playerParty.GetHealthyPokemon();
+                    if (nextPokemon != null)
+                    {
+                        OpenPartyScreen();
+                    }
+                    else
+                    {
+                        OnBattleOver.Invoke(false);
+                    }
+                }
+                else if (damageDetails.Fainted == false)
+                {
+                    yield return playerHud.UpdateHP();
+                    yield return ShowDamageDetails(damageDetails);
+                    yield return StartCoroutine(ActionSelection());
+                }
+        */
     }
 
     IEnumerator ShowDamageDetails(DamageDetails damageDetails)
@@ -385,7 +385,7 @@ public class BattleSystem : MonoBehaviour
             {
                 // Bag
                 dialogBox.EnableActionSelector(false);
-                
+
                 Debug.LogWarning("Pokeballs are currently disabled because the function requires an input of what kind of pokeball was thrown.");
                 templatePokeball = new PokeballItem();
                 StartCoroutine(ThrowPokeball(templatePokeball));
@@ -780,5 +780,13 @@ public class BattleSystem : MonoBehaviour
     {
         playerHud.ClearData();
         enemyHud.ClearData();
+
+        if (isTrainerBattle)
+        {
+            if (won) MoneyHandler.instance.AddMoney(MoneyHandler.instance.CurrentMoneyWager);
+            else MoneyHandler.instance.RemoveMoney(MoneyHandler.instance.CurrentMoneyWager / 2);
+
+            MoneyHandler.instance.ResetMoneyWager();
+        }
     }
 }

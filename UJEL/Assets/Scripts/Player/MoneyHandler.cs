@@ -6,7 +6,17 @@ public class MoneyHandler : MonoBehaviour, ISavable
 {
     private int money;
 
+    private int currentMoneyWager;
+
     public int Money => money;
+    public int CurrentMoneyWager => currentMoneyWager;
+
+    public static MoneyHandler instance;
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
 
     public void Start()
     {
@@ -21,6 +31,16 @@ public class MoneyHandler : MonoBehaviour, ISavable
     public void RemoveMoney(int amount)
     {
         money -= amount;
+    }
+
+    public void SetMoneyWager(int value)
+    {
+        currentMoneyWager = value;
+    }
+
+    public void ResetMoneyWager()
+    {
+        currentMoneyWager = 0;
     }
 
     public object CaptureState()

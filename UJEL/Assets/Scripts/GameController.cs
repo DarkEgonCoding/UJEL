@@ -170,6 +170,8 @@ public class GameController : MonoBehaviour
     {
         state = GameState.Battle;
 
+        MoneyHandler.instance.SetMoneyWager(trainer.MoneyForWin);
+
         AudioManager.instance.PlayMusic(trainer.trainerBattleMusic, startSeconds: 0.5f);
 
         ScreenTransition transition = worldCamera.GetComponent<ScreenTransition>();
