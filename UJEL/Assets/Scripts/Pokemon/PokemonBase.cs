@@ -35,6 +35,8 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int speed;
     [SerializeField] int catchRate; // A value from 3-255 -> the higher it is the easier it is to catch
 
+    [SerializeField] List<MoveLearn> levelUpMoves;
+
     [SerializeField] int expYield;
     [SerializeField] GrowthRate growthRate;
     [SerializeField] List<LearnableMove> learnableMoves;
@@ -48,6 +50,7 @@ public class PokemonBase : ScriptableObject
     public void Init(int num, string name, List<string> types, int hp, int atk, int def, int spa, int spd, int spe, Dictionary<string, string> abilities, double heightm, double weightkg, string color)
     {
         this.universalDexNumber = num;
+        SetInGamePokedexNumber(name);
         this.pokemonName = name;
         SetTypes(types);
         this.maxHp = hp;
@@ -66,6 +69,63 @@ public class PokemonBase : ScriptableObject
         this.heightm = heightm;
         this.weightkg = weightkg;
         this.color = color;
+
+        SetLevelUpMoves();
+        SetEvolutions();
+    }
+
+    private void SetEvolutions()
+    {
+        Evolution evo = EvolutionsLoader.GetEvolution(pokemonName);
+        if (evo != null)
+        {
+            evolutions = new List<Evolution> { evo };
+        }
+        else
+        {
+            evolutions = new List<Evolution>();
+        }
+    }
+
+    private void SetInGamePokedexNumber(string name)
+    {
+        string normalizedName = FixWeirdPokemonNames(name.ToLower().Replace(" ", "").Replace("-", "").Replace(".", "").Replace("é", "e"));
+
+        this.pokedexNumber = PokedexNumberLoader.GetDexNumber(normalizedName, DebugError: false);
+    }
+
+    public void SetLevelUpMoves()
+    {
+        string normalizedName = FixWeirdPokemonNames(pokemonName.ToLower().Replace(" ", "").Replace("-", "").Replace(".", "").Replace("é", "e"));
+
+        if (LearnsetLoader.LevelUpMovesByPokemonDict != null && LearnsetLoader.LevelUpMovesByPokemonDict.TryGetValue(normalizedName, out var learned))
+        {
+            this.levelUpMoves = new List<MoveLearn>(learned);
+        }
+        else
+        {
+            this.levelUpMoves = new List<MoveLearn>();
+            Debug.LogWarning($"No level-up moves found for '{name}' (lookup key: '{normalizedName}')");
+        }
+    }
+
+    private string FixWeirdPokemonNames(string pokemonName)
+    {
+        pokemonName = pokemonName
+        .Replace("’", "'")   // U+2019 right single quote
+        .Replace("‘", "'")   // U+2018 left single quote
+        .Replace("‛", "'")   // U+201B single high-reversed-9 quote
+        .Replace("′", "'");  // U+2032 prime (just in case)
+
+        if (pokemonName == "kommo-o") return "kommoo";
+        else if (pokemonName == "hakamo-o") return "hakamoo";
+        else if (pokemonName == "farfetch'd") return "farfetchd";
+        else if (pokemonName == "ho-oh") return "hooh";
+        else if (pokemonName == "porygon-z") return "porygonz";
+        else if (pokemonName == "jangmo-o") return "jangmoo";
+        else if (pokemonName == "sirfetch'd") return "sirfetchd";
+
+        return pokemonName;
     }
 
     public void SetTypes(List<string> types)
@@ -157,6 +217,35 @@ public class PokemonBase : ScriptableObject
         return -1; // THIS IS AN ERROR, THE GROWTH RATE DOES NOT EXIST
     }
 
+    public void DebugMoves()
+    {
+        if (levelUpMoves == null || levelUpMoves.Count == 0)
+        {
+            Debug.LogWarning($"{pokemonName} has no level-up moves.");
+            return;
+        }
+            
+        foreach (var ml in levelUpMoves)
+        {
+            Debug.Log($"{pokemonName} learns {ml}.");
+        }
+    }
+
+    public void DebugEvolutions()
+    {
+        if (evolutions == null || evolutions.Count == 0)
+        {
+            Debug.LogError($"{pokemonName} has no evolutions.");
+            return;
+        }
+
+        foreach (var evolution in evolutions)
+        {
+            if (!evolution.NeedsStone) Debug.Log($"{pokemonName} evolves into {evolution.EvolvesInto} at level {evolution.RequiredLevel}.");
+            else Debug.Log($"{pokemonName} needs a stone to evolve.");
+        }
+    }
+
     public string PokemonName
     {
         get { return pokemonName; }
@@ -211,16 +300,26 @@ public class PokemonBase : ScriptableObject
     public GrowthRate GrowthRate => growthRate;
     public int UniversalDexNumber => universalDexNumber;
     public List<string> Abilities => abilities;
+    public List<MoveLearn> LevelUpMoves => levelUpMoves;
 }
 
 [System.Serializable]
 public class Evolution
 {
-    [SerializeField] PokemonBase evolvesInto;
+    [SerializeField] string evolvesInto;
     [SerializeField] int requiredLevel;
 
-    public PokemonBase EvolvesInto => evolvesInto;
+    [SerializeField] bool needsStone = false;
+
+    public string EvolvesInto => evolvesInto;
     public int RequiredLevel => requiredLevel;
+    public bool NeedsStone => needsStone;
+
+    public Evolution(string evolvesInto, int requiredLevel)
+    {
+        this.evolvesInto = evolvesInto;
+        this.requiredLevel = requiredLevel;
+    }
 }
 
 public enum PokemonType
@@ -295,15 +394,18 @@ public class TypeChart{
 }
 
 [System.Serializable]
-public class LearnableMove{
+public class LearnableMove
+{
     [SerializeField] MoveBase moveBase;
     [SerializeField] int level;
 
-    public MoveBase Base {
+    public MoveBase Base
+    {
         get { return moveBase; }
     }
 
-    public int Level {
-        get { return level;}
+    public int Level
+    {
+        get { return level; }
     }
 }

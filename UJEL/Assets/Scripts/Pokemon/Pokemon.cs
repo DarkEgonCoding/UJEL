@@ -243,7 +243,8 @@ public class Pokemon
 
     public void Evolve(Evolution evolution)
     {
-        _base = evolution.EvolvesInto;
+        var nameOfEvolution = PokemonDB.FixWeirdPokemonNames(evolution.EvolvesInto);
+        _base = PokemonDB.GetPokemonByName(nameOfEvolution);
         Debug.LogWarning("Idk if the stats for the new pokemon are correct. - Evan");
     }
 

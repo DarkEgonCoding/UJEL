@@ -18,6 +18,8 @@ public class PokemonLoader : MonoBehaviour
     public bool GrowthRatesLoaded = false;
     public bool CatchRatesLoaded = false;
     public bool LearnsetsLoaded = false;
+    public bool DexNumbersLoaded = false;
+    public bool EvolutionsLoaded = false;
     public static PokemonLoader instance;
 
     void Awake()
@@ -30,6 +32,8 @@ public class PokemonLoader : MonoBehaviour
         GrowthRatesLoaded = false;
         CatchRatesLoaded = false;
         LearnsetsLoaded = false;
+        DexNumbersLoaded = false;
+        EvolutionsLoaded = false;
         StartCoroutine(LoadPokemon());
     }
 
@@ -49,6 +53,16 @@ public class PokemonLoader : MonoBehaviour
         LearnsetLoader.LoadLearnsets();
 
         yield return new WaitUntil(() => LearnsetsLoaded == true);
+
+        Debug.Log("Start Loading Dex Numbers");
+        PokedexNumberLoader.LoadDexNumbers();
+
+        yield return new WaitUntil(() => DexNumbersLoaded == true);
+
+        Debug.Log("Start Loading Evolutions");
+        EvolutionsLoader.LoadEvolutions();
+
+        yield return new WaitUntil(() => EvolutionsLoaded == true);
 
         Debug.Log("Pokemon Loader start");
         tempPokemonsByName = new Dictionary<string, PokemonBase>();
@@ -95,10 +109,9 @@ public class PokemonLoader : MonoBehaviour
 
             server.WriteLine("exit");
 
-            Debug.Log(PokemonDB.GetPokemonByDexNum(1).PokemonName + " " + PokemonDB.GetPokemonByDexNum(1).GrowthRate + " " + PokemonDB.GetPokemonByDexNum(1).CatchRate);
-            Debug.Log(PokemonDB.GetPokemonByDexNum(2).PokemonName + " " + PokemonDB.GetPokemonByDexNum(2).GrowthRate + " " + PokemonDB.GetPokemonByDexNum(2).CatchRate);
-            Debug.Log(PokemonDB.GetPokemonByDexNum(3).PokemonName + " " + PokemonDB.GetPokemonByDexNum(3).GrowthRate + " " + PokemonDB.GetPokemonByDexNum(3).CatchRate);
-            Debug.Log(PokemonDB.GetPokemonByName("pikachu").PokemonName + " " + PokemonDB.GetPokemonByName("pikachu").GrowthRate + " " + PokemonDB.GetPokemonByName("pikachu").CatchRate);
+            // Debug tests
+            var charmander = PokemonDB.GetPokemonByName("charmander");
+            charmander.DebugEvolutions();
         }
     }
 }

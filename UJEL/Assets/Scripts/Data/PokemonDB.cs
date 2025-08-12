@@ -62,4 +62,24 @@ public class PokemonDB
         }
         return pb;
     }
+
+    public static string FixWeirdPokemonNames(string pokemonName)
+    {
+        pokemonName = pokemonName.ToLower().Replace(" ", "").Replace("-", "").Replace(".", "").Replace("é", "e")
+        .Replace("’", "'")   // U+2019 right single quote
+        .Replace("‘", "'")   // U+2018 left single quote
+        .Replace("‛", "'")   // U+201B single high-reversed-9 quote
+        .Replace("′", "'");   // U+2032 prime (just in case)
+        
+
+        if (pokemonName == "kommo-o") return "kommoo";
+        else if (pokemonName == "hakamo-o") return "hakamoo";
+        else if (pokemonName == "farfetch'd") return "farfetchd";
+        else if (pokemonName == "ho-oh") return "hooh";
+        else if (pokemonName == "porygon-z") return "porygonz";
+        else if (pokemonName == "jangmo-o") return "jangmoo";
+        else if (pokemonName == "sirfetch'd") return "sirfetchd";
+
+        return pokemonName;
+    }
 }

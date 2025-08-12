@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
     // Components
     public Character character;
+    public MoneyHandler moneyHandler;
     private void Awake()
     {
         if (Instance == null)
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour, ISavable
         }
         character = GetComponent<Character>();
         controls = new PlayerControls();
+        moneyHandler = GetComponent<MoneyHandler>();
     }
 
     private void OnEnable(){
