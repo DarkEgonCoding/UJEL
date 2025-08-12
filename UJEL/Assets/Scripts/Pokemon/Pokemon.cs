@@ -169,11 +169,20 @@ public class Pokemon
         return false;
     }
 
+    /*
     public LearnableMove GetLearnableMoveAtCurrLevel()
     {
         return Base.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();
     }
+    */
 
+    public string GetLearnableMoveAtCurrLevel()
+    {
+        var moveLearn = Base.LevelUpMoves.FirstOrDefault(x => x.Level == level);
+        return moveLearn?.Move; // returns null if none found
+    }
+
+    /*
     public void LearnMove(MoveBase moveToLearn)
     {
         if (Moves.Count > PokemonBase.MaxNumOfMoves)
@@ -182,6 +191,17 @@ public class Pokemon
         }
 
         Moves.Add(new Move(moveToLearn));
+    }
+    */
+
+    public void LearnMove(string moveToLearn)
+    {
+        if (pMoves.Count > PokemonBase.MaxNumOfMoves)
+        {
+            return;
+        }
+
+        pMoves.Add(moveToLearn);
     }
 
     public int Attack
@@ -264,9 +284,16 @@ public class Pokemon
         OnHPChanged?.Invoke();
     }
 
+    /*
     public bool HasMove(MoveBase moveToCheck)
     {
         return Moves.Count(m => m.Base == moveToCheck) > 0;
+    }
+    */
+
+    public bool HasMove(string moveToCheck)
+    {
+        return pMoves.Count(m => m == moveToCheck) > 0;
     }
 
     public Evolution CheckForEvolution()
@@ -281,10 +308,18 @@ public class Pokemon
         Debug.LogWarning("Idk if the stats for the new pokemon are correct. - Evan");
     }
 
+    /*
     public Move GetRandomMove()
     {
         int r = UnityEngine.Random.Range(0, Moves.Count);
         return Moves[r];
+    }
+    */
+
+    public string GetRandomMove()
+    {
+        int r = UnityEngine.Random.Range(0, pMoves.Count);
+        return pMoves[r];
     }
 
     public void SetStatus(ConditionID conditionId)
