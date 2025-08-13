@@ -72,6 +72,8 @@ public class PokemonBase : ScriptableObject
         this.weightkg = weightkg;
         this.color = color;
 
+        this.frontSprite = PSpriteLoader.GetFrontSprite(name);
+        this.backSprite = PSpriteLoader.GetBackSprite(name);
         SetLevelUpMoves();
         SetEvolutions();
     }

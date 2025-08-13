@@ -72,7 +72,7 @@ public class PokemonDB
         .Replace("‘", "'")   // U+2018 left single quote
         .Replace("‛", "'")   // U+201B single high-reversed-9 quote
         .Replace("′", "'");   // U+2032 prime (just in case)
-        
+
 
         if (pokemonName == "kommo-o") return "kommoo";
         else if (pokemonName == "hakamo-o") return "hakamoo";
@@ -81,6 +81,8 @@ public class PokemonDB
         else if (pokemonName == "porygon-z") return "porygonz";
         else if (pokemonName == "jangmo-o") return "jangmoo";
         else if (pokemonName == "sirfetch'd") return "sirfetchd";
+        else if (pokemonName == "vulpix-alola") return "vulpixalola";
+        else if (pokemonName == "ninetales-alola") return "ninetalesalola";
 
         return pokemonName;
     }

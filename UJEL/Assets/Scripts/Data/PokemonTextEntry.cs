@@ -46,7 +46,7 @@ public enum PokemonInGame
     Delphox, Froakie, Frogadier, Greninja, Rowlet, Dartrix, Decidueye, Litten, Torracat, Incineroar,
     Popplio, Brionne, Primarina, Grookey, Thwackey, Rillaboom, Scorbunny, Raboot, Cinderace, Sobble,
     Drizzile, Inteleon, Sentret, Furret, Mareep, Flaaffy, Eevee, Vaporeon, Flareon, Jolteon, Espeon,
-    Umbreon, Leafeon, Glaceon, Sylveon, Vulpix, Ninetales, AlolanVulpix, AlolanNinetales, Cubchoo,
+    Umbreon, Leafeon, Glaceon, Sylveon, Vulpix, Ninetales, vulpixalola, ninetalesalola, Cubchoo,
     Beartic, Onix, Steelix, Drilbur, Excadrill, Nincada, Ninjask, Shedinja, Tympole, Palpitoad, Seismitoad,
     Timburr, Gurdurr, Conkeldurr, Sandygast, Palossand, Mudbray, Mudsdale, Passimian, Makuhita, Hariyama,
     Clobbopus, Grapploct, Meditite, Medicham, Houndour, Houndoom, Poochyena, Mightyena, Pawniard, Bisharp,

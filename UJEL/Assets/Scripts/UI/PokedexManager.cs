@@ -76,7 +76,7 @@ public class PokedexManager : MonoBehaviour, ISavable
                 location = currPokemon.FoundLocations,
                 entryNumber = currPokemon.PokedexNumber,
                 description = currPokemon.Description,
-                haveCaught = false
+                haveCaught = true
             });
         }
 

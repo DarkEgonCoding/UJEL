@@ -20,6 +20,8 @@ public class PokemonLoader : MonoBehaviour
     public bool LearnsetsLoaded = false;
     public bool DexNumbersLoaded = false;
     public bool EvolutionsLoaded = false;
+    public bool SpritesLoaded = false;
+    public bool BackSpritesLoaded = false;
     public static PokemonLoader instance;
 
     void Awake()
@@ -34,6 +36,8 @@ public class PokemonLoader : MonoBehaviour
         LearnsetsLoaded = false;
         DexNumbersLoaded = false;
         EvolutionsLoaded = false;
+        SpritesLoaded = false;
+        BackSpritesLoaded = false;
         StartCoroutine(LoadPokemon());
     }
 
@@ -64,6 +68,16 @@ public class PokemonLoader : MonoBehaviour
 
         yield return new WaitUntil(() => EvolutionsLoaded == true);
 
+        Debug.Log("Start Loading Sprites");
+        PSpriteLoader.LoadAllFrontSprites();
+
+        yield return new WaitUntil(() => SpritesLoaded == true);
+
+        Debug.Log("Start Loading Back Sprites");
+        PSpriteLoader.LoadAllBackSprites();
+
+        yield return new WaitUntil(() => BackSpritesLoaded == true);
+
         Debug.Log("Pokemon Loader start");
         tempPokemonsByName = new Dictionary<string, PokemonBase>();
         tempPokemonsByDexNum = new Dictionary<int, PokemonBase>();
@@ -77,6 +91,8 @@ public class PokemonLoader : MonoBehaviour
         {
             server.WriteLine($"getByNum {i}");
         }
+        server.WriteLine($"getByName vulpixalola");
+        server.WriteLine($"getByName ninetalesalola");
     }
 
     void Update()
@@ -100,7 +116,7 @@ public class PokemonLoader : MonoBehaviour
         tempPokemonsByDexNum[pb.UniversalDexNumber] = pb;
         //Debug.Log($"Loaded Pokemon: {pb.PokemonName}, Num: {pb.UniversalDexNumber}");
 
-        if (tempPokemonsByName.Count == NUM_OF_POKEMON - 1)
+        if (tempPokemonsByName.Count == NUM_OF_POKEMON + 1) // Accounts for alolan variants
         {
             float LoadTime = Time.time - startTime;
 

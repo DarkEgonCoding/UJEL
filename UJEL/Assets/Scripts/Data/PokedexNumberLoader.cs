@@ -42,7 +42,7 @@ public static class PokedexNumberLoader
                 continue;
 
             string name = parts[0].Trim();
-            name = FixOddPokemonNames(name);
+            name = PokemonDB.FixWeirdPokemonNames(name);
 
             PJEL_Pokedex_Pokemon.Add(name);
             //Debug.Log(name);
