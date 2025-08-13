@@ -6,7 +6,7 @@ using Unity.Services.Analytics;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
-public enum ItemCategory { Items, Pokeballs, Tms }
+public enum ItemCategory { Items, Pokeballs, Tms, Lures }
 
 public class Inventory : MonoBehaviour
 {
@@ -70,6 +70,8 @@ public class Inventory : MonoBehaviour
             return ItemCategory.Pokeballs;
         else if (item is TmItem)
             return ItemCategory.Tms;
+        else if (item is LureItem)
+            return ItemCategory.Lures;
         else
         {
             Debug.LogError("Error here");

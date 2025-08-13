@@ -20,7 +20,7 @@ public class MoneyHandler : MonoBehaviour, ISavable
 
     public void Start()
     {
-        money = 0;
+        money = 100;
     }
 
     public void AddMoney(int amount)
@@ -31,6 +31,12 @@ public class MoneyHandler : MonoBehaviour, ISavable
     public void RemoveMoney(int amount)
     {
         money -= amount;
+    }
+
+    public bool CanBuy(int cost)
+    {
+        if (money >= cost) return true;
+        else return false;
     }
 
     public void SetMoneyWager(int value)

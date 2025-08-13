@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution, PC }
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution, PC, Shop }
 
 public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex, Map }
 
@@ -123,6 +123,10 @@ public class GameController : MonoBehaviour
         else if (state == GameState.PC)
         {
             PCBox.instance.HandlePCUpdate();
+        }
+        else if (state == GameState.Shop)
+        {
+            ShopController.instance.HandleUpdate();
         }
     }
 
