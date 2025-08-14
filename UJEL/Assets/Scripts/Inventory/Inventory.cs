@@ -114,6 +114,16 @@ public class Inventory : MonoBehaviour
 
         OnUpdated?.Invoke();
     }
+
+    public int GetItemCount(ItemBase item)
+    {
+        foreach (var slotList in allSlots)
+        {
+            var slot = slotList.FirstOrDefault(s => s.Item == item);
+            if (slot != null) return slot.Count;
+        }
+        return 0;
+    }
 }
 
 [Serializable]

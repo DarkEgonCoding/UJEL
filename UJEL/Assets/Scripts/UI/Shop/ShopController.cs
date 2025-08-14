@@ -17,6 +17,10 @@ public class ShopController : MonoBehaviour
     [SerializeField] Image itemIcon;
     [SerializeField] TextMeshProUGUI itemDescription;
 
+    [Header("Text Objects")]
+    [SerializeField] TextMeshProUGUI moneyTxt;
+    [SerializeField] TextMeshProUGUI inBagTxt;
+
     [Header("Slots Details")]
     [SerializeField] GameObject ShopUI;
     [SerializeField] Transform slotParent;
@@ -72,7 +76,15 @@ public class ShopController : MonoBehaviour
             ui.Init(slot);
         }
 
+        UpdateMoneyText();
+        UpdateInBagText();
         UpdateItemSelection();
+    }
+
+    private void UpdateMoneyText()
+    {
+        string currMoney = MoneyHandler.instance.Money.ToString();
+        moneyTxt.text = $"Money: {currMoney}";
     }
 
     public void HandleUpdate()
@@ -97,42 +109,51 @@ public class ShopController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            var slot = shopSlotUIs[selectedItem].shopSlot;
-
-            // Return if it is out of the item count and not infinite
-            if (slot.itemCount <= 0 && slot.infiniteNumOfItem != true)
-            {
-                Debug.Log("There are no items left!");
-                return;
-            }
-
-            var item = slot.item;
-            int cost = slot.cost;
-            var playerInventory = Inventory.GetInventory();
-
-            if (MoneyHandler.instance.CanBuy(cost))
-            {
-                MoneyHandler.instance.RemoveMoney(cost);
-                playerInventory.AddItem(item);
-
-                if (slot.infiniteNumOfItem)
-                {
-                    return;
-                }
-                else
-                {
-                    slot.itemCount -= 1;
-                    shopSlotUIs[selectedItem].UpdateCountText(slot);
-                }
-            }
-            else
-            {
-                Debug.Log("You don't have enough money to buy the item.");
-            }
+            Purchase(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            Purchase(10);
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
             ExitShop();
+        }
+    }
+
+    public void Purchase(int numOfItems = 1)
+    {
+        var slot = shopSlotUIs[selectedItem].shopSlot;
+
+        // Return if the amount bought would lower the item count below 0
+        if ((slot.itemCount - numOfItems) < 0 && slot.infiniteNumOfItem != true)
+        {
+            Debug.Log("There are no items left!");
+            return;
+        }
+
+        var item = slot.item;
+        int cost = slot.cost * numOfItems;
+        var playerInventory = Inventory.GetInventory();
+
+        if (MoneyHandler.instance.CanBuy(cost))
+        {
+            MoneyHandler.instance.RemoveMoney(cost);
+
+            playerInventory.AddItem(item, numOfItems);
+
+            if (!slot.infiniteNumOfItem)
+            {
+                slot.itemCount -= numOfItems;
+                shopSlotUIs[selectedItem].UpdateCountText(slot);
+            }
+
+            UpdateInBagText();
+            UpdateMoneyText();
+        }
+        else
+        {
+            Debug.Log("You don't have enough money to buy the item.");
         }
     }
 
@@ -144,7 +165,7 @@ public class ShopController : MonoBehaviour
         GameController.instance.SetUICanvas(false);
         ShopUI.SetActive(false);
     }
-    
+
     void UpdateItemSelection()
     {
         //Debug.Log("Updating Item Selection");
@@ -167,6 +188,19 @@ public class ShopController : MonoBehaviour
             itemDescription.text = slot.Description;
             HandleScrolling();
         }
+
+        UpdateInBagText();
+    }
+
+    private void UpdateInBagText()
+    {
+        if (shopSlotUIs.Count == 0) return;
+
+        var slot = shopSlotUIs[selectedItem].shopSlot;
+        var item = slot.item;
+
+        int countInBag = Inventory.GetInventory().GetItemCount(item);
+        inBagTxt.text = $"In Bag: {countInBag}";
     }
 
     void HandleScrolling()

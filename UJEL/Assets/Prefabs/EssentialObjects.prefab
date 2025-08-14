@@ -3294,6 +3294,8 @@ MonoBehaviour:
   shopSlotUIs: []
   itemIcon: {fileID: 9046399188524782041}
   itemDescription: {fileID: 4504742704641799737}
+  moneyTxt: {fileID: 3582976431883909230}
+  inBagTxt: {fileID: 5800525101350727043}
   ShopUI: {fileID: 6203895355784264665}
   slotParent: {fileID: 3765645491940841660}
   slotPrefab: {fileID: 3429604493523743821, guid: e9a277a45a41ef04d812cc6f2f227986, type: 3}
@@ -7772,6 +7774,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a54d6520599c424baecbf138a84184f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3582976431883909230 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3412046421280955212, guid: 798db11df46664d4da06421c36712257, type: 3}
+  m_PrefabInstance: {fileID: 2225706412654289698}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3725613860376699350 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3267157165358908148, guid: 798db11df46664d4da06421c36712257, type: 3}
@@ -7961,6 +7974,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51e70cbab02b8eb44b2f15c11e82843e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5800525101350727043 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5664638724389883553, guid: 798db11df46664d4da06421c36712257, type: 3}
+  m_PrefabInstance: {fileID: 2225706412654289698}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6075868125932028931 stripped

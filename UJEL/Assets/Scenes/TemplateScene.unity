@@ -2104,7 +2104,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5000001
+      m_AnimationSpeed: 1.5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -8, y: -8, z: 0}
@@ -2119,7 +2119,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5000001
+      m_AnimationSpeed: 1.5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -8, z: 0}
@@ -2149,7 +2149,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5000001
+      m_AnimationSpeed: 1.5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: -8, z: 0}
@@ -2179,7 +2179,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5
+      m_AnimationSpeed: 1.5000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -8, y: -7, z: 0}
@@ -2269,7 +2269,7 @@ Tilemap:
       - {fileID: 942940904, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: 1160353532, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
       - {fileID: -762346281, guid: 24e2e22c18f31e4439326de112f51ffd, type: 3}
-      m_AnimationSpeed: 1.5
+      m_AnimationSpeed: 1.5000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -6, z: 0}
@@ -20338,6 +20338,7 @@ GameObject:
   - component: {fileID: 1631849953}
   - component: {fileID: 1631849956}
   - component: {fileID: 1631849955}
+  - component: {fileID: 1631849957}
   m_Layer: 8
   m_Name: ShopLoader
   m_TagString: Untagged
@@ -20510,6 +20511,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1631849957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631849952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: e2c7b01c-5b38-4374-bfdb-54847963f2b9
 --- !u!1001 &1678005721
 PrefabInstance:
   m_ObjectHideFlags: 0
