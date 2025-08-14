@@ -82,7 +82,15 @@ public class PokemonDB
         else if (pokemonName == "jangmo-o") return "jangmoo";
         else if (pokemonName == "sirfetch'd") return "sirfetchd";
         else if (pokemonName == "vulpix-alola") return "vulpixalola";
+        else if (pokemonName == "vulpix alola") return "vulpixalola";
+        else if (pokemonName == "alolan vulpix") return "vulpixalola";
+        else if (pokemonName == "alolan-vulpix") return "vulpixalola";
+        else if (pokemonName == "alolanvulpix") return "vulpixalola";
+        else if (pokemonName == "ninetales alola") return "ninetalesalola";
         else if (pokemonName == "ninetales-alola") return "ninetalesalola";
+        else if (pokemonName == "alola-ninetales") return "ninetalesalola";
+        else if (pokemonName == "alola ninetales") return "ninetalesalola";
+        else if (pokemonName == "alolaninetales") return "ninetalesalola";
 
         return pokemonName;
     }

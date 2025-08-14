@@ -77,6 +77,7 @@ public class PokemonBase : ScriptableObject
         this.backSprite = PSpriteLoader.GetBackSprite(name);
         SetLevelUpMoves();
         SetEvolutions();
+        this.foundLocations = PokemonFoundLocationsLoader.GetLocations(name);
     }
 
     private void SetEvolutions()

@@ -22,6 +22,7 @@ public class PokemonLoader : MonoBehaviour
     public bool EvolutionsLoaded = false;
     public bool SpritesLoaded = false;
     public bool BackSpritesLoaded = false;
+    public bool FoundLocationsLoaded = false;
     public static PokemonLoader instance;
 
     void Awake()
@@ -38,6 +39,7 @@ public class PokemonLoader : MonoBehaviour
         EvolutionsLoaded = false;
         SpritesLoaded = false;
         BackSpritesLoaded = false;
+        FoundLocationsLoaded = false;
         StartCoroutine(LoadPokemon());
     }
 
@@ -77,6 +79,11 @@ public class PokemonLoader : MonoBehaviour
         PSpriteLoader.LoadAllBackSprites();
 
         yield return new WaitUntil(() => BackSpritesLoaded == true);
+
+        Debug.Log("Start Loading Found Locations");
+        PokemonFoundLocationsLoader.LoadFoundLocations();
+
+        yield return new WaitUntil(() => FoundLocationsLoaded == true);
 
         Debug.Log("Pokemon Loader start");
         tempPokemonsByName = new Dictionary<string, PokemonBase>();
