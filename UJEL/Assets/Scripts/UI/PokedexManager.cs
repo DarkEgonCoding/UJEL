@@ -80,6 +80,7 @@ public class PokedexManager : MonoBehaviour, ISavable
                 type2 = currPokemon.type2,
                 heightm = currPokemon.Heightm,
                 weightkg = currPokemon.Weightkg,
+                evolutionText = currPokemon.GetEvolutionString(),
                 haveCaught = true
             });
         }

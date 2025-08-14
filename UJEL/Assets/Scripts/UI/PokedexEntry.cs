@@ -20,6 +20,7 @@ public class PokedexEntry
     public PokemonType type2;
     public double heightm;
     public double weightkg;
+    public string evolutionText;
 
     public void SetCaught(bool caught)
     {

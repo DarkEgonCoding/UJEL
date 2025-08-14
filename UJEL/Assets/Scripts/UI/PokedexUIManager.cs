@@ -20,6 +20,7 @@ public class PokedexUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI type2text;
     [SerializeField] private TextMeshProUGUI heightTxt;
     [SerializeField] private TextMeshProUGUI weightTxt;
+    [SerializeField] private TextMeshProUGUI evolutionsTxt;
     [SerializeField] private GameObject upArrow;
     [SerializeField] private GameObject downArrow;
     [SerializeField] private RectTransform itemListRect;
@@ -211,6 +212,7 @@ public class PokedexUIManager : MonoBehaviour
         weightTxt.text = $"Weight: {pokedexUIList[selectedItem].Weightkg} kg.";
         type1text.text = pokedexUIList[selectedItem].Type1;
         type2text.text = pokedexUIList[selectedItem].Type2;
+        evolutionsTxt.text = pokedexUIList[selectedItem].EvolutionsText;
 
         HandleScrolling();
     }

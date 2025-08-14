@@ -15,6 +15,7 @@ public class PokedexElementUI : MonoBehaviour
     [SerializeField] private string weightkg;
     [SerializeField] private string type1;
     [SerializeField] private string type2;
+    [SerializeField] private string evolutionsText;
 
     RectTransform rectTransform;
 
@@ -33,6 +34,7 @@ public class PokedexElementUI : MonoBehaviour
     public string Weightkg => weightkg;
     public string Type1 => type1;
     public string Type2 => type2;
+    public string EvolutionsText => evolutionsText;
 
     public void SetData(PokedexEntry entry)
     {
@@ -44,6 +46,7 @@ public class PokedexElementUI : MonoBehaviour
         weightkg = entry.weightkg.ToString();
         type1 = entry.type1.ToString();
         type2 = entry.type2.ToString();
+        evolutionsText = entry.evolutionText;
 
         if (entry.haveCaught)
         {

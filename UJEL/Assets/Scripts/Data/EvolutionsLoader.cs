@@ -6,6 +6,38 @@ public static class EvolutionsLoader
 {
     static Dictionary<string, Evolution> evolutionDict;
 
+    static Dictionary<string, List<Evolution>> stoneEvolutions = new Dictionary<string, List<Evolution>>()
+    {
+        {"snorunt", new List<Evolution> { new Evolution ("froslass", 0, true, EvolutionStone.Dawn)} },
+        {"eevee", new List<Evolution>
+            {
+                new Evolution ("vaporeon", 0, true, EvolutionStone.Water),
+                new Evolution("flareon", 0, true, EvolutionStone.Fire),
+                new Evolution("jolteon", 0, true, EvolutionStone.Thunder),
+                new Evolution("espeon", 0, true, EvolutionStone.Dawn),
+                new Evolution("umbreon", 0, true, EvolutionStone.Dusk),
+                new Evolution("leafeon", 0, true, EvolutionStone.Leaf),
+                new Evolution("glaceon", 0, true, EvolutionStone.Ice),
+                new Evolution("sylveon", 0, true, EvolutionStone.Shiny)
+            }
+        },
+        {"vulpix", new List<Evolution> { new Evolution ("ninetales", 0, true, EvolutionStone.Fire)} },
+        {"vulpixalola", new List<Evolution> { new Evolution ("ninetalesalola", 0, true, EvolutionStone.Ice)} },
+        {"kirlia", new List<Evolution> { new Evolution ("gallade", 0, true, EvolutionStone.Dawn)} },
+        {"charjabug", new List<Evolution> { new Evolution ("vikavolt", 0, true, EvolutionStone.Thunder)} },
+        {"helioptile", new List<Evolution> { new Evolution ("heliolisk", 0, true, EvolutionStone.Sun)} },
+        {"lampent", new List<Evolution> { new Evolution ("chandelure", 0, true, EvolutionStone.Dusk)} },
+        {"nuzleaf", new List<Evolution> { new Evolution ("shiftry", 0, true, EvolutionStone.Leaf)} },
+        {"mantyke", new List<Evolution> { new Evolution ("mantine", 0, true, EvolutionStone.Water)} },
+        {"eelektrik", new List<Evolution> { new Evolution ("eelektross", 0, true, EvolutionStone.Thunder)} },
+        {"electabuzz", new List<Evolution> { new Evolution ("electivire", 0, true, EvolutionStone.Thunder)} },
+        {"pikachu", new List<Evolution> { new Evolution ("raichu", 0, true, EvolutionStone.Thunder)} },
+        {"magneton", new List<Evolution> { new Evolution ("magnezone", 0, true, EvolutionStone.Thunder)} },
+        {"shellder", new List<Evolution> { new Evolution ("cloyster", 0, true, EvolutionStone.Water)} },
+        {"lotad", new List<Evolution> { new Evolution ("lombre", 0, true, EvolutionStone.Water)} },
+        {"doublade", new List<Evolution> { new Evolution ("aegislash", 0, true, EvolutionStone.Dusk)} },
+    };
+
     public static void LoadEvolutions()
     {
         evolutionDict = new Dictionary<string, Evolution>();
@@ -50,16 +82,35 @@ public static class EvolutionsLoader
     }
 
     // Get evolution for a base Pokémon, or null if none
-    public static Evolution GetEvolution(string basePokemonName)
+    public static List<Evolution> GetEvolution(string basePokemonName)
     {
-        if (evolutionDict != null && evolutionDict.TryGetValue(basePokemonName, out Evolution evo))
+        if (evolutionDict == null || stoneEvolutions == null)
         {
-            return evo;
+            Debug.LogError("Evolution dictionary is empty.");
+            return null;
+        }
+
+        List<Evolution> pEvolutions = new List<Evolution>();
+
+        // Level evolutions
+        if (evolutionDict.TryGetValue(basePokemonName, out Evolution evo))
+        {
+            pEvolutions.Add(evo);
         }
         else
         {
-            //Debug.Log($"No evolution found for '{basePokemonName}'");
-            return null;
+            // Debug.Log($"No level evolution found for '{basePokemonName}'");
         }
+
+        if (stoneEvolutions.TryGetValue(PokemonDB.FixWeirdPokemonNames(basePokemonName), out List<Evolution> stoneEvos))
+        {
+            pEvolutions.AddRange(stoneEvos);
+        }
+        else
+        {
+            // Debug.Log($"No stone evolution found for '{basePokemonName}'");
+        }
+
+        return pEvolutions;
     }
 }

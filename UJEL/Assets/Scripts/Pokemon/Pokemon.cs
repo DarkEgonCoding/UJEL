@@ -311,7 +311,21 @@ public class Pokemon
     {
         var nameOfEvolution = PokemonDB.FixWeirdPokemonNames(evolution.EvolvesInto);
         _base = PokemonDB.GetPokemonByName(nameOfEvolution);
-        Debug.LogWarning("Idk if the stats for the new pokemon are correct. - Evan");
+
+        float hpPercent = (float)HP / MaxHp;
+
+        HP = Mathf.RoundToInt(hpPercent * MaxHp);
+
+        foreach (var moveLearn in Base.LevelUpMoves)
+        {
+            if (moveLearn.Level <= Level && !pMoves.Contains(moveLearn.Move))
+            {
+                if (pMoves.Count < PokemonBase.MaxNumOfMoves)
+                {
+                    pMoves.Add(moveLearn.Move);
+                }
+            }
+        }
     }
 
     /*

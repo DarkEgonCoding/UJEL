@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new Pokemon")]
@@ -80,15 +81,39 @@ public class PokemonBase : ScriptableObject
 
     private void SetEvolutions()
     {
-        Evolution evo = EvolutionsLoader.GetEvolution(pokemonName);
+        List<Evolution> evo = EvolutionsLoader.GetEvolution(pokemonName);
         if (evo != null)
         {
-            evolutions = new List<Evolution> { evo };
+            evolutions = evo;
         }
         else
         {
             evolutions = new List<Evolution>();
         }
+    }
+
+    public string GetEvolutionString()
+    {
+        string evo = $"Evolutions: ";
+        string originalEvo = evo;
+        foreach (Evolution evolution in evolutions)
+        {
+            if (evolution.NeedsStone)
+            {
+                string stoneName = evolution.RequiredStone.ToString();
+                evo += $"{stoneName} stone, ";
+            }
+            else
+            {
+                evo += $"Level: {evolution.RequiredLevel} to {evolution.EvolvesInto}, ";
+            }
+        }
+
+        if (evo == originalEvo) return "Max evolution";
+
+        evo = evo.TrimEnd(',', ' ');
+
+        return evo;
     }
 
     private void SetInGamePokedexNumber(string name)
@@ -321,14 +346,23 @@ public class Evolution
 
     [SerializeField] bool needsStone = false;
 
+    private EvolutionStone requiredStone;
+
     public string EvolvesInto => evolvesInto;
     public int RequiredLevel => requiredLevel;
     public bool NeedsStone => needsStone;
+    public EvolutionStone RequiredStone => requiredStone;
 
-    public Evolution(string evolvesInto, int requiredLevel)
+    public Evolution(string evolvesInto, int requiredLevel, bool needsStone = false, EvolutionStone evolutionStone = EvolutionStone.None)
     {
         this.evolvesInto = evolvesInto;
         this.requiredLevel = requiredLevel;
+        this.needsStone = needsStone;
+        if (needsStone)
+        {
+            requiredStone = evolutionStone;
+        }
+        else requiredStone = EvolutionStone.None;
     }
 }
 
