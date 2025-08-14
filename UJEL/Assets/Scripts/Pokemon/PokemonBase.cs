@@ -228,7 +228,7 @@ public class PokemonBase : ScriptableObject
             Debug.LogWarning($"{pokemonName} has no level-up moves.");
             return;
         }
-            
+
         foreach (var ml in levelUpMoves)
         {
             Debug.Log($"{pokemonName} learns {ml}.");
@@ -297,7 +297,7 @@ public class PokemonBase : ScriptableObject
         get { return learnableMoves; }
     }
     */
-    
+
     public int CatchRate => catchRate;
     public int PokedexNumber => pokedexNumber;
     public string FoundLocations => foundLocations;
@@ -309,6 +309,8 @@ public class PokemonBase : ScriptableObject
     public int UniversalDexNumber => universalDexNumber;
     public List<string> Abilities => abilities;
     public List<MoveLearn> LevelUpMoves => levelUpMoves;
+    public double Heightm => heightm;
+    public double Weightkg => weightkg;
 }
 
 [System.Serializable]

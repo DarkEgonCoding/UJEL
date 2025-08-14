@@ -76,6 +76,10 @@ public class PokedexManager : MonoBehaviour, ISavable
                 location = currPokemon.FoundLocations,
                 entryNumber = currPokemon.PokedexNumber,
                 description = currPokemon.Description,
+                type1 = currPokemon.type1,
+                type2 = currPokemon.type2,
+                heightm = currPokemon.Heightm,
+                weightkg = currPokemon.Weightkg,
                 haveCaught = true
             });
         }
