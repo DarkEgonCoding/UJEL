@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ShopSlotUI : MonoBehaviour
 {
@@ -27,19 +28,20 @@ public class ShopSlotUI : MonoBehaviour
 
         if (shopSlot.infiniteNumOfItem)
         {
-            ItemCountText.text = "--";
+            ItemCountText.text = "inf";
         }
         else
         {
-            string countString = shopSlot.itemCount.ToString();
-            ItemCountText.text = $"x {countString}";
+            UpdateCountText(slot);
         }
     }
 
     public void UpdateCountText(ShopSlot slot)
     {
         string countString = shopSlot.itemCount.ToString();
-        ItemCountText.text = $"x {countString}";
+        if (countString.Length <= 0) Debug.LogError("Count String is length 0.");
+        else if (countString.Length == 1) ItemCountText.text = $"x  {countString}";
+        else if (countString.Length >= 2) ItemCountText.text = $"x {countString}";
     }
 
     public void Highlight(bool on)

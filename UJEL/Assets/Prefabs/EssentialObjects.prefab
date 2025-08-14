@@ -8432,6 +8432,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: stoneSlots.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: tmSlots.Array.data[0].item
       value: 
       objectReference: {fileID: 11400000, guid: 0bb1fdbf9b49a8b4fa7695d3d677874c, type: 2}
@@ -8446,6 +8454,46 @@ PrefabInstance:
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: tmSlots.Array.data[1].count
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: f0789e201fdd1a54eb4ad3670ae9a65f, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 248a405cfeef2174ea46aec590cc2d0f, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: fb22da19381418f4c88ade8e1f3088ea, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[0].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[1].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[2].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: stoneSlots.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 290c9dd17d8b706429bf00e0af27dee6, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: stoneSlots.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 3db0d9282804a6b42b6c0a7c1e72e52e, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: stoneSlots.Array.data[0].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: stoneSlots.Array.data[1].count
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3521094896781968196, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: uniqueId

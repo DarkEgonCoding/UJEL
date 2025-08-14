@@ -6,13 +6,15 @@ using Unity.Services.Analytics;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
-public enum ItemCategory { Items, Pokeballs, Tms, Lures }
+public enum ItemCategory { Items, Pokeballs, Tms, Lures, EvolutionStones }
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] List<ItemSlot> slots;
     [SerializeField] List<ItemSlot> pokeballSlots;
     [SerializeField] List<ItemSlot> tmSlots;
+    [SerializeField] List<ItemSlot> lureSlots;
+    [SerializeField] List<ItemSlot> stoneSlots;
 
     List<List<ItemSlot>> allSlots;
 
@@ -22,12 +24,14 @@ public class Inventory : MonoBehaviour
     {
         "ITEMS",
         "POKEBALLS",
-        "TMs & HMs"
+        "TMs & HMs",
+        "Lures & Repels",
+        "Evolution Stones"
     };
 
     private void Awake()
     {
-        allSlots = new List<List<ItemSlot>>() { slots, pokeballSlots, tmSlots };
+        allSlots = new List<List<ItemSlot>>() { slots, pokeballSlots, tmSlots, lureSlots, stoneSlots };
     }
 
     public List<ItemSlot> GetSlotsByCategory(int categoryIndex)
@@ -72,6 +76,8 @@ public class Inventory : MonoBehaviour
             return ItemCategory.Tms;
         else if (item is LureItem)
             return ItemCategory.Lures;
+        else if (item is EvolutionItem)
+            return ItemCategory.EvolutionStones;
         else
         {
             Debug.LogError("Error here");
