@@ -537,6 +537,8 @@ MonoBehaviour:
   EvolutionsLoaded: 0
   SpritesLoaded: 0
   BackSpritesLoaded: 0
+  FoundLocationsLoaded: 0
+  ExpYieldLoaded: 0
 --- !u!114 &7022530384016150381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7543,6 +7545,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8763170581844072469, guid: 798db11df46664d4da06421c36712257, type: 3}
+      propertyPath: expYieldTxt
+      value: 
+      objectReference: {fileID: 3566730043036546139}
     - target: {fileID: 8778661632737874851, guid: 798db11df46664d4da06421c36712257, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -7772,6 +7778,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a54d6520599c424baecbf138a84184f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3566730043036546139 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3430861258263975801, guid: 798db11df46664d4da06421c36712257, type: 3}
+  m_PrefabInstance: {fileID: 2225706412654289698}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3582976431883909230 stripped

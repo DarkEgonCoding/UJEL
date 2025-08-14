@@ -21,6 +21,7 @@ public class PokedexUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI heightTxt;
     [SerializeField] private TextMeshProUGUI weightTxt;
     [SerializeField] private TextMeshProUGUI evolutionsTxt;
+    [SerializeField] private TextMeshProUGUI expYieldTxt;
     [SerializeField] private GameObject upArrow;
     [SerializeField] private GameObject downArrow;
     [SerializeField] private RectTransform itemListRect;
@@ -213,6 +214,7 @@ public class PokedexUIManager : MonoBehaviour
         type1text.text = pokedexUIList[selectedItem].Type1;
         type2text.text = pokedexUIList[selectedItem].Type2;
         evolutionsTxt.text = pokedexUIList[selectedItem].EvolutionsText;
+        expYieldTxt.text = $"Exp Yield: {pokedexUIList[selectedItem].ExpYield.ToString()}";
 
         HandleScrolling();
     }

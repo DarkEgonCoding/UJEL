@@ -23,6 +23,7 @@ public class PokemonLoader : MonoBehaviour
     public bool SpritesLoaded = false;
     public bool BackSpritesLoaded = false;
     public bool FoundLocationsLoaded = false;
+    public bool ExpYieldLoaded = false;
     public static PokemonLoader instance;
 
     void Awake()
@@ -40,6 +41,7 @@ public class PokemonLoader : MonoBehaviour
         SpritesLoaded = false;
         BackSpritesLoaded = false;
         FoundLocationsLoaded = false;
+        ExpYieldLoaded = false;
         StartCoroutine(LoadPokemon());
     }
 
@@ -84,6 +86,11 @@ public class PokemonLoader : MonoBehaviour
         PokemonFoundLocationsLoader.LoadFoundLocations();
 
         yield return new WaitUntil(() => FoundLocationsLoaded == true);
+
+        Debug.Log("Start Loading Exp Yields");
+        ExpYieldLoader.LoadXPYields();
+
+        yield return new WaitUntil(() => ExpYieldLoaded == true);
 
         Debug.Log("Pokemon Loader start");
         tempPokemonsByName = new Dictionary<string, PokemonBase>();

@@ -16,6 +16,7 @@ public class PokedexElementUI : MonoBehaviour
     [SerializeField] private string type1;
     [SerializeField] private string type2;
     [SerializeField] private string evolutionsText;
+    [SerializeField] private int expYield;
 
     RectTransform rectTransform;
 
@@ -35,6 +36,7 @@ public class PokedexElementUI : MonoBehaviour
     public string Type1 => type1;
     public string Type2 => type2;
     public string EvolutionsText => evolutionsText;
+    public int ExpYield => expYield;
 
     public void SetData(PokedexEntry entry)
     {
@@ -47,6 +49,7 @@ public class PokedexElementUI : MonoBehaviour
         type1 = entry.type1.ToString();
         type2 = entry.type2.ToString();
         evolutionsText = entry.evolutionText;
+        expYield = entry.expYield;
 
         if (entry.haveCaught)
         {

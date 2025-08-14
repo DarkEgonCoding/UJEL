@@ -78,6 +78,7 @@ public class PokemonBase : ScriptableObject
         SetLevelUpMoves();
         SetEvolutions();
         this.foundLocations = PokemonFoundLocationsLoader.GetLocations(name);
+        this.expYield = ExpYieldLoader.GetXPYield(name);
     }
 
     private void SetEvolutions()
