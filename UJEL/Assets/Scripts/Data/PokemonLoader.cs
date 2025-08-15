@@ -15,6 +15,7 @@ public class PokemonLoader : MonoBehaviour
     private const int NUM_OF_POKEMON = 1000;
     private float startTime;
 
+    public bool isLoaded = false;
     public bool GrowthRatesLoaded = false;
     public bool CatchRatesLoaded = false;
     public bool LearnsetsLoaded = false;
@@ -24,6 +25,7 @@ public class PokemonLoader : MonoBehaviour
     public bool BackSpritesLoaded = false;
     public bool FoundLocationsLoaded = false;
     public bool ExpYieldLoaded = false;
+    public bool FlavorTextsLoaded = false;
     public static PokemonLoader instance;
 
     void Awake()
@@ -33,6 +35,7 @@ public class PokemonLoader : MonoBehaviour
 
     void Start()
     {
+        isLoaded = false;
         GrowthRatesLoaded = false;
         CatchRatesLoaded = false;
         LearnsetsLoaded = false;
@@ -42,6 +45,7 @@ public class PokemonLoader : MonoBehaviour
         BackSpritesLoaded = false;
         FoundLocationsLoaded = false;
         ExpYieldLoaded = false;
+        FlavorTextsLoaded = false;
         StartCoroutine(LoadPokemon());
     }
 
@@ -92,6 +96,11 @@ public class PokemonLoader : MonoBehaviour
 
         yield return new WaitUntil(() => ExpYieldLoaded == true);
 
+        Debug.Log("Start Loading Flavor Texts");
+        PokemonFlavorTextLoader.LoadFlavorTexts();
+
+        yield return new WaitUntil(() => FlavorTextsLoaded == true);
+
         Debug.Log("Pokemon Loader start");
         tempPokemonsByName = new Dictionary<string, PokemonBase>();
         tempPokemonsByDexNum = new Dictionary<int, PokemonBase>();
@@ -141,9 +150,7 @@ public class PokemonLoader : MonoBehaviour
 
             PokedexManager.instance.Init();
 
-            // Debug tests
-            var charmander = PokemonDB.GetPokemonByName("charmander");
-            charmander.DebugEvolutions();
+            isLoaded = false;
         }
     }
 }

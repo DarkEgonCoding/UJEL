@@ -79,6 +79,7 @@ public class PokemonBase : ScriptableObject
         SetEvolutions();
         this.foundLocations = PokemonFoundLocationsLoader.GetLocations(name);
         this.expYield = ExpYieldLoader.GetXPYield(name);
+        this.description = PokemonFlavorTextLoader.GetFlavorText(this.universalDexNumber);
     }
 
     private void SetEvolutions()
