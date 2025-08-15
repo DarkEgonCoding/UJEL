@@ -689,6 +689,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
 
         var expSharePokemon = playerParty.GetExpShare();
+        if (expSharePokemon == playerUnit.Pokemon) expSharePokemon = null;
         if (expSharePokemon != null)
         {
             var expShareGain = expGain / 2;

@@ -8,7 +8,6 @@ public class SpecialItem : ItemBase
     [SerializeField] public string heldItemName;
 
     public override bool IsReusable => true;
-    public override string Name => heldItemName;
 
     /// <summary>
     /// Held Items in the inventory are not managed by the inventory but

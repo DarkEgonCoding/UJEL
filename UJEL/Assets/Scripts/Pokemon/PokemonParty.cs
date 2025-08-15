@@ -9,7 +9,7 @@ public class PokemonParty : MonoBehaviour
 {
     List<Pokemon> pokemons;
 
-    [SerializeField] List<PokemonTextEntry> testPokemon;
+    [SerializeField] List<PokemonTextEntry> pokemonTextEntries;
 
     public event Action OnUpdated;
 
@@ -37,9 +37,8 @@ public class PokemonParty : MonoBehaviour
             pokemon.Init();
         }
 
-        foreach (var pokemonText in testPokemon)
+        foreach (var pokemonText in pokemonTextEntries)
         {
-            Debug.Log($"Sent data: Pokemon Name: {pokemonText.PokemonEnum.ToString()}, Pokemon Level: {pokemonText.Level}");
             var createdPokemon = PokemonTextEntryExtensions.TextEntryToPokemon(pokemonText);
             AddPokemon(createdPokemon);
         }

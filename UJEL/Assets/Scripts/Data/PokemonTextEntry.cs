@@ -28,10 +28,6 @@ public static class PokemonTextEntryExtensions
         string pName = textEntry.PokemonEnum.ToString();
         PokemonBase pb = PokemonDB.GetPokemonByName(pName);
 
-        Debug.Log($"PokemonEnum raw value: {(int)textEntry.PokemonEnum}");
-        Debug.Log($"Pokemon test entry data: Pokemon Name: {pName}, Pokemon Level {textEntry.Level}");
-        Debug.Log($"Pokemon Being Created: Pokemon Name: {pb.PokemonName}, Pokemon Level: {textEntry.Level}, Pokemon Moves {textEntry.Moves}");
-
         var pokemon = new Pokemon(pb, textEntry.Level, textEntry.Moves);
 
         return pokemon;

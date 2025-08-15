@@ -15,12 +15,10 @@ public class PokemonTextEntryDrawer : PropertyDrawer
         if (allPokemonNames == null)
         {
             allPokemonNames = Enum.GetNames(typeof(PokemonInGame))
-                .OrderBy(n => n, StringComparer.OrdinalIgnoreCase)
                 .ToArray();
 
             allMoveNames = PokemonTextEntryExtensions.ALL_MOVES
                 .Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries)
-                .OrderBy(m => m, StringComparer.OrdinalIgnoreCase)
                 .ToArray();
         }
     }
