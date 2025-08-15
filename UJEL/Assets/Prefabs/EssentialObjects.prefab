@@ -530,6 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d400984a98f2242af19e123af7a5ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLoaded: 0
   GrowthRatesLoaded: 0
   CatchRatesLoaded: 0
   LearnsetsLoaded: 0
@@ -539,6 +540,7 @@ MonoBehaviour:
   BackSpritesLoaded: 0
   FoundLocationsLoaded: 0
   ExpYieldLoaded: 0
+  FlavorTextsLoaded: 0
 --- !u!114 &7022530384016150381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8450,7 +8452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: lureSlots.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: stoneSlots.Array.size
@@ -8485,6 +8487,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: fb22da19381418f4c88ade8e1f3088ea, type: 2}
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: a5273b8083f5ff64c80342dbd5a62000, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[4].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 428c608c5d0919c42b47c740722e920b, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: lureSlots.Array.data[0].count
       value: 1
       objectReference: {fileID: 0}
@@ -8495,6 +8505,14 @@ PrefabInstance:
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: lureSlots.Array.data[2].count
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[3].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: lureSlots.Array.data[4].count
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: stoneSlots.Array.data[0].item

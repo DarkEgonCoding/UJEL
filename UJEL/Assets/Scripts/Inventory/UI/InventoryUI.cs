@@ -136,6 +136,7 @@ public class InventoryUI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
+                var category = Inventory.ItemCategories[selectedCategory];
                 OpenPartyScreen();
             }
             else if (Input.GetKeyDown(KeyCode.X))
@@ -176,6 +177,10 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+    IEnumerator ShowText(string text) {
+        yield return DialogManager.Instance.ShowDialogText(text);
+    }
+
     void ResetSelection()
     {
         selectedItem = 0;
@@ -194,6 +199,7 @@ public class InventoryUI : MonoBehaviour
         yield return StartCoroutine(HandleTmItems());
 
         var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
+
         if (usedItem != null)
         {
             if (usedItem is RecoveryItem)
