@@ -15,6 +15,7 @@ public class Pokemon
     public List<string> PMoves => pMoves;
     Natures nature;
     string ability;
+    ItemBase heldItem;
 
     public Pokemon(PokemonBase pBase, int pLevel)
     {
@@ -58,14 +59,17 @@ public class Pokemon
     // Old list of moves
     public List<Move> Moves { get; set; }
     public int Exp { get; set; }
+    public ItemBase HeldItem => heldItem;
 
     public Condition Status { get; private set; }
     public event System.Action OnStatusChanged;
     public event System.Action OnHPChanged;
+    public Natures Nature => nature;
 
     public void Init()
     {
         HP = MaxHp;
+        heldItem = null;
 
         Exp = Base.GetExpForLevel(Level);
 
@@ -79,7 +83,8 @@ public class Pokemon
                 {
                     pMoves.Add(moveLearn.Move);
                 }
-                if (pMoves.Count >= PokemonBase.MaxNumOfMoves) {
+                if (pMoves.Count >= PokemonBase.MaxNumOfMoves)
+                {
                     break;
                 }
             }
@@ -120,6 +125,27 @@ public class Pokemon
         var random = new System.Random();
         int index = random.Next(values.Length);
         return (Natures)values.GetValue(index);
+    }
+
+    public void HoldItem(ItemBase item)
+    {
+        var inventory = Inventory.GetInventory();
+        var category = (int)Inventory.GetCategoryFromItem(item);
+
+        if (heldItem == null) // If you have no held item
+        {
+            heldItem = item;
+            inventory.RemoveItem(item, category);
+        }
+        else
+        {
+            // Get the old item back
+            inventory.AddItem(heldItem, 1);
+
+            // Replace the held item
+            heldItem = item;
+            inventory.RemoveItem(item, category);
+        }
     }
 
     public PokemonSaveData GetSaveData()
@@ -340,6 +366,18 @@ public class Pokemon
     {
         int r = UnityEngine.Random.Range(0, pMoves.Count);
         return pMoves[r];
+    }
+
+    public string DebugMoves()
+    {
+        string moveText = "Moves: ";
+        if (pMoves == null) return moveText;
+
+        foreach (string move in pMoves)
+        {
+            moveText += $"{move}, ";
+        }
+        return moveText;
     }
 
     public void SetStatus(ConditionID conditionId)

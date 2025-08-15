@@ -8451,6 +8451,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: heldSlots.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: lureSlots.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -8475,6 +8479,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: heldSlots.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: ba8a5fe4ed8c7164dbf016fff7089d78, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: lureSlots.Array.data[0].item
       value: 
       objectReference: {fileID: 11400000, guid: f0789e201fdd1a54eb4ad3670ae9a65f, type: 2}
@@ -8494,6 +8502,10 @@ PrefabInstance:
       propertyPath: lureSlots.Array.data[4].item
       value: 
       objectReference: {fileID: 11400000, guid: 428c608c5d0919c42b47c740722e920b, type: 2}
+    - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: heldSlots.Array.data[0].count
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2900384610792951424, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: lureSlots.Array.data[0].count
       value: 1
@@ -8537,6 +8549,10 @@ PrefabInstance:
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: pokemons.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: pokemons.Array.data[0]._base
@@ -8585,6 +8601,62 @@ PrefabInstance:
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: pokemons.Array.data[5].level
       value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[0].level
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[1].level
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[0].pokemonEnum
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[1].pokemonEnum
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[0].moves.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[1].moves.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[0].moves.Array.data[0]
+      value: tackle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[0].moves.Array.data[1]
+      value: growl
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[0].moves.Array.data[2]
+      value: vinewhip
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[0].moves.Array.data[3]
+      value: leechseed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[1].moves.Array.data[0]
+      value: scratch
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[1].moves.Array.data[1]
+      value: bite
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[1].moves.Array.data[2]
+      value: scaryface
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: testPokemon.Array.data[1].moves.Array.data[3]
+      value: icefang
       objectReference: {fileID: 0}
     - target: {fileID: 7160498940358260427, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: name

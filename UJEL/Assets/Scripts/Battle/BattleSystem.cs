@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
+using UnityEngine.Analytics;
 
 public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen, MoveForget, EndingBattle}
 
@@ -680,66 +681,88 @@ public class BattleSystem : MonoBehaviour
         float trainerBonus = (isTrainerBattle) ? 1.5f : 1;
 
         int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / 7);
+
         playerUnit.Pokemon.Exp += expGain;
         yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} gained {expGain} exp.");
         yield return new WaitForSeconds(0.75f);
         yield return playerHud.SetExpSmooth();
         yield return new WaitForSeconds(0.25f);
 
+        var expSharePokemon = playerParty.GetExpShare();
+        if (expSharePokemon != null)
+        {
+            var expShareGain = expGain / 2;
+            expSharePokemon.Exp += expShareGain;
+            yield return dialogBox.StartDialog($"{expSharePokemon.Base.PokemonName} gained {expShareGain} exp.");
+            yield return new WaitForSeconds(0.75f);
+        }  
+
         // Check Level Up
         while (playerUnit.Pokemon.CheckForLevelUp())
         {
             playerHud.SetLevel();
-            yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} grew to level {playerUnit.Pokemon.Level}!");
-            yield return new WaitForSeconds(0.85f);
-
-            // Try to learn a new move
-            var newMove = playerUnit.Pokemon.GetLearnableMoveAtCurrLevel();
-            if (newMove != null)
-            {
-                if (playerUnit.Pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
-                {
-                    //playerUnit.Pokemon.LearnMove(newMove.Base);
-                    //yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} learned {newMove.Base.Name}!");
-                    yield return new WaitForSeconds(0.85f);
-                    dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
-                }
-                else
-                {
-                    //yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} is trying to learn {newMove.Base.Name}.");
-                    yield return new WaitForSeconds(0.5f);
-                    yield return dialogBox.StartDialog($"But it cannot learn more than {PokemonBase.MaxNumOfMoves} moves.");
-                    yield return new WaitForSeconds(0.5f);
-                    //yield return ChooseMoveToForget(playerUnit.Pokemon, newMove.Base);
-                    yield return new WaitUntil(() => state != BattleState.MoveForget);
-                    if (!didLearnMove)
-                    {
-                        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} did not learn {moveToLearn.Name}.");
-                        yield return new WaitForSeconds(0.75f);
-                    }
-                    else if (didLearnMove)
-                    {
-                        yield return dialogBox.StartDialog("1");
-                        yield return new WaitForSeconds(1f);
-                        yield return dialogBox.StartDialog("2");
-                        yield return new WaitForSeconds(1f);
-                        yield return dialogBox.StartDialog("3");
-                        yield return new WaitForSeconds(1f);
-                        yield return dialogBox.StartDialog("Poof!");
-                        yield return new WaitForSeconds(1f);
-                        yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} forgot {learnedMove.Name} and learned {moveToLearn.Name}!");
-                        yield return new WaitForSeconds(0.75f);
-                    }
-                    learnedMove = null;
-                    moveToLearn = null;
-                    yield return new WaitForSeconds(2f);
-                }
-            }
-
+            yield return LevelUpPokemon(playerUnit.Pokemon);
             yield return playerHud.SetExpSmooth(true);
         }
 
+        if (expSharePokemon != null)
+        {
+            while (expSharePokemon.CheckForLevelUp())
+            {
+                yield return LevelUpPokemon(expSharePokemon);
+            }
+        }
+
         yield return new WaitForSeconds(1f);
+    }
+
+    IEnumerable LevelUpPokemon(Pokemon pokemon)
+    {
+        yield return dialogBox.StartDialog($"{pokemon.Base.PokemonName} grew to level {pokemon.Level}!");
+        yield return new WaitForSeconds(0.85f);
+
+        // Try to learn a new move
+        var newMove = pokemon.GetLearnableMoveAtCurrLevel();
+        if (newMove != null)
+        {
+            if (pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
+            {
+                //playerUnit.Pokemon.LearnMove(newMove.Base);
+                //yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} learned {newMove.Base.Name}!");
+                yield return new WaitForSeconds(0.85f);
+                dialogBox.SetMoveNames(pokemon.Moves);
+            }
+            else
+            {
+                //yield return dialogBox.StartDialog($"{playerUnit.Pokemon.Base.PokemonName} is trying to learn {newMove.Base.Name}.");
+                yield return new WaitForSeconds(0.5f);
+                yield return dialogBox.StartDialog($"But it cannot learn more than {PokemonBase.MaxNumOfMoves} moves.");
+                yield return new WaitForSeconds(0.5f);
+                //yield return ChooseMoveToForget(playerUnit.Pokemon, newMove.Base);
+                yield return new WaitUntil(() => state != BattleState.MoveForget);
+                if (!didLearnMove)
+                {
+                    yield return dialogBox.StartDialog($"{pokemon.Base.PokemonName} did not learn {moveToLearn.Name}.");
+                    yield return new WaitForSeconds(0.75f);
+                }
+                else if (didLearnMove)
+                {
+                    yield return dialogBox.StartDialog("1");
+                    yield return new WaitForSeconds(1f);
+                    yield return dialogBox.StartDialog("2");
+                    yield return new WaitForSeconds(1f);
+                    yield return dialogBox.StartDialog("3");
+                    yield return new WaitForSeconds(1f);
+                    yield return dialogBox.StartDialog("Poof!");
+                    yield return new WaitForSeconds(1f);
+                    yield return dialogBox.StartDialog($"{pokemon.Base.PokemonName} forgot {learnedMove.Name} and learned {moveToLearn.Name}!");
+                    yield return new WaitForSeconds(0.75f);
+                }
+                learnedMove = null;
+                moveToLearn = null;
+                yield return new WaitForSeconds(2f);
+            }
+        }
     }
 
     IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)

@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9163f050bcfa0e43a6758927d5c91b0, type: 3}
-  m_Name: Legendary Repel
+  m_Script: {fileID: 11500000, guid: cf668cc2f29be334794d8879c52dad3d, type: 3}
+  m_Name: exp_share
   m_EditorClassIdentifier: 
-  name: Legendary Repel
-  description: Not stinky; reguardless, Pokemon avoid you at all cost. Lasts for
-    600 tiles.
+  name: 
+  description: 
   icon: {fileID: 0}
-  encounterChance: 0
-  duration: 600
-  removeLure: 0
+  heldItemName: 

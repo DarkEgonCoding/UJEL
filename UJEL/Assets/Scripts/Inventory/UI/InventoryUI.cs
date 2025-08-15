@@ -76,6 +76,15 @@ public class InventoryUI : MonoBehaviour
             slotUIList.Add(slotUIObj);
         }
 
+        if (slotUIList.Count == 0)
+        {
+            selectedItem = 0; // no items
+        }
+        else if (selectedItem >= slotUIList.Count)
+        {
+            selectedItem = slotUIList.Count - 1;
+        }
+
         UpdateItemSelection();
     }
 
@@ -136,6 +145,14 @@ public class InventoryUI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
+                var slots = inventory.GetSlotsByCategory(selectedCategory);
+
+                // Null checks
+                if (slots == null || slots.Count == 0) return; // If no slots exist, return
+                if (selectedItem < 0 || selectedItem >= slots.Count) return; // If the index is invalid, return
+                if (slots[selectedItem] == null || slots[selectedItem].Count <= 0) return; // If the slot is null or empty, return
+
+                // This could be useful to open the party screen depending on the item type
                 var category = Inventory.ItemCategories[selectedCategory];
                 OpenPartyScreen();
             }

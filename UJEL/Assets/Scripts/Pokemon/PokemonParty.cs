@@ -7,9 +7,13 @@ using UnityEngine;
 
 public class PokemonParty : MonoBehaviour
 {
-    [SerializeField] List<Pokemon> pokemons;
+    List<Pokemon> pokemons;
+
+    [SerializeField] List<PokemonTextEntry> testPokemon;
 
     public event Action OnUpdated;
+
+    const int MAX_POKEMON = 6;
 
     public List<Pokemon> Pokemons
     {
@@ -24,14 +28,21 @@ public class PokemonParty : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void InitializeParty()
     {
-        /*
+        pokemons = new List<Pokemon>();
+
         foreach (var pokemon in pokemons)
         {
             pokemon.Init();
         }
-        */
+
+        foreach (var pokemonText in testPokemon)
+        {
+            Debug.Log($"Sent data: Pokemon Name: {pokemonText.PokemonEnum.ToString()}, Pokemon Level: {pokemonText.Level}");
+            var createdPokemon = PokemonTextEntryExtensions.TextEntryToPokemon(pokemonText);
+            AddPokemon(createdPokemon);
+        }
     }
 
     public Pokemon GetHealthyPokemon()
@@ -41,7 +52,7 @@ public class PokemonParty : MonoBehaviour
 
     public void AddPokemon(Pokemon newPokemon)
     {
-        if (pokemons.Count < 6)
+        if (pokemons.Count < MAX_POKEMON)
         {
             pokemons.Add(newPokemon);
 
@@ -78,5 +89,18 @@ public class PokemonParty : MonoBehaviour
     public static PokemonParty GetPlayerParty()
     {
         return FindObjectOfType<PlayerController>().GetComponent<PokemonParty>();
+    }
+
+    public Pokemon GetExpShare()
+    {
+        foreach (var pokemon in pokemons)
+        {
+            if (pokemon.HeldItem.Name == "exp_share")
+            {
+                return pokemon;
+            }
+        }
+
+        return null;
     }
 }
