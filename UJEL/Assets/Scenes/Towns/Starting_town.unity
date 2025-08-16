@@ -163,6 +163,14 @@ PrefabInstance:
       value: 4394132727991369732
       objectReference: {fileID: 0}
     - target: {fileID: 589617862370968066, guid: 0610d58dd010d2a4ca065c90cd5bb58f, type: 3}
+      propertyPath: disableIfConditionsMet.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 589617862370968066, guid: 0610d58dd010d2a4ca065c90cd5bb58f, type: 3}
+      propertyPath: disableIfConditionsMet.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a791a3eb64274444f8aa8a282d0763dc, type: 2}
+    - target: {fileID: 589617862370968066, guid: 0610d58dd010d2a4ca065c90cd5bb58f, type: 3}
       propertyPath: managedReferences[4394132727991369728]
       value: Assembly-CSharp MoveActorAction
       objectReference: {fileID: 0}
