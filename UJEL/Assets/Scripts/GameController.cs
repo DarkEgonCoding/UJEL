@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution, PC, Shop }
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution, PC, Shop, ChooseStarter }
 
 public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex, Map }
 
@@ -128,6 +128,10 @@ public class GameController : MonoBehaviour
         {
             ShopController.instance.HandleUpdate();
         }
+        else if (state == GameState.ChooseStarter)
+        {
+            StarterHandler.instance.HandleUpdate();
+        }
     }
 
     public void StartCutsceneState()
@@ -214,6 +218,10 @@ public class GameController : MonoBehaviour
     
     public void OpenMenu()
     {
+        // Don't open the menu if you haven't gotten a starter yet.
+        // This can be disabled for testing.
+        if (!GameFlags.Instance.HasFlag("HasStarter")) return;
+
         if (state == GameState.FreeRoam)
         {
             state = GameState.Menu;

@@ -151,7 +151,7 @@ public class PokemonLoader : MonoBehaviour
             PokedexManager.instance.Init();
             PokemonParty.GetPlayerParty().InitializeParty();
 
-            isLoaded = false;
+            isLoaded = true;
         }
     }
 }

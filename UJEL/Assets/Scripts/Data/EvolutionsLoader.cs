@@ -36,6 +36,7 @@ public static class EvolutionsLoader
         {"shellder", new List<Evolution> { new Evolution ("cloyster", 0, true, EvolutionStone.Water)} },
         {"lotad", new List<Evolution> { new Evolution ("lombre", 0, true, EvolutionStone.Water)} },
         {"doublade", new List<Evolution> { new Evolution ("aegislash", 0, true, EvolutionStone.Dusk)} },
+        {"nincada", new List<Evolution> { new Evolution ("shedinja", 0, true, EvolutionStone.Dusk)}}
     };
 
     public static void LoadEvolutions()
