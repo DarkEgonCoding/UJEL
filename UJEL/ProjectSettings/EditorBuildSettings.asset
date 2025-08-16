@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RouteTest.unity
     guid: e0db439882ab51540a55184f9acf9a8c
+  - enabled: 1
+    path: Assets/Scenes/BeginningScenes/Professor.unity
+    guid: 565cd8f77439e4b48a382eaff244ffad
   m_configObjects: {}

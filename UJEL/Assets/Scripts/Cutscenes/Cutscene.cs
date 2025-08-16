@@ -13,6 +13,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable, ISavable
     [SerializeField] List<CutsceneAction> actions;
 
     [Header("Disable Settings")]
+    [Tooltip("Whether to disable the cutscene after it has run once.")]
     [SerializeField] bool disableAfterTrigger = false;
     [SerializeField] List<CutsceneCondition> disableIfConditionsMet;
     [SerializeField] List<CutsceneCondition> enableOnlyIfConditionsMet;
