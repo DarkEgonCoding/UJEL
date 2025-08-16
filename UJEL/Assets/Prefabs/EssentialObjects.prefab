@@ -8603,6 +8603,10 @@ PrefabInstance:
       value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: testPokemon.Array.data[0].level
       value: 11
       objectReference: {fileID: 0}
@@ -8619,12 +8623,24 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[0].level
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[1].level
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: testPokemon.Array.data[0].moves.Array.size
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: testPokemon.Array.data[1].moves.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[1].pokemonEnum
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: testPokemon.Array.data[0].moves.Array.data[0]
@@ -8657,6 +8673,46 @@ PrefabInstance:
     - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: testPokemon.Array.data[1].moves.Array.data[3]
       value: icefang
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[0].moves.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[1].moves.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[0].moves.Array.data[0]
+      value: tackle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[0].moves.Array.data[1]
+      value: growl
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[0].moves.Array.data[2]
+      value: absorb
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[0].moves.Array.data[3]
+      value: leechseed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[1].moves.Array.data[0]
+      value: watergun
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[1].moves.Array.data[1]
+      value: rockthrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[1].moves.Array.data[2]
+      value: supersonic
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357730594382681090, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
+      propertyPath: pokemonTextEntries.Array.data[1].moves.Array.data[3]
+      value: waterpulse
       objectReference: {fileID: 0}
     - target: {fileID: 7160498940358260427, guid: de923762ff20d7e4d946e9d521ca04e6, type: 3}
       propertyPath: name
