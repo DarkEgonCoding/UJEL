@@ -220,7 +220,11 @@ public class GameController : MonoBehaviour
     {
         // Don't open the menu if you haven't gotten a starter yet.
         // This can be disabled for testing.
-        if (!GameFlags.Instance.HasFlag("HasStarter")) return;
+        if (!GameFlags.Instance.HasFlag("HasStarter"))
+        {
+            Debug.LogWarning("You don't have the first starter yet.");
+            return;
+        }
 
         if (state == GameState.FreeRoam)
         {
