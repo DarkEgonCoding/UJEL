@@ -84,7 +84,7 @@ public class Inventory : MonoBehaviour
             return ItemCategory.HeldItems;
         else
         {
-            Debug.LogError("Error here");
+            Debug.LogError("Error here, did you remember to add the checks for the different types of items? Did you remember to set the item in the inspector for the pickup?");
         }
         return ItemCategory.Items;
     }

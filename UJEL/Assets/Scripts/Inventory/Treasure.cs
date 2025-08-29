@@ -2,11 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickup : MonoBehaviour, Interactable, ISavable
+public class Treasure : MonoBehaviour, Interactable, ISavable
 {
     [SerializeField] ItemBase item;
 
+    [SerializeField] Sprite closedSpr;
+    [SerializeField] Sprite openSpr;
+    SpriteRenderer spriteRenderer;
+
     public bool Used { get; set; } = false;
+
+    public void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = closedSpr;
+        Used = false;
+    }
 
     private void OnDrawGizmos()
     {
@@ -21,10 +32,16 @@ public class Pickup : MonoBehaviour, Interactable, ISavable
     {
         if (!Used)
         {
+            // Check if player is below the chest
+            Vector2 chestPos = transform.position;
+            Vector2 playerPos = initiator.position;
+
+            if (!(playerPos.y < chestPos.y - 0.5f && Mathf.Abs(playerPos.x - chestPos.x) < 0.5f)) return; // Must be below the chest
+
             initiator.GetComponent<Inventory>().AddItem(item);
             Used = true;
 
-            DisablePickup();
+            spriteRenderer.sprite = openSpr;
 
             Dialog dialog;
             if (IsVowel(item.Name[0]))
@@ -38,17 +55,15 @@ public class Pickup : MonoBehaviour, Interactable, ISavable
             DialogManager.Instance.ShowDialog(dialog, () => { });
         }
     }
-
-    private void DisablePickup()
+    
+    private void EnableChest()
     {
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().sprite = closedSpr;
     }
 
-    private void EnablePickup()
+    private void DisableChest()
     {
-        GetComponent<SpriteRenderer>().enabled = true;
-        GetComponent<BoxCollider2D>().enabled = true;
+        GetComponent<SpriteRenderer>().sprite = openSpr;
     }
 
     private bool IsVowel(char character)
@@ -70,8 +85,8 @@ public class Pickup : MonoBehaviour, Interactable, ISavable
         Used = (bool)state;
 
         if (Used)
-            DisablePickup();
+            DisableChest();
         else
-            EnablePickup();
+            EnableChest();
     }
 }

@@ -61,7 +61,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b3ff7e23781ba1438d445d8a032834c, type: 2}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -230,9 +230,15 @@ MonoBehaviour:
   dialog:
     lines:
     - Remember to change this!
+  PostBattleDialog:
+    lines: []
+  SecondPostBattleDialog:
+    lines: []
+  DisableDialogWhenFinished: 0
   fov: {fileID: 8844833062473569421}
   spottedMusic: {fileID: 8300000, guid: a779f693ac2670949b3447fbea86d9e5, type: 3}
   trainerBattleMusic: {fileID: 8300000, guid: 84c793ad710a39b4c90868f5aec39dc6, type: 3}
+  MoneyForWin: 0
 --- !u!114 &2661904694362954139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,9 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8746822dcf7a0d84692cccaa2ef2b524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pokemons:
-  - _base: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
-    level: 6
+  pokemonTextEntries: []
 --- !u!114 &7421156027732274708
 MonoBehaviour:
   m_ObjectHideFlags: 0

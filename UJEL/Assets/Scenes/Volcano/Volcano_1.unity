@@ -245,6 +245,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1057719546}
     m_Modifications:
+    - target: {fileID: 3332449716226929870, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
+      propertyPath: uniqueId
+      value: 4b02e342-fad9-47c9-a320-20fcf1d66371
+      objectReference: {fileID: 0}
     - target: {fileID: 6089836405038125963, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
       propertyPath: m_Name
       value: Pickup (5)
@@ -307,6 +311,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1057719546}
     m_Modifications:
+    - target: {fileID: 3332449716226929870, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
+      propertyPath: uniqueId
+      value: c4424f5b-c048-445d-a1b0-22cfb2cae502
+      objectReference: {fileID: 0}
     - target: {fileID: 6089836405038125963, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
       propertyPath: m_Name
       value: Pickup (1)
@@ -369,6 +377,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1057719546}
     m_Modifications:
+    - target: {fileID: 3332449716226929870, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
+      propertyPath: uniqueId
+      value: 8eb9ee61-7211-4619-afdb-b2170cc1c19e
+      objectReference: {fileID: 0}
     - target: {fileID: 6089836405038125963, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
       propertyPath: m_Name
       value: Pickup (2)
@@ -58190,6 +58202,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1057719546}
     m_Modifications:
+    - target: {fileID: 3332449716226929870, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
+      propertyPath: uniqueId
+      value: 316dccbd-2b68-4d22-a315-44a2390f1985
+      objectReference: {fileID: 0}
     - target: {fileID: 6089836405038125963, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
       propertyPath: m_Name
       value: Pickup
@@ -58660,6 +58676,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1057719546}
     m_Modifications:
+    - target: {fileID: 3332449716226929870, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
+      propertyPath: uniqueId
+      value: 65d00979-2879-4c0d-a0c7-c409c662b9c0
+      objectReference: {fileID: 0}
     - target: {fileID: 6089836405038125963, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
       propertyPath: m_Name
       value: Pickup (4)
@@ -58841,6 +58861,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1057719546}
     m_Modifications:
+    - target: {fileID: 3332449716226929870, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
+      propertyPath: uniqueId
+      value: 535bf36b-b3fc-4b1e-96d8-c92acb77fc47
+      objectReference: {fileID: 0}
     - target: {fileID: 6089836405038125963, guid: 5bdb3ca93789836428a03b88f97435eb, type: 3}
       propertyPath: m_Name
       value: Pickup (6)

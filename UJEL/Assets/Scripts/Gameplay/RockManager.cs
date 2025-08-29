@@ -7,6 +7,15 @@ public class RockManager : MonoBehaviour
     [SerializeField] LavaManager lavaManager;
     public bool isInLava = false;
 
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying)
+        {
+            Vector3 pos = transform.position;
+            transform.position = new Vector3(Mathf.Floor(pos.x) + 0.5f, Mathf.Floor(pos.y) + 0.5f, pos.z);
+        }
+    }
+
     public bool TryPush(Vector2 direction)
     {
         if (lavaManager == null)
