@@ -1,7 +1,5 @@
 
 using System;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using UnityEngine;
@@ -12,6 +10,7 @@ namespace PsLib
     {
         // Battle process
         private Process _battle;
+        private string messageBuffer = "";
 
         // Paths
         private static string _psRoot = Application.dataPath + "/StreamingAssets/";
@@ -21,13 +20,14 @@ namespace PsLib
             Application.platform == RuntimePlatform.WindowsEditor ? "node-win-x64.exe" :
             Application.platform == RuntimePlatform.LinuxEditor ? "node-linux-x64" :
             throw new Exception("Invalid platform! Can only be run on linux or windows!"));
-        private static string _battlePath = _psRoot + "pokemon-showdown/battle.js";
+        private static string _battlePath = _psRoot +
+            "pokemon-showdown/node_modules/pokemon-showdown simulate-battle";
         
         // Event queue
-        private ConcurrentQueue<Sim.Message> _msgQ;
+        private ConcurrentQueue<Sim.Messages.Message> _msgQ;
         private ConcurrentQueue<string> _simStream;
 
-        public bool TryGetMessage(out Sim.Message msg)
+        public bool TryGetMessage(out Sim.Messages.Message msg)
         {
             return _msgQ.TryDequeue(out msg);
         }
@@ -41,7 +41,7 @@ namespace PsLib
             
         ) {
             // Initialize the queue semaphore.
-            _msgQ = new ConcurrentQueue<Sim.Message>();
+            _msgQ = new ConcurrentQueue<Sim.Messages.Message>();
             UnityEngine.Debug.Log(Application.platform);
         }
 
@@ -74,7 +74,7 @@ namespace PsLib
             _battle.StandardInput.WriteLine(">player p1 " + "");
             _battle.StandardInput.WriteLine(">player p2 " + "");
 
-            _msgQ = new ConcurrentQueue<Sim.Message>();
+            _msgQ = new ConcurrentQueue<Sim.Messages.Message>();
             _simStream = new ConcurrentQueue<string>();
         }
 

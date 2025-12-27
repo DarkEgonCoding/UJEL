@@ -5,10 +5,6 @@ using Newtonsoft.Json.Converters;
 
 namespace PsLib.Sim
 {
-    public abstract class Message {
-
-    }
-
     [JsonConverter(typeof(StringEnumConverter))] 
     public enum MoveTarget {
         normal,
@@ -50,98 +46,5 @@ namespace PsLib.Sim
         public string name;
         public string id;
         public Pokemon pokemon;
-    }
-
-    /*
-     * When it comes time for a player to make a choice, they are provided a request object
-     * that holds information about their active pokemon and about their team.
-     * 
-     * Some examples of the format are as follows:
-     * - moves[1][3] refers to the third move by the second active pokemon (double battle only).
-     * - side.pokemon[0] refers to the first pokemon on your side.
-     */
-    public class Request : Message {
-        public List<List<Move>> moves;
-        public Side side;
-        public int rqid;
-
-        public string serialize(Request req)
-        {
-            return JsonConvert.SerializeObject(req);
-        }
-
-        public Request deserialize(string json)
-        {
-            Request req = JsonConvert.DeserializeObject<Request>(json);
-            return req;
-        }
-    }
-
-    public enum MajorActionTypes
-    {
-        MOVE,
-        SWITCH,
-        DETAILSCHANGE,
-        REPLACE,
-        SWAP,
-        CANT,
-        FAINT
-    }
-
-    public enum MinorActionTypes
-    {
-        FAIL,
-        BLOCK,
-        NOTARGET,
-        MISS,
-        DAMAGE,
-        HEAL,
-        SETHP,
-        STATUS,
-        CURESTATUS,
-        CURETEAM,
-        BOOST,
-        UNBOOST,
-        SETBOOST,
-        SWAPBOOST,
-        INVERTBOOST,
-        CLEARBOOST,
-        CLEARALLBOOST,
-        CLEARPOSITIVEBOOST,
-        CLEARNEGATIVEBOOST,
-        COPYBOOST,
-        WEATHER,
-        FIELDSTART,
-        FIELDEND,
-        SIDESTART,
-        SIDEEND,
-        SWAPSIDECONDITIONS,
-        START,
-        END,
-        CRIT,
-        SUPEREFFECTIVE,
-        RESISTED,
-        IMMUNE,
-        ITEM,
-        ENDITEM,
-        ABILITY,
-        TRANSFORM,
-        MEGA,
-        PRIMAL,
-        BURST,
-        ZPOWER,
-        ZBROKEN,
-        ACTIVATE,
-        HINT,
-        CENTER,
-        MESSAGE,
-        COMBINE,
-        WAITING,
-        PERPARE,
-        MUSTRECHARGE,
-        NOTHING,
-        HITCOUNT,
-        SINGLEMOVE,
-        SINGLETURN
     }
 }
