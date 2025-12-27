@@ -55,13 +55,21 @@ namespace PsLib.Sim
 
         /* Given a string, returns a message and the specific type of the message.
          * Removes the message from lines if possible. */
-        public bool TryParseMessage(List<string> lines)
+        public bool TryParseMessage(string text)
         {
             string[] split = text.split('|');
 
-            if (majorActionMapping.TryGetValue())
+            // Handle major actions.
+            if (majorActionMapping.TryGetValue(split[0])) {
+                
+            }
 
-            foreach ((string, Type) kvp in majorActionMapping)
+            // Handle minor actions
+            if (minorActionMapping.TryGetValue(split[0])) {
+
+            }
+
+            // Otherwise return (null, null)
             return (null, null);
         }
     }
