@@ -2981,6 +2981,9 @@ MonoBehaviour:
   fovLayer:
     serializedVersion: 2
     m_Bits: 0
+  iceLayer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!114 &1571092516961370920
 MonoBehaviour:
   m_ObjectHideFlags: 0

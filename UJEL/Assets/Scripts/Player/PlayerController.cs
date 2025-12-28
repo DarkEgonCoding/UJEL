@@ -341,6 +341,12 @@ public class PlayerController : MonoBehaviour, ISavable
                 yield return null;
             }
             transform.position = targetPos;
+
+            // Check for ice
+            if (HandleIce())
+            {
+                yield break;
+            }
         }
         
         // Checks for collision
@@ -353,6 +359,25 @@ public class PlayerController : MonoBehaviour, ISavable
             animator.SetBool("isSwimming", false);
             animator.SetBool("isBiking", false);
         } 
+    }
+
+    /// <summary>
+    /// Returns FALSE if Ice was not found
+    /// Returns TRUE if Ice was found and called DoMove recursively
+    /// </summary>
+    /// <returns></returns>
+    private bool HandleIce()
+    {
+        Collider2D iceCollider = Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.IceLayer);
+        if (iceCollider == null)
+        {
+            return false;
+        }
+
+        // You are standing on an ice slot
+        Vector2 currDirection = GetFacingDirection();
+        StartCoroutine(DoMove(currDirection));
+        return true;
     }
 
     private void OnMoveOver()
@@ -378,7 +403,6 @@ public class PlayerController : MonoBehaviour, ISavable
             if (lureCounter == 0)
                 RemoveLure();
         }
-        
     }
 
     public void RemoveLure()
