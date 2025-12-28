@@ -54,7 +54,7 @@ namespace PsLib
             UnityEngine.Debug.Log(args.Data);
         }
 
-        public void Start(string p1spec, string p2spec) {
+        public void Start(string p1spec, string p2spec, string formatid) {
             // Spawn the simulator.
             UnityEngine.Debug.Log($"Starting server using nodejs with path {_battlePath}");
             _battle = new Process();
@@ -70,7 +70,7 @@ namespace PsLib
             _battle.BeginOutputReadLine();
             _battle.BeginErrorReadLine();
 
-            _battle.StandardInput.WriteLine(">start {\"formatid\":\"gen7randombattle\"}");
+            _battle.StandardInput.WriteLine(">start {\"formatid\":\"" + formatid + "\"}");
             _battle.StandardInput.WriteLine(">player p1 " + "");
             _battle.StandardInput.WriteLine(">player p2 " + "");
 

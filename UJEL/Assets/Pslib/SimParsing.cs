@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace PsLib.Sim
 {
-    /* A class that handles parsing data as defined by SimActions.cs. */
+    // A class that handles parsing data as defined by SimActions.cs.
     class Parser
     {
         private const string majorActionNamespace = "PsLib.Sim.Messages.Major";
-        private const string minorActionNamespace = "PsLib.Sim.Messages.Major";
+        private const string minorActionNamespace = "PsLib.Sim.Messages.Minor";
 
         private Type[] majorActionTypes;
         private Type[] minorActionTypes;
@@ -28,7 +28,7 @@ namespace PsLib.Sim
             minorActionTypes = Assembly.GetExecutingAssembly().GetTypes().Where(
                     t => t.IsClass && t.Namespace == minorActionNamespace).ToArray();
 
-            /* Loop through each of the major actions and add the info to the dictionary. */
+            // Loop through each of the major actions and add the info to the dictionary.
             foreach (Type majorAction in majorActionTypes) {
                 Messages.StreamText textAttr = majorAction.
                     GetCustomAttribute<Messages.StreamText>();
@@ -40,7 +40,7 @@ namespace PsLib.Sim
                 }
             }
 
-            /* Loop through each of the major actions and add the info to the dictionary. */
+            // Loop through each of the minor actions and add the info to the dictionary.
             foreach (Type minorAction in minorActionTypes) {
                 Messages.StreamText textAttr = minorAction.
                     GetCustomAttribute<Messages.StreamText>();
@@ -53,24 +53,28 @@ namespace PsLib.Sim
             }
         }
 
-        /* Given a string, returns a message and the specific type of the message.
-         * Removes the message from lines if possible. */
-        public bool TryParseMessage(string text)
+        // Given a string, returns a message and the specific type of the message.
+        // Removes the message from lines if possible.
+        public bool TryParseMessage(string text, out Messages.Message msg)
         {
-            string[] split = text.split('|');
+            string[] split = text.Split('|');
+            Type ev;
+
+            // TODO: Fix me, don't want to assign null mesage.
+            msg = null;
 
             // Handle major actions.
-            if (majorActionMapping.TryGetValue(split[0])) {
-                
+            if (majorActionMapping.TryGetValue(split[0], out ev)) {
+                PropertyInfo[] properties = ev.GetProperties();
             }
 
             // Handle minor actions
-            if (minorActionMapping.TryGetValue(split[0])) {
-
+            if (minorActionMapping.TryGetValue(split[0], out ev)) {
+                PropertyInfo[] properties = ev.GetProperties();
             }
 
-            // Otherwise return (null, null)
-            return (null, null);
+            // Return false on failed parse.
+            return false;
         }
     }
 }
