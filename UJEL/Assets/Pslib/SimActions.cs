@@ -3,17 +3,30 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using PsLib.Sim.Messages;
-using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
 
 namespace PsLib.Sim.Messages
 {
-    public abstract class Message {}
+    public enum MessageTypes
+    {
+        update,
+        sideupdate,
+        p1,
+        p2
+    }
+
+    public class Message
+    {
+        public MessageTypes type;
+        public List<Action> actions;
+    }
+
+    public abstract class Action {}
 
     public class StreamText : Attribute
     {
-        public StreamText(string str) {}
+        public string text;
+        public StreamText(string str) { text = str; }
     }
 
     public class Flag : Attribute
@@ -39,7 +52,7 @@ namespace PsLib.Sim.Messages.Parts
         sandstorm,
         tox,
         trapped
-    };
+    }
 
     public enum Stat {
         atk,
@@ -146,7 +159,7 @@ namespace PsLib.Sim.Messages.Parts
     {
         public Stat[] arr;
 
-        public Stats Parse(string text)
+        public static Stats Parse(string text)
         {
             Stats stats = new Stats();
             string[] statSplit = text.Split(", ");
@@ -154,11 +167,31 @@ namespace PsLib.Sim.Messages.Parts
             return stats;
         }
     }
+
+    /*
+     * When it comes time for a player to make a choice, they are provided a request object
+     * that holds information about their active pokemon and about their team.
+     * 
+     * Some examples of the format are as follows:
+     * - moves[1][3] refers to the third move by the second active pokemon (double battle only).
+     * - side.pokemon[0] refers to the first pokemon on your side.
+     */
+    public class Request
+    {
+        public List<List<Move>> moves;
+        public Side side;
+        public int rqid;
+
+        public static Request Parse(string text)
+        {
+            return JsonConvert.DeserializeObject<Request>(text);
+        }
+    }
 }
 
 namespace PsLib.Sim.Messages.Init
 {
-    public class PLAYER : Message
+    public class PLAYER : Action
     {
         public Parts.Player player;
         public string username;
@@ -166,56 +199,56 @@ namespace PsLib.Sim.Messages.Init
         public string rating;
     }
 
-    public class TEAMSIZE : Message
+    public class TEAMSIZE : Action
     {
         public Parts.Player player;
         public string number;
     }
 
-    public class gametype : Message
+    public class GAMETYPE : Action
     {
         public Parts.Player player;
         public string number;
     }
 
-    public class GEN : Message
+    public class GEN : Action
     {
         public int gennum;
     }
 
-    public class TIER : Message
+    public class TIER : Action
     {
         public string formatname;
     }
 
-    public class RATED : Message
+    public class RATED : Action
     {
         public string message;
     }
 
-    public class RULE : Message
+    public class RULE : Action
     {
         public string rule;
     }
 
-    public class CLEARPOKE : Message
+    public class CLEARPOKE : Action
     {
 
     }
 
-    public class POKE : Message
+    public class POKE : Action
     {
         public Parts.Player player;
         public string details;
         public string item;
     }
 
-    public class TEAMPREVIEW : Message
+    public class TEAMPREVIEW : Action
     {
 
     }
 
-    public class START : Message
+    public class START : Action
     {
 
     }
@@ -224,43 +257,43 @@ namespace PsLib.Sim.Messages.Init
 namespace PsLib.Sim.Messages.Progress
 {
     [StreamText("")]
-    public class NULLMSG : Message
+    public class NULLMSG : Action
     {
 
     }
 
-    public class REQUEST : Message
+    public class REQUEST : Action
     {
         public string request;
     }
 
-    public class INACTIVE : Message
+    public class INACTIVE : Action
     {
         public string message;
     }
 
-    public class UPKEEP : Message
+    public class UPKEEP : Action
     {
 
     }
 
-    public class TURN : Message
+    public class TURN : Action
     {
         public int number;
     }
 
-    public class WIN : Message
+    public class WIN : Action
     {
         public string user;
     }
 
-    public class TIE : Message
+    public class TIE : Action
     {
 
     }
 
     [StreamText("t:")]
-    public class TIMESTAMP : Message
+    public class TIMESTAMP : Action
     {
         public int timestamp;
     }
@@ -268,7 +301,7 @@ namespace PsLib.Sim.Messages.Progress
 
 namespace PsLib.Sim.Messages.Actions.Major
 {
-    public class MOVE : Message
+    public class MOVE : Action
     {
         public Parts.Pokemon pokemon;
         public string move;
@@ -291,7 +324,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         }
     }
 
-    public class SWITCH : Message
+    public class SWITCH : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Details details;
@@ -302,7 +335,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         }
     }
 
-    public class DRAG : Message
+    public class DRAG : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Details details;
@@ -313,7 +346,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         }
     }
 
-    public class DETAILSCHANGE : Message
+    public class DETAILSCHANGE : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Details details;
@@ -325,7 +358,7 @@ namespace PsLib.Sim.Messages.Actions.Major
     }
     
     [StreamText("-formechange")]
-    public class FORMECHANGE : Message
+    public class FORMECHANGE : Action
     {
         public Parts.Pokemon pokemon;
         public string species;
@@ -336,7 +369,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         }
     }
 
-    public class REPLACE : Message
+    public class REPLACE : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Details details;
@@ -347,13 +380,13 @@ namespace PsLib.Sim.Messages.Actions.Major
         }
     }
 
-    public class SWAP : Message
+    public class SWAP : Action
     {
         public Parts.Pokemon pokemon;
         public int position;
     }
 
-    public class CANT : Message
+    public class CANT : Action
     {
         public Parts.Pokemon pokemon;
         public string reason;
@@ -370,7 +403,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         }
     }
 
-    public class FAINT : Message
+    public class FAINT : Action
     {
         public Parts.Pokemon pokemon;
 
@@ -383,13 +416,13 @@ namespace PsLib.Sim.Messages.Actions.Major
 namespace PsLib.Sim.Messages.Actions.Minor
 {
 
-    public class FAIL : Message
+    public class FAIL : Action
     {
         public Parts.Pokemon pokemon;
         public string action;
     }
 
-    public class BLOCK : Message
+    public class BLOCK : Action
     {
         public Parts.Pokemon pokemon;
         public string effect;
@@ -399,192 +432,192 @@ namespace PsLib.Sim.Messages.Actions.Minor
         public string action;
     }
 
-    public class NOTARGET : Message
+    public class NOTARGET : Action
     {
         [Optional]
         public Parts.Pokemon pokemon;
     }
 
-    public class MISS : Message
+    public class MISS : Action
     {
         public Parts.Pokemon source;
         public Parts.Pokemon target;
     }
 
-    public class DAMAGE : Message
+    public class DAMAGE : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.HpStatus hpStatus;
     }
 
-    public class HEAL : Message
+    public class HEAL : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.HpStatus hpStatus;
     }
 
-    public class SETHP : Message
+    public class SETHP : Action
     {
         public Parts.Pokemon pokemon;
         public int hp;
     }
 
-    public class STATUS : Message
+    public class STATUS : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Status status;
     }
 
-    public class CURESTATUS : Message
+    public class CURESTATUS : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Status status;
     }
 
-    public class CURETEAM : Message
+    public class CURETEAM : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class BOOST : Message
-    {
-        public Parts.Pokemon pokemon;
-        public Parts.Stat stat;
-        public int amount;
-    }
-
-    public class UNBOOST : Message
+    public class BOOST : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Stat stat;
         public int amount;
     }
 
-    public class SETBOOST : Message
+    public class UNBOOST : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Stat stat;
         public int amount;
     }
 
-    public class SWAPBOOST : Message
+    public class SETBOOST : Action
+    {
+        public Parts.Pokemon pokemon;
+        public Parts.Stat stat;
+        public int amount;
+    }
+
+    public class SWAPBOOST : Action
     {
         public Parts.Pokemon source;
         public Parts.Pokemon target;
         public Parts.Stats stats;
     }
 
-    public class INVERTBOOST : Message
+    public class INVERTBOOST : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class CLEARBOOST : Message
+    public class CLEARBOOST : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class CLEARALLBOOST : Message
+    public class CLEARALLBOOST : Action
     {
 
     }
 
-    public class CLEARPOSITIVEBOOST : Message
+    public class CLEARPOSITIVEBOOST : Action
     {
         public Parts.Pokemon target;
         public Parts.Pokemon pokemon;
         public string effect;
     }
 
-    public class CLEARNEGATIVEBOOST : Message
+    public class CLEARNEGATIVEBOOST : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class COPYBOOST : Message
+    public class COPYBOOST : Action
     {
         public Parts.Pokemon source;
         public Parts.Pokemon target;
     }
 
-    public class WEATHER : Message
+    public class WEATHER : Action
     {
         public string weather;
     }
 
-    public class FIELDSTART : Message
+    public class FIELDSTART : Action
     {
         public string condition;
     }
 
-    public class FIELDEND : Message
+    public class FIELDEND : Action
     {
         public string condition;
     }
 
-    public class SIDESTART : Message
+    public class SIDESTART : Action
     {
         public string side;
         public string condition;
     }
 
-    public class SIDEEND : Message
+    public class SIDEEND : Action
     {
         public string side;
         public string condition;
     }
 
-    public class SWAPSIDECONDITIONS : Message
+    public class SWAPSIDECONDITIONS : Action
     {
 
     }
 
-    public class START : Message
-    {
-        public Parts.Pokemon pokemon;
-        public string effect;
-    }
-
-    public class END : Message
+    public class START : Action
     {
         public Parts.Pokemon pokemon;
         public string effect;
     }
 
-    public class CRIT : Message
+    public class END : Action
+    {
+        public Parts.Pokemon pokemon;
+        public string effect;
+    }
+
+    public class CRIT : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class SUPEREFFECTIVE : Message
+    public class SUPEREFFECTIVE : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class RESISTED : Message
+    public class RESISTED : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class IMMUNE : Message
+    public class IMMUNE : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class ITEM : Message
+    public class ITEM : Action
     {
         public Parts.Pokemon pokemon;
         public string item;
         public string effect;
     }
 
-    public class ENDITEM : Message
+    public class ENDITEM : Action
     {
         public Parts.Pokemon pokemon;
         public string item;
     }
 
-    public class ABILITY : Message
+    public class ABILITY : Action
     {
         public Parts.Pokemon pokemon;
         public string ability;
@@ -592,104 +625,104 @@ namespace PsLib.Sim.Messages.Actions.Minor
         public string effect;
     }
 
-    public class ENDABILITY : Message
+    public class ENDABILITY : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class TRANSFORM : Message
+    public class TRANSFORM : Action
     {
         public Parts.Pokemon pokemon;
         public string species;
     }
 
-    public class MEGA : Message
+    public class MEGA : Action
     {
         public Parts.Pokemon pokemon;
         public string megastone;
     }
 
-    public class PRIMAL : Message
+    public class PRIMAL : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class BURST : Message
+    public class BURST : Action
     {
         public Parts.Pokemon pokemon;
         public string species;
         public string item;
     }
 
-    public class ZPOWER : Message
+    public class ZPOWER : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class ZBROKEN : Message
+    public class ZBROKEN : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class ACTIVATE : Message
+    public class ACTIVATE : Action
     {
         public string effect;
     }
 
-    public class HINT : Message
+    public class HINT : Action
     {
         public string message;
     }
 
-    public class CENTER : Message
+    public class CENTER : Action
     {
 
     }
 
-    public class MESSAGE : Message
+    public class MESSAGE : Action
     {
         public string message;
     }
 
-    public class COMBINE : Message
+    public class COMBINE : Action
     {
 
     }
 
-    public class WAITING : Message
+    public class WAITING : Action
     {
         public Parts.Pokemon source;
         public Parts.Pokemon target;
     }
 
-    public class PERPARE : Message
+    public class PERPARE : Action
     {
         public Parts.Pokemon attacker;
         public string move;
     }
 
-    public class MUSTRECHARGE : Message
+    public class MUSTRECHARGE : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class NOTHING : Message
+    public class NOTHING : Action
     {
 
     }
 
-    public class HITCOUNT : Message
+    public class HITCOUNT : Action
     {
         public Parts.Pokemon pokemon;
     }
 
-    public class SINGLEMOVE : Message
+    public class SINGLEMOVE : Action
     {
         public Parts.Pokemon pokemon;
         public string move;
     }
 
-    public class SINGLETURN : Message
+    public class SINGLETURN : Action
     {
         public Parts.Pokemon pokemon;
         public string move;
