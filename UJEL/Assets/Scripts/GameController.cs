@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution, PC }
+public enum GameState { FreeRoam, Battle, Dialog, Pause, Trainer, Menu, Cutscene, Evolution, PC, Shop, ChooseStarter }
 
 public enum MenuState { Main, Pokemon, Bag, PartyOption, Pokedex, Map }
 
@@ -64,7 +64,6 @@ public class GameController : MonoBehaviour
     {
         controls = new PlayerControls();
         menuItems = menu.GetComponentsInChildren<TextMeshProUGUI>().ToList();
-        PokemonDB.Init();
         MoveDB.Init();
         ConditionsDB.Init();
     }
@@ -125,6 +124,14 @@ public class GameController : MonoBehaviour
         {
             PCBox.instance.HandlePCUpdate();
         }
+        else if (state == GameState.Shop)
+        {
+            ShopController.instance.HandleUpdate();
+        }
+        else if (state == GameState.ChooseStarter)
+        {
+            StarterHandler.instance.HandleUpdate();
+        }
     }
 
     public void StartCutsceneState()
@@ -171,6 +178,8 @@ public class GameController : MonoBehaviour
     {
         state = GameState.Battle;
 
+        MoneyHandler.instance.SetMoneyWager(trainer.MoneyForWin);
+
         AudioManager.instance.PlayMusic(trainer.trainerBattleMusic, startSeconds: 0.5f);
 
         ScreenTransition transition = worldCamera.GetComponent<ScreenTransition>();
@@ -209,6 +218,14 @@ public class GameController : MonoBehaviour
     
     public void OpenMenu()
     {
+        // Don't open the menu if you haven't gotten a starter yet.
+        // This can be disabled for testing.
+        if (!GameFlags.Instance.HasFlag("HasStarter"))
+        {
+            Debug.LogWarning("You don't have the first starter yet.");
+            return;
+        }
+
         if (state == GameState.FreeRoam)
         {
             state = GameState.Menu;
@@ -396,7 +413,7 @@ public class GameController : MonoBehaviour
         {
             // First selection
             switchSourceIndex = currentPartyMember;
-            Debug.Log($"Selected {playerParty.Pokemons[switchSourceIndex].Base.Name} for switching.");
+            Debug.Log($"Selected {playerParty.Pokemons[switchSourceIndex].Base.PokemonName} for switching.");
         }
         else if (switchSourceIndex == currentPartyMember)
         {
@@ -411,7 +428,7 @@ public class GameController : MonoBehaviour
             playerParty.Pokemons[switchSourceIndex] = playerParty.Pokemons[currentPartyMember];
             playerParty.Pokemons[currentPartyMember] = temp;
 
-            Debug.Log($"Switched {playerParty.Pokemons[currentPartyMember].Base.Name} with {playerParty.Pokemons[switchSourceIndex].Base.Name}");
+            Debug.Log($"Switched {playerParty.Pokemons[currentPartyMember].Base.PokemonName} with {playerParty.Pokemons[switchSourceIndex].Base.PokemonName}");
 
             // Refresh UI
             settingsPartyScreen.SetPartyData();

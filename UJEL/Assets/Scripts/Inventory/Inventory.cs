@@ -6,13 +6,16 @@ using Unity.Services.Analytics;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
-public enum ItemCategory { Items, Pokeballs, Tms }
+public enum ItemCategory { Items, Pokeballs, Tms, Lures, EvolutionStones, HeldItems }
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] List<ItemSlot> slots;
     [SerializeField] List<ItemSlot> pokeballSlots;
     [SerializeField] List<ItemSlot> tmSlots;
+    [SerializeField] List<ItemSlot> lureSlots;
+    [SerializeField] List<ItemSlot> stoneSlots;
+    [SerializeField] List<ItemSlot> heldSlots;
 
     List<List<ItemSlot>> allSlots;
 
@@ -22,12 +25,15 @@ public class Inventory : MonoBehaviour
     {
         "ITEMS",
         "POKEBALLS",
-        "TMs & HMs"
+        "TMs & HMs",
+        "Lures & Repels",
+        "Evolution Stones",
+        "Held Items"
     };
 
     private void Awake()
     {
-        allSlots = new List<List<ItemSlot>>() { slots, pokeballSlots, tmSlots };
+        allSlots = new List<List<ItemSlot>>() { slots, pokeballSlots, tmSlots, lureSlots, stoneSlots, heldSlots };
     }
 
     public List<ItemSlot> GetSlotsByCategory(int categoryIndex)
@@ -62,7 +68,7 @@ public class Inventory : MonoBehaviour
         OnUpdated?.Invoke();
     }
 
-    ItemCategory GetCategoryFromItem(ItemBase item)
+    public static ItemCategory GetCategoryFromItem(ItemBase item)
     {
         if (item is RecoveryItem)
             return ItemCategory.Items;
@@ -70,9 +76,15 @@ public class Inventory : MonoBehaviour
             return ItemCategory.Pokeballs;
         else if (item is TmItem)
             return ItemCategory.Tms;
+        else if (item is LureItem)
+            return ItemCategory.Lures;
+        else if (item is EvolutionItem)
+            return ItemCategory.EvolutionStones;
+        else if (item is SpecialItem)
+            return ItemCategory.HeldItems;
         else
         {
-            Debug.LogError("Error here");
+            Debug.LogError("Error here, did you remember to add the checks for the different types of items? Did you remember to set the item in the inspector for the pickup?");
         }
         return ItemCategory.Items;
     }
@@ -111,6 +123,16 @@ public class Inventory : MonoBehaviour
         }
 
         OnUpdated?.Invoke();
+    }
+
+    public int GetItemCount(ItemBase item)
+    {
+        foreach (var slotList in allSlots)
+        {
+            var slot = slotList.FirstOrDefault(s => s.Item == item);
+            if (slot != null) return slot.Count;
+        }
+        return 0;
     }
 }
 

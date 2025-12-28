@@ -17,7 +17,7 @@ public class LureItem : ItemBase
         {
             PlayerController.Instance.RemoveLure();
         }
-        else if (PlayerController.Instance.lureCounter != 0)
+        else if (PlayerController.Instance.lureCounter == 0)
         {
             PlayerController.Instance.lureEncounterChance = encounterChance;
             PlayerController.Instance.lureCounter = duration;

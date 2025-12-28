@@ -13,8 +13,15 @@ MonoBehaviour:
   m_Name: LegendaryEncounter
   m_EditorClassIdentifier: 
   wildEncounters:
-  - baseData: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
-    minLevel: 45
-    maxLevel: 60
+  - baseData:
+      pokemonEnum: 149
+      level: 60
+      moves:
+      - nastyplot
+      - dragonpulse
+      - hypervoice
+      - crunch
+    minLevel: 60
+    maxLevel: 65
     weight: 1
   encounterRate: 0

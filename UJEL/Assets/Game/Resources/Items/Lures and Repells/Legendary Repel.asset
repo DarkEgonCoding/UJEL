@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Legendary Repel
   description: Not stinky; reguardless, Pokemon avoid you at all cost. Lasts for
-    200 tiles.
+    600 tiles.
   icon: {fileID: 0}
   encounterChance: 0
-  duration: 200
+  duration: 600
   removeLure: 0
