@@ -20,7 +20,7 @@ namespace PsLib
             Application.platform == RuntimePlatform.LinuxEditor ? "node-linux-x64" :
             throw new Exception("Invalid platform! Can only be run on linux or windows!"));
         private static string _battlePath = _psRoot +
-            "pokemon-showdown/node_modules/pokemon-showdown simulate-battle";
+            "pokemon-showdown/node_modules/pokemon-showdown/pokemon-showdown simulate-battle";
 
         public Battle()
         {
@@ -39,20 +39,21 @@ namespace PsLib
             _battle = new Process();
             _battle.StartInfo.FileName = _nodePath;
             _battle.StartInfo.Arguments = _battlePath;
-            _battle.StartInfo.UseShellExecute = false;
-            _battle.StartInfo.RedirectStandardInput = true;
-            _battle.StartInfo.RedirectStandardOutput = true;
-            _battle.StartInfo.RedirectStandardError = true;
-            _battle.StartInfo.CreateNoWindow = true;
+            // _battle.StartInfo.UseShellExecute = false;
+            // _battle.StartInfo.RedirectStandardInput = true;
+            // _battle.StartInfo.RedirectStandardOutput = true;
+            // _battle.StartInfo.RedirectStandardError = true;
+            // _battle.StartInfo.CreateNoWindow = true;
             _battle.Start();
-            _battle.OutputDataReceived += dataHandler;
-            _battle.ErrorDataReceived += OnError;
-            _battle.BeginOutputReadLine();
-            _battle.BeginErrorReadLine();
 
-            _battle.StandardInput.WriteLine(">start {\"formatid\":\"" + formatid + "\"}");
-            _battle.StandardInput.WriteLine(">player p1 " + "");
-            _battle.StandardInput.WriteLine(">player p2 " + "");
+            // _battle.OutputDataReceived += dataHandler;
+            // _battle.ErrorDataReceived += OnError;
+            // _battle.BeginOutputReadLine();
+            // _battle.BeginErrorReadLine();
+
+            // _battle.StandardInput.WriteLine(">start {\"formatid\":\"" + formatid + "\"}");
+            // _battle.StandardInput.WriteLine(">player p1 " + "");
+            // _battle.StandardInput.WriteLine(">player p2 " + "");
         }
 
         public void WriteLine(string line)
