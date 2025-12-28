@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf668cc2f29be334794d8879c52dad3d, type: 3}
+  m_Name: exp_share
+  m_EditorClassIdentifier: 
+  name: exp_share
+  description: The pokemon that holds this item will recieve half of the exp as the
+    pokemon in the battle.
+  icon: {fileID: -1087713847, guid: a1f3f7a574b0ce140a17c25b19b9bdb9, type: 3}
+  heldItemName: exp_share

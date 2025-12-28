@@ -1,0 +1,1027 @@
+#,MS,Pokémon,Experience type
+1,Bulbasaur,Bulbasaur,Medium Slow
+2,Ivysaur,Ivysaur,Medium Slow
+3,Venusaur,Venusaur,Medium Slow
+4,Charmander,Charmander,Medium Slow
+5,Charmeleon,Charmeleon,Medium Slow
+6,Charizard,Charizard,Medium Slow
+7,Squirtle,Squirtle,Medium Slow
+8,Wartortle,Wartortle,Medium Slow
+9,Blastoise,Blastoise,Medium Slow
+10,Caterpie,Caterpie,Medium Fast
+11,Metapod,Metapod,Medium Fast
+12,Butterfree,Butterfree,Medium Fast
+13,Weedle,Weedle,Medium Fast
+14,Kakuna,Kakuna,Medium Fast
+15,Beedrill,Beedrill,Medium Fast
+16,Pidgey,Pidgey,Medium Slow
+17,Pidgeotto,Pidgeotto,Medium Slow
+18,Pidgeot,Pidgeot,Medium Slow
+19,Rattata,Rattata,Medium Fast
+20,Raticate,Raticate,Medium Fast
+21,Spearow,Spearow,Medium Fast
+22,Fearow,Fearow,Medium Fast
+23,Ekans,Ekans,Medium Fast
+24,Arbok,Arbok,Medium Fast
+25,Pikachu,Pikachu,Medium Fast
+26,Raichu,Raichu,Medium Fast
+27,Sandshrew,Sandshrew,Medium Fast
+28,Sandslash,Sandslash,Medium Fast
+29,Nidoran♀,Nidoran♀,Medium Slow
+30,Nidorina,Nidorina,Medium Slow
+31,Nidoqueen,Nidoqueen,Medium Slow
+32,Nidoran♂,Nidoran♂,Medium Slow
+33,Nidorino,Nidorino,Medium Slow
+34,Nidoking,Nidoking,Medium Slow
+35,Clefairy,Clefairy,Fast
+36,Clefable,Clefable,Fast
+37,Vulpix,Vulpix,Medium Fast
+38,Ninetales,Ninetales,Medium Fast
+39,Jigglypuff,Jigglypuff,Fast
+40,Wigglytuff,Wigglytuff,Fast
+41,Zubat,Zubat,Medium Fast
+42,Golbat,Golbat,Medium Fast
+43,Oddish,Oddish,Medium Slow
+44,Gloom,Gloom,Medium Slow
+45,Vileplume,Vileplume,Medium Slow
+46,Paras,Paras,Medium Fast
+47,Parasect,Parasect,Medium Fast
+48,Venonat,Venonat,Medium Fast
+49,Venomoth,Venomoth,Medium Fast
+50,Diglett,Diglett,Medium Fast
+51,Dugtrio,Dugtrio,Medium Fast
+52,Meowth,Meowth,Medium Fast
+53,Persian,Persian,Medium Fast
+54,Psyduck,Psyduck,Medium Fast
+55,Golduck,Golduck,Medium Fast
+56,Mankey,Mankey,Medium Fast
+57,Primeape,Primeape,Medium Fast
+58,Growlithe,Growlithe,Slow
+59,Arcanine,Arcanine,Slow
+60,Poliwag,Poliwag,Medium Slow
+61,Poliwhirl,Poliwhirl,Medium Slow
+62,Poliwrath,Poliwrath,Medium Slow
+63,Abra,Abra,Medium Slow
+64,Kadabra,Kadabra,Medium Slow
+65,Alakazam,Alakazam,Medium Slow
+66,Machop,Machop,Medium Slow
+67,Machoke,Machoke,Medium Slow
+68,Machamp,Machamp,Medium Slow
+69,Bellsprout,Bellsprout,Medium Slow
+70,Weepinbell,Weepinbell,Medium Slow
+71,Victreebel,Victreebel,Medium Slow
+72,Tentacool,Tentacool,Slow
+73,Tentacruel,Tentacruel,Slow
+74,Geodude,Geodude,Medium Slow
+75,Graveler,Graveler,Medium Slow
+76,Golem,Golem,Medium Slow
+77,Ponyta,Ponyta,Medium Fast
+78,Rapidash,Rapidash,Medium Fast
+79,Slowpoke,Slowpoke,Medium Fast
+80,Slowbro,Slowbro,Medium Fast
+81,Magnemite,Magnemite,Medium Fast
+82,Magneton,Magneton,Medium Fast
+83,Farfetch'd,Farfetch'd,Medium Fast
+84,Doduo,Doduo,Medium Fast
+85,Dodrio,Dodrio,Medium Fast
+86,Seel,Seel,Medium Fast
+87,Dewgong,Dewgong,Medium Fast
+88,Grimer,Grimer,Medium Fast
+89,Muk,Muk,Medium Fast
+90,Shellder,Shellder,Slow
+91,Cloyster,Cloyster,Slow
+92,Gastly,Gastly,Medium Slow
+93,Haunter,Haunter,Medium Slow
+94,Gengar,Gengar,Medium Slow
+95,Onix,Onix,Medium Fast
+96,Drowzee,Drowzee,Medium Fast
+97,Hypno,Hypno,Medium Fast
+98,Krabby,Krabby,Medium Fast
+99,Kingler,Kingler,Medium Fast
+100,Voltorb,Voltorb,Medium Fast
+101,Electrode,Electrode,Medium Fast
+102,Exeggcute,Exeggcute,Slow
+103,Exeggutor,Exeggutor,Slow
+104,Cubone,Cubone,Medium Fast
+105,Marowak,Marowak,Medium Fast
+106,Hitmonlee,Hitmonlee,Medium Fast
+107,Hitmonchan,Hitmonchan,Medium Fast
+108,Lickitung,Lickitung,Medium Fast
+109,Koffing,Koffing,Medium Fast
+110,Weezing,Weezing,Medium Fast
+111,Rhyhorn,Rhyhorn,Slow
+112,Rhydon,Rhydon,Slow
+113,Chansey,Chansey,Fast
+114,Tangela,Tangela,Medium Fast
+115,Kangaskhan,Kangaskhan,Medium Fast
+116,Horsea,Horsea,Medium Fast
+117,Seadra,Seadra,Medium Fast
+118,Goldeen,Goldeen,Medium Fast
+119,Seaking,Seaking,Medium Fast
+120,Staryu,Staryu,Slow
+121,Starmie,Starmie,Slow
+122,Mr. Mime,Mr. Mime,Medium Fast
+123,Scyther,Scyther,Medium Fast
+124,Jynx,Jynx,Medium Fast
+125,Electabuzz,Electabuzz,Medium Fast
+126,Magmar,Magmar,Medium Fast
+127,Pinsir,Pinsir,Slow
+128,Tauros,Tauros,Slow
+129,Magikarp,Magikarp,Slow
+130,Gyarados,Gyarados,Slow
+131,Lapras,Lapras,Slow
+132,Ditto,Ditto,Medium Fast
+133,Eevee,Eevee,Medium Fast
+134,Vaporeon,Vaporeon,Medium Fast
+135,Jolteon,Jolteon,Medium Fast
+136,Flareon,Flareon,Medium Fast
+137,Porygon,Porygon,Medium Fast
+138,Omanyte,Omanyte,Medium Fast
+139,Omastar,Omastar,Medium Fast
+140,Kabuto,Kabuto,Medium Fast
+141,Kabutops,Kabutops,Medium Fast
+142,Aerodactyl,Aerodactyl,Slow
+143,Snorlax,Snorlax,Slow
+144,Articuno,Articuno,Slow
+145,Zapdos,Zapdos,Slow
+146,Moltres,Moltres,Slow
+147,Dratini,Dratini,Slow
+148,Dragonair,Dragonair,Slow
+149,Dragonite,Dragonite,Slow
+150,Mewtwo,Mewtwo,Slow
+151,Mew,Mew,Medium Slow
+152,Chikorita,Chikorita,Medium Slow
+153,Bayleef,Bayleef,Medium Slow
+154,Meganium,Meganium,Medium Slow
+155,Cyndaquil,Cyndaquil,Medium Slow
+156,Quilava,Quilava,Medium Slow
+157,Typhlosion,Typhlosion,Medium Slow
+158,Totodile,Totodile,Medium Slow
+159,Croconaw,Croconaw,Medium Slow
+160,Feraligatr,Feraligatr,Medium Slow
+161,Sentret,Sentret,Medium Fast
+162,Furret,Furret,Medium Fast
+163,Hoothoot,Hoothoot,Medium Fast
+164,Noctowl,Noctowl,Medium Fast
+165,Ledyba,Ledyba,Fast
+166,Ledian,Ledian,Fast
+167,Spinarak,Spinarak,Fast
+168,Ariados,Ariados,Fast
+169,Crobat,Crobat,Medium Fast
+170,Chinchou,Chinchou,Slow
+171,Lanturn,Lanturn,Slow
+172,Pichu,Pichu,Medium Fast
+173,Cleffa,Cleffa,Fast
+174,Igglybuff,Igglybuff,Fast
+175,Togepi,Togepi,Fast
+176,Togetic,Togetic,Fast
+177,Natu,Natu,Medium Fast
+178,Xatu,Xatu,Medium Fast
+179,Mareep,Mareep,Medium Slow
+180,Flaaffy,Flaaffy,Medium Slow
+181,Ampharos,Ampharos,Medium Slow
+182,Bellossom,Bellossom,Medium Slow
+183,Marill,Marill,Fast
+184,Azumarill,Azumarill,Fast
+185,Sudowoodo,Sudowoodo,Medium Fast
+186,Politoed,Politoed,Medium Slow
+187,Hoppip,Hoppip,Medium Slow
+188,Skiploom,Skiploom,Medium Slow
+189,Jumpluff,Jumpluff,Medium Slow
+190,Aipom,Aipom,Fast
+191,Sunkern,Sunkern,Medium Slow
+192,Sunflora,Sunflora,Medium Slow
+193,Yanma,Yanma,Medium Fast
+194,Wooper,Wooper,Medium Fast
+195,Quagsire,Quagsire,Medium Fast
+196,Espeon,Espeon,Medium Fast
+197,Umbreon,Umbreon,Medium Fast
+198,Murkrow,Murkrow,Medium Slow
+199,Slowking,Slowking,Medium Fast
+200,Misdreavus,Misdreavus,Fast
+201,Unown,Unown,Medium Fast
+202,Wobbuffet,Wobbuffet,Medium Fast
+203,Girafarig,Girafarig,Medium Fast
+204,Pineco,Pineco,Medium Fast
+205,Forretress,Forretress,Medium Fast
+206,Dunsparce,Dunsparce,Medium Fast
+207,Gligar,Gligar,Medium Slow
+208,Steelix,Steelix,Medium Fast
+209,Snubbull,Snubbull,Fast
+210,Granbull,Granbull,Fast
+211,Qwilfish,Qwilfish,Medium Fast
+212,Scizor,Scizor,Medium Fast
+213,Shuckle,Shuckle,Medium Slow
+214,Heracross,Heracross,Slow
+215,Sneasel,Sneasel,Medium Slow
+216,Teddiursa,Teddiursa,Medium Fast
+217,Ursaring,Ursaring,Medium Fast
+218,Slugma,Slugma,Medium Fast
+219,Magcargo,Magcargo,Medium Fast
+220,Swinub,Swinub,Slow
+221,Piloswine,Piloswine,Slow
+222,Corsola,Corsola,Fast
+223,Remoraid,Remoraid,Medium Fast
+224,Octillery,Octillery,Medium Fast
+225,Delibird,Delibird,Fast
+226,Mantine,Mantine,Slow
+227,Skarmory,Skarmory,Slow
+228,Houndour,Houndour,Slow
+229,Houndoom,Houndoom,Slow
+230,Kingdra,Kingdra,Medium Fast
+231,Phanpy,Phanpy,Medium Fast
+232,Donphan,Donphan,Medium Fast
+233,Porygon2,Porygon2,Medium Fast
+234,Stantler,Stantler,Slow
+235,Smeargle,Smeargle,Fast
+236,Tyrogue,Tyrogue,Medium Fast
+237,Hitmontop,Hitmontop,Medium Fast
+238,Smoochum,Smoochum,Medium Fast
+239,Elekid,Elekid,Medium Fast
+240,Magby,Magby,Medium Fast
+241,Miltank,Miltank,Slow
+242,Blissey,Blissey,Fast
+243,Raikou,Raikou,Slow
+244,Entei,Entei,Slow
+245,Suicune,Suicune,Slow
+246,Larvitar,Larvitar,Slow
+247,Pupitar,Pupitar,Slow
+248,Tyranitar,Tyranitar,Slow
+249,Lugia,Lugia,Slow
+250,Ho-Oh,Ho-Oh,Slow
+251,Celebi,Celebi,Medium Slow
+252,Treecko,Treecko,Medium Slow
+253,Grovyle,Grovyle,Medium Slow
+254,Sceptile,Sceptile,Medium Slow
+255,Torchic,Torchic,Medium Slow
+256,Combusken,Combusken,Medium Slow
+257,Blaziken,Blaziken,Medium Slow
+258,Mudkip,Mudkip,Medium Slow
+259,Marshtomp,Marshtomp,Medium Slow
+260,Swampert,Swampert,Medium Slow
+261,Poochyena,Poochyena,Medium Fast
+262,Mightyena,Mightyena,Medium Fast
+263,Zigzagoon,Zigzagoon,Medium Fast
+264,Linoone,Linoone,Medium Fast
+265,Wurmple,Wurmple,Medium Fast
+266,Silcoon,Silcoon,Medium Fast
+267,Beautifly,Beautifly,Medium Fast
+268,Cascoon,Cascoon,Medium Fast
+269,Dustox,Dustox,Medium Fast
+270,Lotad,Lotad,Medium Slow
+271,Lombre,Lombre,Medium Slow
+272,Ludicolo,Ludicolo,Medium Slow
+273,Seedot,Seedot,Medium Slow
+274,Nuzleaf,Nuzleaf,Medium Slow
+275,Shiftry,Shiftry,Medium Slow
+276,Taillow,Taillow,Medium Slow
+277,Swellow,Swellow,Medium Slow
+278,Wingull,Wingull,Medium Fast
+279,Pelipper,Pelipper,Medium Fast
+280,Ralts,Ralts,Slow
+281,Kirlia,Kirlia,Slow
+282,Gardevoir,Gardevoir,Slow
+283,Surskit,Surskit,Medium Fast
+284,Masquerain,Masquerain,Medium Fast
+285,Shroomish,Shroomish,Fluctuating
+286,Breloom,Breloom,Fluctuating
+287,Slakoth,Slakoth,Slow
+288,Vigoroth,Vigoroth,Slow
+289,Slaking,Slaking,Slow
+290,Nincada,Nincada,Erratic
+291,Ninjask,Ninjask,Erratic
+292,Shedinja,Shedinja,Erratic
+293,Whismur,Whismur,Medium Slow
+294,Loudred,Loudred,Medium Slow
+295,Exploud,Exploud,Medium Slow
+296,Makuhita,Makuhita,Fluctuating
+297,Hariyama,Hariyama,Fluctuating
+298,Azurill,Azurill,Fast
+299,Nosepass,Nosepass,Medium Fast
+300,Skitty,Skitty,Fast
+301,Delcatty,Delcatty,Fast
+302,Sableye,Sableye,Medium Slow
+303,Mawile,Mawile,Fast
+304,Aron,Aron,Slow
+305,Lairon,Lairon,Slow
+306,Aggron,Aggron,Slow
+307,Meditite,Meditite,Medium Fast
+308,Medicham,Medicham,Medium Fast
+309,Electrike,Electrike,Slow
+310,Manectric,Manectric,Slow
+311,Plusle,Plusle,Medium Fast
+312,Minun,Minun,Medium Fast
+313,Volbeat,Volbeat,Erratic
+314,Illumise,Illumise,Fluctuating
+315,Roselia,Roselia,Medium Slow
+316,Gulpin,Gulpin,Fluctuating
+317,Swalot,Swalot,Fluctuating
+318,Carvanha,Carvanha,Slow
+319,Sharpedo,Sharpedo,Slow
+320,Wailmer,Wailmer,Fluctuating
+321,Wailord,Wailord,Fluctuating
+322,Numel,Numel,Medium Fast
+323,Camerupt,Camerupt,Medium Fast
+324,Torkoal,Torkoal,Medium Fast
+325,Spoink,Spoink,Fast
+326,Grumpig,Grumpig,Fast
+327,Spinda,Spinda,Fast
+328,Trapinch,Trapinch,Medium Slow
+329,Vibrava,Vibrava,Medium Slow
+330,Flygon,Flygon,Medium Slow
+331,Cacnea,Cacnea,Medium Slow
+332,Cacturne,Cacturne,Medium Slow
+333,Swablu,Swablu,Erratic
+334,Altaria,Altaria,Erratic
+335,Zangoose,Zangoose,Erratic
+336,Seviper,Seviper,Fluctuating
+337,Lunatone,Lunatone,Fast
+338,Solrock,Solrock,Fast
+339,Barboach,Barboach,Medium Fast
+340,Whiscash,Whiscash,Medium Fast
+341,Corphish,Corphish,Fluctuating
+342,Crawdaunt,Crawdaunt,Fluctuating
+343,Baltoy,Baltoy,Medium Fast
+344,Claydol,Claydol,Medium Fast
+345,Lileep,Lileep,Erratic
+346,Cradily,Cradily,Erratic
+347,Anorith,Anorith,Erratic
+348,Armaldo,Armaldo,Erratic
+349,Feebas,Feebas,Erratic
+350,Milotic,Milotic,Erratic
+351,Castform,Castform,Medium Fast
+352,Kecleon,Kecleon,Medium Slow
+353,Shuppet,Shuppet,Fast
+354,Banette,Banette,Fast
+355,Duskull,Duskull,Fast
+356,Dusclops,Dusclops,Fast
+357,Tropius,Tropius,Slow
+358,Chimecho,Chimecho,Fast
+359,Absol,Absol,Medium Slow
+360,Wynaut,Wynaut,Medium Fast
+361,Snorunt,Snorunt,Medium Fast
+362,Glalie,Glalie,Medium Fast
+363,Spheal,Spheal,Medium Slow
+364,Sealeo,Sealeo,Medium Slow
+365,Walrein,Walrein,Medium Slow
+366,Clamperl,Clamperl,Erratic
+367,Huntail,Huntail,Erratic
+368,Gorebyss,Gorebyss,Erratic
+369,Relicanth,Relicanth,Slow
+370,Luvdisc,Luvdisc,Fast
+371,Bagon,Bagon,Slow
+372,Shelgon,Shelgon,Slow
+373,Salamence,Salamence,Slow
+374,Beldum,Beldum,Slow
+375,Metang,Metang,Slow
+376,Metagross,Metagross,Slow
+377,Regirock,Regirock,Slow
+378,Regice,Regice,Slow
+379,Registeel,Registeel,Slow
+380,Latias,Latias,Slow
+381,Latios,Latios,Slow
+382,Kyogre,Kyogre,Slow
+383,Groudon,Groudon,Slow
+384,Rayquaza,Rayquaza,Slow
+385,Jirachi,Jirachi,Slow
+386,Deoxys,Deoxys,Slow
+387,Turtwig,Turtwig,Medium Slow
+388,Grotle,Grotle,Medium Slow
+389,Torterra,Torterra,Medium Slow
+390,Chimchar,Chimchar,Medium Slow
+391,Monferno,Monferno,Medium Slow
+392,Infernape,Infernape,Medium Slow
+393,Piplup,Piplup,Medium Slow
+394,Prinplup,Prinplup,Medium Slow
+395,Empoleon,Empoleon,Medium Slow
+396,Starly,Starly,Medium Slow
+397,Staravia,Staravia,Medium Slow
+398,Staraptor,Staraptor,Medium Slow
+399,Bidoof,Bidoof,Medium Fast
+400,Bibarel,Bibarel,Medium Fast
+401,Kricketot,Kricketot,Medium Slow
+402,Kricketune,Kricketune,Medium Slow
+403,Shinx,Shinx,Medium Slow
+404,Luxio,Luxio,Medium Slow
+405,Luxray,Luxray,Medium Slow
+406,Budew,Budew,Medium Slow
+407,Roserade,Roserade,Medium Slow
+408,Cranidos,Cranidos,Erratic
+409,Rampardos,Rampardos,Erratic
+410,Shieldon,Shieldon,Erratic
+411,Bastiodon,Bastiodon,Erratic
+412,Burmy,Burmy,Medium Fast
+413,Wormadam,Wormadam,Medium Fast
+414,Mothim,Mothim,Medium Fast
+415,Combee,Combee,Medium Slow
+416,Vespiquen,Vespiquen,Medium Slow
+417,Pachirisu,Pachirisu,Medium Fast
+418,Buizel,Buizel,Medium Fast
+419,Floatzel,Floatzel,Medium Fast
+420,Cherubi,Cherubi,Medium Fast
+421,Cherrim,Cherrim,Medium Fast
+422,Shellos,Shellos,Medium Fast
+423,Gastrodon,Gastrodon,Medium Fast
+424,Ambipom,Ambipom,Fast
+425,Drifloon,Drifloon,Fluctuating
+426,Drifblim,Drifblim,Fluctuating
+427,Buneary,Buneary,Medium Fast
+428,Lopunny,Lopunny,Medium Fast
+429,Mismagius,Mismagius,Fast
+430,Honchkrow,Honchkrow,Medium Slow
+431,Glameow,Glameow,Fast
+432,Purugly,Purugly,Fast
+433,Chingling,Chingling,Fast
+434,Stunky,Stunky,Medium Fast
+435,Skuntank,Skuntank,Medium Fast
+436,Bronzor,Bronzor,Medium Fast
+437,Bronzong,Bronzong,Medium Fast
+438,Bonsly,Bonsly,Medium Fast
+439,Mime Jr.,Mime Jr.,Medium Fast
+440,Happiny,Happiny,Fast
+441,Chatot,Chatot,Medium Slow
+442,Spiritomb,Spiritomb,Medium Fast
+443,Gible,Gible,Slow
+444,Gabite,Gabite,Slow
+445,Garchomp,Garchomp,Slow
+446,Munchlax,Munchlax,Slow
+447,Riolu,Riolu,Medium Slow
+448,Lucario,Lucario,Medium Slow
+449,Hippopotas,Hippopotas,Slow
+450,Hippowdon,Hippowdon,Slow
+451,Skorupi,Skorupi,Slow
+452,Drapion,Drapion,Slow
+453,Croagunk,Croagunk,Medium Fast
+454,Toxicroak,Toxicroak,Medium Fast
+455,Carnivine,Carnivine,Slow
+456,Finneon,Finneon,Erratic
+457,Lumineon,Lumineon,Erratic
+458,Mantyke,Mantyke,Slow
+459,Snover,Snover,Slow
+460,Abomasnow,Abomasnow,Slow
+461,Weavile,Weavile,Medium Slow
+462,Magnezone,Magnezone,Medium Fast
+463,Lickilicky,Lickilicky,Medium Fast
+464,Rhyperior,Rhyperior,Slow
+465,Tangrowth,Tangrowth,Medium Fast
+466,Electivire,Electivire,Medium Fast
+467,Magmortar,Magmortar,Medium Fast
+468,Togekiss,Togekiss,Fast
+469,Yanmega,Yanmega,Medium Fast
+470,Leafeon,Leafeon,Medium Fast
+471,Glaceon,Glaceon,Medium Fast
+472,Gliscor,Gliscor,Medium Slow
+473,Mamoswine,Mamoswine,Slow
+474,Porygon-Z,Porygon-Z,Medium Fast
+475,Gallade,Gallade,Slow
+476,Probopass,Probopass,Medium Fast
+477,Dusknoir,Dusknoir,Fast
+478,Froslass,Froslass,Medium Fast
+479,Rotom,Rotom,Medium Fast
+480,Uxie,Uxie,Slow
+481,Mesprit,Mesprit,Slow
+482,Azelf,Azelf,Slow
+483,Dialga,Dialga,Slow
+484,Palkia,Palkia,Slow
+485,Heatran,Heatran,Slow
+486,Regigigas,Regigigas,Slow
+487,Giratina,Giratina,Slow
+488,Cresselia,Cresselia,Slow
+489,Phione,Phione,Slow
+490,Manaphy,Manaphy,Slow
+491,Darkrai,Darkrai,Slow
+492,Shaymin,Shaymin,Medium Slow
+493,Arceus,Arceus,Slow
+494,Victini,Victini,Slow
+495,Snivy,Snivy,Medium Slow
+496,Servine,Servine,Medium Slow
+497,Serperior,Serperior,Medium Slow
+498,Tepig,Tepig,Medium Slow
+499,Pignite,Pignite,Medium Slow
+500,Emboar,Emboar,Medium Slow
+501,Oshawott,Oshawott,Medium Slow
+502,Dewott,Dewott,Medium Slow
+503,Samurott,Samurott,Medium Slow
+504,Patrat,Patrat,Medium Fast
+505,Watchog,Watchog,Medium Fast
+506,Lillipup,Lillipup,Medium Slow
+507,Herdier,Herdier,Medium Slow
+508,Stoutland,Stoutland,Medium Slow
+509,Purrloin,Purrloin,Medium Fast
+510,Liepard,Liepard,Medium Fast
+511,Pansage,Pansage,Medium Fast
+512,Simisage,Simisage,Medium Fast
+513,Pansear,Pansear,Medium Fast
+514,Simisear,Simisear,Medium Fast
+515,Panpour,Panpour,Medium Fast
+516,Simipour,Simipour,Medium Fast
+517,Munna,Munna,Fast
+518,Musharna,Musharna,Fast
+519,Pidove,Pidove,Medium Slow
+520,Tranquill,Tranquill,Medium Slow
+521,Unfezant,Unfezant,Medium Slow
+522,Blitzle,Blitzle,Medium Fast
+523,Zebstrika,Zebstrika,Medium Fast
+524,Roggenrola,Roggenrola,Medium Slow
+525,Boldore,Boldore,Medium Slow
+526,Gigalith,Gigalith,Medium Slow
+527,Woobat,Woobat,Medium Fast
+528,Swoobat,Swoobat,Medium Fast
+529,Drilbur,Drilbur,Medium Fast
+530,Excadrill,Excadrill,Medium Fast
+531,Audino,Audino,Fast
+532,Timburr,Timburr,Medium Slow
+533,Gurdurr,Gurdurr,Medium Slow
+534,Conkeldurr,Conkeldurr,Medium Slow
+535,Tympole,Tympole,Medium Slow
+536,Palpitoad,Palpitoad,Medium Slow
+537,Seismitoad,Seismitoad,Medium Slow
+538,Throh,Throh,Medium Fast
+539,Sawk,Sawk,Medium Fast
+540,Sewaddle,Sewaddle,Medium Slow
+541,Swadloon,Swadloon,Medium Slow
+542,Leavanny,Leavanny,Medium Slow
+543,Venipede,Venipede,Medium Slow
+544,Whirlipede,Whirlipede,Medium Slow
+545,Scolipede,Scolipede,Medium Slow
+546,Cottonee,Cottonee,Medium Fast
+547,Whimsicott,Whimsicott,Medium Fast
+548,Petilil,Petilil,Medium Fast
+549,Lilligant,Lilligant,Medium Fast
+550,Basculin,Basculin,Medium Fast
+551,Sandile,Sandile,Medium Slow
+552,Krokorok,Krokorok,Medium Slow
+553,Krookodile,Krookodile,Medium Slow
+554,Darumaka,Darumaka,Medium Slow
+555,Darmanitan,Darmanitan,Medium Slow
+556,Maractus,Maractus,Medium Fast
+557,Dwebble,Dwebble,Medium Fast
+558,Crustle,Crustle,Medium Fast
+559,Scraggy,Scraggy,Medium Fast
+560,Scrafty,Scrafty,Medium Fast
+561,Sigilyph,Sigilyph,Medium Fast
+562,Yamask,Yamask,Medium Fast
+563,Cofagrigus,Cofagrigus,Medium Fast
+564,Tirtouga,Tirtouga,Medium Fast
+565,Carracosta,Carracosta,Medium Fast
+566,Archen,Archen,Medium Fast
+567,Archeops,Archeops,Medium Fast
+568,Trubbish,Trubbish,Medium Fast
+569,Garbodor,Garbodor,Medium Fast
+570,Zorua,Zorua,Medium Slow
+571,Zoroark,Zoroark,Medium Slow
+572,Minccino,Minccino,Fast
+573,Cinccino,Cinccino,Fast
+574,Gothita,Gothita,Medium Slow
+575,Gothorita,Gothorita,Medium Slow
+576,Gothitelle,Gothitelle,Medium Slow
+577,Solosis,Solosis,Medium Slow
+578,Duosion,Duosion,Medium Slow
+579,Reuniclus,Reuniclus,Medium Slow
+580,Ducklett,Ducklett,Medium Fast
+581,Swanna,Swanna,Medium Fast
+582,Vanillite,Vanillite,Slow
+583,Vanillish,Vanillish,Slow
+584,Vanilluxe,Vanilluxe,Slow
+585,Deerling,Deerling,Medium Fast
+586,Sawsbuck,Sawsbuck,Medium Fast
+587,Emolga,Emolga,Medium Fast
+588,Karrablast,Karrablast,Medium Fast
+589,Escavalier,Escavalier,Medium Fast
+590,Foongus,Foongus,Medium Fast
+591,Amoonguss,Amoonguss,Medium Fast
+592,Frillish,Frillish,Medium Fast
+593,Jellicent,Jellicent,Medium Fast
+594,Alomomola,Alomomola,Fast
+595,Joltik,Joltik,Medium Fast
+596,Galvantula,Galvantula,Medium Fast
+597,Ferroseed,Ferroseed,Medium Fast
+598,Ferrothorn,Ferrothorn,Medium Fast
+599,Klink,Klink,Medium Slow
+600,Klang,Klang,Medium Slow
+601,Klinklang,Klinklang,Medium Slow
+602,Tynamo,Tynamo,Slow
+603,Eelektrik,Eelektrik,Slow
+604,Eelektross,Eelektross,Slow
+605,Elgyem,Elgyem,Medium Fast
+606,Beheeyem,Beheeyem,Medium Fast
+607,Litwick,Litwick,Medium Slow
+608,Lampent,Lampent,Medium Slow
+609,Chandelure,Chandelure,Medium Slow
+610,Axew,Axew,Slow
+611,Fraxure,Fraxure,Slow
+612,Haxorus,Haxorus,Slow
+613,Cubchoo,Cubchoo,Medium Fast
+614,Beartic,Beartic,Medium Fast
+615,Cryogonal,Cryogonal,Medium Fast
+616,Shelmet,Shelmet,Medium Fast
+617,Accelgor,Accelgor,Medium Fast
+618,Stunfisk,Stunfisk,Medium Fast
+619,Mienfoo,Mienfoo,Medium Slow
+620,Mienshao,Mienshao,Medium Slow
+621,Druddigon,Druddigon,Medium Fast
+622,Golett,Golett,Medium Fast
+623,Golurk,Golurk,Medium Fast
+624,Pawniard,Pawniard,Medium Fast
+625,Bisharp,Bisharp,Medium Fast
+626,Bouffalant,Bouffalant,Medium Fast
+627,Rufflet,Rufflet,Slow
+628,Braviary,Braviary,Slow
+629,Vullaby,Vullaby,Slow
+630,Mandibuzz,Mandibuzz,Slow
+631,Heatmor,Heatmor,Medium Fast
+632,Durant,Durant,Medium Fast
+633,Deino,Deino,Slow
+634,Zweilous,Zweilous,Slow
+635,Hydreigon,Hydreigon,Slow
+636,Larvesta,Larvesta,Slow
+637,Volcarona,Volcarona,Slow
+638,Cobalion,Cobalion,Slow
+639,Terrakion,Terrakion,Slow
+640,Virizion,Virizion,Slow
+641,Tornadus,Tornadus,Slow
+642,Thundurus,Thundurus,Slow
+643,Reshiram,Reshiram,Slow
+644,Zekrom,Zekrom,Slow
+645,Landorus,Landorus,Slow
+646,Kyurem,Kyurem,Slow
+647,Keldeo,Keldeo,Slow
+648,Meloetta,Meloetta,Slow
+649,Genesect,Genesect,Slow
+650,Chespin,Chespin,Medium Slow
+651,Quilladin,Quilladin,Medium Slow
+652,Chesnaught,Chesnaught,Medium Slow
+653,Fennekin,Fennekin,Medium Slow
+654,Braixen,Braixen,Medium Slow
+655,Delphox,Delphox,Medium Slow
+656,Froakie,Froakie,Medium Slow
+657,Frogadier,Frogadier,Medium Slow
+658,Greninja,Greninja,Medium Slow
+659,Bunnelby,Bunnelby,Medium Fast
+660,Diggersby,Diggersby,Medium Fast
+661,Fletchling,Fletchling,Medium Slow
+662,Fletchinder,Fletchinder,Medium Slow
+663,Talonflame,Talonflame,Medium Slow
+664,Scatterbug,Scatterbug,Medium Fast
+665,Spewpa,Spewpa,Medium Fast
+666,Vivillon,Vivillon,Medium Fast
+667,Litleo,Litleo,Medium Slow
+668,Pyroar,Pyroar,Medium Slow
+669,Flabébé,Flabébé,Medium Fast
+670,Floette,Floette,Medium Fast
+671,Florges,Florges,Medium Fast
+672,Skiddo,Skiddo,Medium Fast
+673,Gogoat,Gogoat,Medium Fast
+674,Pancham,Pancham,Medium Fast
+675,Pangoro,Pangoro,Medium Fast
+676,Furfrou,Furfrou,Medium Fast
+677,Espurr,Espurr,Medium Fast
+678,Meowstic,Meowstic,Medium Fast
+679,Honedge,Honedge,Medium Fast
+680,Doublade,Doublade,Medium Fast
+681,Aegislash,Aegislash,Medium Fast
+682,Spritzee,Spritzee,Medium Fast
+683,Aromatisse,Aromatisse,Medium Fast
+684,Swirlix,Swirlix,Medium Fast
+685,Slurpuff,Slurpuff,Medium Fast
+686,Inkay,Inkay,Medium Fast
+687,Malamar,Malamar,Medium Fast
+688,Binacle,Binacle,Medium Fast
+689,Barbaracle,Barbaracle,Medium Fast
+690,Skrelp,Skrelp,Medium Fast
+691,Dragalge,Dragalge,Medium Fast
+692,Clauncher,Clauncher,Slow
+693,Clawitzer,Clawitzer,Slow
+694,Helioptile,Helioptile,Medium Fast
+695,Heliolisk,Heliolisk,Medium Fast
+696,Tyrunt,Tyrunt,Medium Fast
+697,Tyrantrum,Tyrantrum,Medium Fast
+698,Amaura,Amaura,Medium Fast
+699,Aurorus,Aurorus,Medium Fast
+700,Sylveon,Sylveon,Medium Fast
+701,Hawlucha,Hawlucha,Medium Fast
+702,Dedenne,Dedenne,Medium Fast
+703,Carbink,Carbink,Slow
+704,Goomy,Goomy,Slow
+705,Sliggoo,Sliggoo,Slow
+706,Goodra,Goodra,Slow
+707,Klefki,Klefki,Fast
+708,Phantump,Phantump,Medium Fast
+709,Trevenant,Trevenant,Medium Fast
+710,Pumpkaboo,Pumpkaboo,Medium Fast
+711,Gourgeist,Gourgeist,Medium Fast
+712,Bergmite,Bergmite,Medium Fast
+713,Avalugg,Avalugg,Medium Fast
+714,Noibat,Noibat,Medium Fast
+715,Noivern,Noivern,Medium Fast
+716,Xerneas,Xerneas,Slow
+717,Yveltal,Yveltal,Slow
+718,Zygarde,Zygarde,Slow
+719,Diancie,Diancie,Slow
+720,Hoopa,Hoopa,Slow
+721,Volcanion,Volcanion,Slow
+722,Rowlet,Rowlet,Medium Slow
+723,Dartrix,Dartrix,Medium Slow
+724,Decidueye,Decidueye,Medium Slow
+725,Litten,Litten,Medium Slow
+726,Torracat,Torracat,Medium Slow
+727,Incineroar,Incineroar,Medium Slow
+728,Popplio,Popplio,Medium Slow
+729,Brionne,Brionne,Medium Slow
+730,Primarina,Primarina,Medium Slow
+731,Pikipek,Pikipek,Medium Fast
+732,Trumbeak,Trumbeak,Medium Fast
+733,Toucannon,Toucannon,Medium Fast
+734,Yungoos,Yungoos,Medium Fast
+735,Gumshoos,Gumshoos,Medium Fast
+736,Grubbin,Grubbin,Medium Fast
+737,Charjabug,Charjabug,Medium Fast
+738,Vikavolt,Vikavolt,Medium Fast
+739,Crabrawler,Crabrawler,Medium Fast
+740,Crabominable,Crabominable,Medium Fast
+741,Oricorio,Oricorio,Medium Fast
+742,Cutiefly,Cutiefly,Medium Fast
+743,Ribombee,Ribombee,Medium Fast
+744,Rockruff,Rockruff,Medium Fast
+745,Lycanroc,Lycanroc,Medium Fast
+746,Wishiwashi,Wishiwashi,Fast
+747,Mareanie,Mareanie,Medium Fast
+748,Toxapex,Toxapex,Medium Fast
+749,Mudbray,Mudbray,Medium Fast
+750,Mudsdale,Mudsdale,Medium Fast
+751,Dewpider,Dewpider,Medium Fast
+752,Araquanid,Araquanid,Medium Fast
+753,Fomantis,Fomantis,Medium Fast
+754,Lurantis,Lurantis,Medium Fast
+755,Morelull,Morelull,Medium Fast
+756,Shiinotic,Shiinotic,Medium Fast
+757,Salandit,Salandit,Medium Fast
+758,Salazzle,Salazzle,Medium Fast
+759,Stufful,Stufful,Medium Fast
+760,Bewear,Bewear,Medium Fast
+761,Bounsweet,Bounsweet,Medium Slow
+762,Steenee,Steenee,Medium Slow
+763,Tsareena,Tsareena,Medium Slow
+764,Comfey,Comfey,Fast
+765,Oranguru,Oranguru,Slow
+766,Passimian,Passimian,Slow
+767,Wimpod,Wimpod,Medium Fast
+768,Golisopod,Golisopod,Medium Fast
+769,Sandygast,Sandygast,Medium Fast
+770,Palossand,Palossand,Medium Fast
+771,Pyukumuku,Pyukumuku,Fast
+772,Type: Null,Type: Null,Slow
+773,Silvally,Silvally,Slow
+774,Minior,Minior,Medium Slow
+775,Komala,Komala,Slow
+776,Turtonator,Turtonator,Medium Fast
+777,Togedemaru,Togedemaru,Medium Fast
+778,Mimikyu,Mimikyu,Medium Fast
+779,Bruxish,Bruxish,Medium Fast
+780,Drampa,Drampa,Medium Fast
+781,Dhelmise,Dhelmise,Medium Fast
+782,Jangmo-o,Jangmo-o,Slow
+783,Hakamo-o,Hakamo-o,Slow
+784,Kommo-o,Kommo-o,Slow
+785,Tapu Koko,Tapu Koko,Slow
+786,Tapu Lele,Tapu Lele,Slow
+787,Tapu Bulu,Tapu Bulu,Slow
+788,Tapu Fini,Tapu Fini,Slow
+789,Cosmog,Cosmog,Slow
+790,Cosmoem,Cosmoem,Slow
+791,Solgaleo,Solgaleo,Slow
+792,Lunala,Lunala,Slow
+793,Nihilego,Nihilego,Slow
+794,Buzzwole,Buzzwole,Slow
+795,Pheromosa,Pheromosa,Slow
+796,Xurkitree,Xurkitree,Slow
+797,Celesteela,Celesteela,Slow
+798,Kartana,Kartana,Slow
+799,Guzzlord,Guzzlord,Slow
+800,Necrozma,Necrozma,Slow
+801,Magearna,Magearna,Slow
+802,Marshadow,Marshadow,Slow
+803,Poipole,Poipole,Slow
+804,Naganadel,Naganadel,Slow
+805,Stakataka,Stakataka,Slow
+806,Blacephalon,Blacephalon,Slow
+807,Zeraora,Zeraora,Slow
+808,Meltan,Meltan,Slow
+809,Melmetal,Melmetal,Slow
+810,Grookey,Grookey,Medium Slow
+811,Thwackey,Thwackey,Medium Slow
+812,Rillaboom,Rillaboom,Medium Slow
+813,Scorbunny,Scorbunny,Medium Slow
+814,Raboot,Raboot,Medium Slow
+815,Cinderace,Cinderace,Medium Slow
+816,Sobble,Sobble,Medium Slow
+817,Drizzile,Drizzile,Medium Slow
+818,Inteleon,Inteleon,Medium Slow
+819,Skwovet,Skwovet,Medium Fast
+820,Greedent,Greedent,Medium Fast
+821,Rookidee,Rookidee,Medium Slow
+822,Corvisquire,Corvisquire,Medium Slow
+823,Corviknight,Corviknight,Medium Slow
+824,Blipbug,Blipbug,Medium Fast
+825,Dottler,Dottler,Medium Fast
+826,Orbeetle,Orbeetle,Medium Fast
+827,Nickit,Nickit,Fast
+828,Thievul,Thievul,Fast
+829,Gossifleur,Gossifleur,Medium Fast
+830,Eldegoss,Eldegoss,Medium Fast
+831,Wooloo,Wooloo,Medium Fast
+832,Dubwool,Dubwool,Medium Fast
+833,Chewtle,Chewtle,Medium Fast
+834,Drednaw,Drednaw,Medium Fast
+835,Yamper,Yamper,Fast
+836,Boltund,Boltund,Fast
+837,Rolycoly,Rolycoly,Medium Slow
+838,Carkol,Carkol,Medium Slow
+839,Coalossal,Coalossal,Medium Slow
+840,Applin,Applin,Erratic
+841,Flapple,Flapple,Erratic
+842,Appletun,Appletun,Erratic
+843,Silicobra,Silicobra,Medium Fast
+844,Sandaconda,Sandaconda,Medium Fast
+845,Cramorant,Cramorant,Medium Fast
+846,Arrokuda,Arrokuda,Slow
+847,Barraskewda,Barraskewda,Slow
+848,Toxel,Toxel,Medium Slow
+849,Toxtricity,Toxtricity,Medium Slow
+850,Sizzlipede,Sizzlipede,Medium Fast
+851,Centiskorch,Centiskorch,Medium Fast
+852,Clobbopus,Clobbopus,Medium Slow
+853,Grapploct,Grapploct,Medium Slow
+854,Sinistea,Sinistea,Medium Fast
+855,Polteageist,Polteageist,Medium Fast
+856,Hatenna,Hatenna,Slow
+857,Hattrem,Hattrem,Slow
+858,Hatterene,Hatterene,Slow
+859,Impidimp,Impidimp,Medium Fast
+860,Morgrem,Morgrem,Medium Fast
+861,Grimmsnarl,Grimmsnarl,Medium Fast
+862,Obstagoon,Obstagoon,Medium Fast
+863,Perrserker,Perrserker,Medium Fast
+864,Cursola,Cursola,Fast
+865,Sirfetch'd,Sirfetch'd,Medium Fast
+866,Mr. Rime,Mr. Rime,Medium Fast
+867,Runerigus,Runerigus,Medium Fast
+868,Milcery,Milcery,Medium Fast
+869,Alcremie,Alcremie,Medium Fast
+870,Falinks,Falinks,Medium Fast
+871,Pincurchin,Pincurchin,Medium Fast
+872,Snom,Snom,Medium Fast
+873,Frosmoth,Frosmoth,Medium Fast
+874,Stonjourner,Stonjourner,Slow
+875,Eiscue,Eiscue,Slow
+876,Indeedee,Indeedee,Fast
+877,Morpeko,Morpeko,Medium Fast
+878,Cufant,Cufant,Medium Fast
+879,Copperajah,Copperajah,Medium Fast
+880,Dracozolt,Dracozolt,Slow
+881,Arctozolt,Arctozolt,Slow
+882,Dracovish,Dracovish,Slow
+883,Arctovish,Arctovish,Slow
+884,Duraludon,Duraludon,Medium Fast
+885,Dreepy,Dreepy,Slow
+886,Drakloak,Drakloak,Slow
+887,Dragapult,Dragapult,Slow
+888,Zacian,Zacian,Slow
+889,Zamazenta,Zamazenta,Slow
+890,Eternatus,Eternatus,Slow
+891,Kubfu,Kubfu,Slow
+892,Urshifu,Urshifu,Slow
+893,Zarude,Zarude,Slow
+894,Regieleki,Regieleki,Slow
+895,Regidrago,Regidrago,Slow
+896,Glastrier,Glastrier,Slow
+897,Spectrier,Spectrier,Slow
+898,Calyrex,Calyrex,Slow
+899,Wyrdeer,Wyrdeer,Slow
+900,Kleavor,Kleavor,Medium Fast
+901,Ursaluna,Ursaluna,Medium Fast
+902,Basculegion,Basculegion,Medium Fast
+903,Sneasler,Sneasler,Medium Slow
+904,Overqwil,Overqwil,Medium Fast
+905,Enamorus,Enamorus,Slow
+906,Sprigatito,Sprigatito,Medium Slow
+907,Floragato,Floragato,Medium Slow
+908,Meowscarada,Meowscarada,Medium Slow
+909,Fuecoco,Fuecoco,Medium Slow
+910,Crocalor,Crocalor,Medium Slow
+911,Skeledirge,Skeledirge,Medium Slow
+912,Quaxly,Quaxly,Medium Slow
+913,Quaxwell,Quaxwell,Medium Slow
+914,Quaquaval,Quaquaval,Medium Slow
+915,Lechonk,Lechonk,Medium Fast
+916,Oinkologne,Oinkologne,Medium Fast
+917,Tarountula,Tarountula,Erratic
+918,Spidops,Spidops,Erratic
+919,Nymble,Nymble,Medium Fast
+920,Lokix,Lokix,Medium Fast
+921,Pawmi,Pawmi,Medium Fast
+922,Pawmo,Pawmo,Medium Fast
+923,Pawmot,Pawmot,Medium Fast
+924,Tandemaus,Tandemaus,Fast
+925,Maushold,Maushold,Fast
+926,Fidough,Fidough,Medium Slow
+927,Dachsbun,Dachsbun,Medium Slow
+928,Smoliv,Smoliv,Medium Slow
+929,Dolliv,Dolliv,Medium Slow
+930,Arboliva,Arboliva,Medium Slow
+931,Squawkabilly,Squawkabilly,Erratic
+932,Nacli,Nacli,Medium Slow
+933,Naclstack,Naclstack,Medium Slow
+934,Garganacl,Garganacl,Medium Slow
+935,Charcadet,Charcadet,Slow
+936,Armarouge,Armarouge,Slow
+937,Ceruledge,Ceruledge,Slow
+938,Tadbulb,Tadbulb,Medium Fast
+939,Bellibolt,Bellibolt,Medium Fast
+940,Wattrel,Wattrel,Medium Slow
+941,Kilowattrel,Kilowattrel,Medium Slow
+942,Maschiff,Maschiff,Medium Slow
+943,Mabosstiff,Mabosstiff,Medium Slow
+944,Shroodle,Shroodle,Medium Slow
+945,Grafaiai,Grafaiai,Medium Slow
+946,Bramblin,Bramblin,Medium Fast
+947,Brambleghast,Brambleghast,Medium Fast
+948,Toedscool,Toedscool,Medium Slow
+949,Toedscruel,Toedscruel,Medium Slow
+950,Klawf,Klawf,Medium Fast
+951,Capsakid,Capsakid,Medium Fast
+952,Scovillain,Scovillain,Medium Fast
+953,Rellor,Rellor,Fast
+954,Rabsca,Rabsca,Fast
+955,Flittle,Flittle,Medium Slow
+956,Espathra,Espathra,Medium Slow
+957,Tinkatink,Tinkatink,Medium Slow
+958,Tinkatuff,Tinkatuff,Medium Slow
+959,Tinkaton,Tinkaton,Medium Slow
+960,Wiglett,Wiglett,Medium Fast
+961,Wugtrio,Wugtrio,Medium Fast
+962,Bombirdier,Bombirdier,Slow
+963,Finizen,Finizen,Slow
+964,Palafin,Palafin,Slow
+965,Varoom,Varoom,Medium Fast
+966,Revavroom,Revavroom,Medium Fast
+967,Cyclizar,Cyclizar,Medium Slow
+968,Orthworm,Orthworm,Slow
+969,Glimmet,Glimmet,Medium Slow
+970,Glimmora,Glimmora,Medium Slow
+971,Greavard,Greavard,Medium Slow
+972,Houndstone,Houndstone,Medium Slow
+973,Flamigo,Flamigo,Medium Slow
+974,Cetoddle,Cetoddle,Medium Slow
+975,Cetitan,Cetitan,Medium Slow
+976,Veluza,Veluza,Fast
+977,Dondozo,Dondozo,Slow
+978,Tatsugiri,Tatsugiri,Medium Slow
+979,Annihilape,Annihilape,Medium Fast
+980,Clodsire,Clodsire,Medium Fast
+981,Farigiraf,Farigiraf,Medium Fast
+982,Dudunsparce,Dudunsparce,Medium Fast
+983,Kingambit,Kingambit,Medium Fast
+984,Great Tusk,Great Tusk,Slow
+985,Scream Tail,Scream Tail,Slow
+986,Brute Bonnet,Brute Bonnet,Slow
+987,Flutter Mane,Flutter Mane,Slow
+988,Slither Wing,Slither Wing,Slow
+989,Sandy Shocks,Sandy Shocks,Slow
+990,Iron Treads,Iron Treads,Slow
+991,Iron Bundle,Iron Bundle,Slow
+992,Iron Hands,Iron Hands,Slow
+993,Iron Jugulis,Iron Jugulis,Slow
+994,Iron Moth,Iron Moth,Slow
+995,Iron Thorns,Iron Thorns,Slow
+996,Frigibax,Frigibax,Slow
+997,Arctibax,Arctibax,Slow
+998,Baxcalibur,Baxcalibur,Slow
+999,Gimmighoul,Gimmighoul,Slow
+1000,Gholdengo,Gholdengo,Slow
+1001,Wo-Chien,Wo-Chien,Slow
+1002,Chien-Pao,Chien-Pao,Slow
+1003,Ting-Lu,Ting-Lu,Slow
+1004,Chi-Yu,Chi-Yu,Slow
+1005,Roaring Moon,Roaring Moon,Slow
+1006,Iron Valiant,Iron Valiant,Slow
+1007,Koraidon,Koraidon,Slow
+1008,Miraidon,Miraidon,Slow
+1009,Walking Wake,Walking Wake,Slow
+1010,Iron Leaves,Iron Leaves,Slow
+1011,Dipplin,Dipplin,Erratic
+1012,Poltchageist,Poltchageist,Medium Fast
+1013,Sinistcha,Sinistcha,Medium Fast
+1014,Okidogi,Okidogi,Slow
+1015,Munkidori,Munkidori,Slow
+1016,Fezandipiti,Fezandipiti,Slow
+1017,Ogerpon,Ogerpon,Slow
+1018,Archaludon,Archaludon,Medium Fast
+1019,Hydrapple,Hydrapple,Erratic
+1020,Gouging Fire,Gouging Fire,Slow
+1021,Raging Bolt,Raging Bolt,Slow
+1022,Iron Boulder,Iron Boulder,Slow
+1023,Iron Crown,Iron Crown,Slow
+1024,Terapagos,Terapagos,Slow
+1025,Pecharunt,Pecharunt,Slow
+Related articles,,,

@@ -7,9 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour, IPlayerTriggerable
 {
+    [Header("Set Data")]
     [SerializeField] int sceneToLoad = -1;
     [SerializeField] Transform spawnPoint;
     [SerializeField] DestinationIdentifier destinationPortal;
+    [SerializeField] bool isInteractablePortal = false;
+
+    [Header("Cutscenes")]
 
     [Tooltip("Gamestate to return to after loading. Default is FreeRoam, Cutscene is most often used alternatively.")]
     [SerializeField] GameState resumeState = GameState.FreeRoam;
@@ -18,14 +22,33 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
 
     PlayerController player;
     SceneDetails sceneDetails;
-    public void OnPlayerTriggered(PlayerController player){
+
+    [Header("Object References")]
+    [SerializeField] InteractablePortal interactablePortal;
+    
+    public void OnPlayerTriggered(PlayerController player)
+    {
         this.player = player;
         player.animator.SetBool("isMoving", false);
         StartCoroutine(SwitchScene());
     }
 
-    private void Start(){
+    public void ForceTrigger(PlayerController player)
+    {
+        this.player = player;
+        player.animator.SetBool("isMoving", false);
+        StartCoroutine(SwitchScene());
+    }
+
+    private void Start()
+    {
         sceneDetails = FindObjectOfType<SceneDetails>();
+
+        if (isInteractablePortal)
+        {
+            interactablePortal.gameObject.SetActive(true);
+        }
+        else interactablePortal.gameObject.SetActive(false);
     }
 
     IEnumerator SwitchScene(){

@@ -11,11 +11,31 @@ public class Pokemon
 {
     [SerializeField] PokemonBase _base;
     [SerializeField] int level;
+    List<string> pMoves;
+    public List<string> PMoves => pMoves;
+    Natures nature;
+    string ability;
+    ItemBase heldItem;
 
     public Pokemon(PokemonBase pBase, int pLevel)
     {
         _base = pBase;
         level = pLevel;
+
+        nature = getRandomNature();
+        ability = getRandomAbility(pBase.Abilities);
+
+        Init();
+    }
+
+    public Pokemon(PokemonBase pBase, int pLevel, List<string> pMoves)
+    {
+        _base = pBase;
+        level = pLevel;
+        this.pMoves = pMoves;
+
+        nature = getRandomNature();
+        ability = getRandomAbility(pBase.Abilities);
 
         Init();
     }
@@ -36,20 +56,42 @@ public class Pokemon
     }
     public int HP { get; set; }
 
+    // Old list of moves
     public List<Move> Moves { get; set; }
     public int Exp { get; set; }
+    public ItemBase HeldItem => heldItem;
 
     public Condition Status { get; private set; }
     public event System.Action OnStatusChanged;
     public event System.Action OnHPChanged;
+    public Natures Nature => nature;
 
     public void Init()
     {
         HP = MaxHp;
+        heldItem = null;
 
         Exp = Base.GetExpForLevel(Level);
 
-        // Generate Moves
+        // Auto generate possible moves if they don't exist
+        if (pMoves == null)
+        {
+            pMoves = new List<string>();
+            foreach (var moveLearn in Base.LevelUpMoves)
+            {
+                if (moveLearn.Level <= Level)
+                {
+                    pMoves.Add(moveLearn.Move);
+                }
+                if (pMoves.Count >= PokemonBase.MaxNumOfMoves)
+                {
+                    break;
+                }
+            }
+        }
+
+        // OLD MOVE GENERATION
+        /*
         Moves = new List<Move>();
         foreach (var move in Base.LearnableMoves)
         {
@@ -62,18 +104,62 @@ public class Pokemon
                 break;
             }
         }
+        */
+    }
+
+    public string getRandomAbility(List<string> abilities)
+    {
+        if (abilities == null || abilities.Count == 0)
+        {
+            Debug.LogWarning("No ability list found.");
+            return null;
+        }
+
+        int index = UnityEngine.Random.Range(0, abilities.Count);
+        return abilities[index];
+    }
+
+    public Natures getRandomNature()
+    {
+        var values = Enum.GetValues(typeof(Natures));
+        var random = new System.Random();
+        int index = random.Next(values.Length);
+        return (Natures)values.GetValue(index);
+    }
+
+    public void HoldItem(ItemBase item)
+    {
+        var inventory = Inventory.GetInventory();
+        var category = (int)Inventory.GetCategoryFromItem(item);
+
+        if (heldItem == null) // If you have no held item
+        {
+            heldItem = item;
+            inventory.RemoveItem(item, category);
+        }
+        else
+        {
+            // Get the old item back
+            inventory.AddItem(heldItem, 1);
+
+            // Replace the held item
+            heldItem = item;
+            inventory.RemoveItem(item, category);
+        }
     }
 
     public PokemonSaveData GetSaveData()
     {
         var saveData = new PokemonSaveData()
         {
-            name = Base.name,
+            name = Base.PokemonName,
             hp = HP,
             level = Level,
             exp = Exp,
             statusId = Status?.Id,
-            moves = Moves.Select(m => m.GetSaveData()).ToList()
+            moves = pMoves,
+            nature = this.nature,
+            ability = this.ability,
         };
 
         return saveData;
@@ -85,6 +171,8 @@ public class Pokemon
         HP = saveData.hp;
         level = saveData.level;
         Exp = saveData.exp;
+        nature = saveData.nature;
+        ability = saveData.ability;
 
         if (saveData.statusId != null)
         {
@@ -94,7 +182,7 @@ public class Pokemon
 
         // Calculate Stats?
 
-        Moves = saveData.moves.Select(s => new Move(s)).ToList();
+        pMoves = saveData.moves;
     }
 
     public bool CheckForLevelUp()
@@ -107,11 +195,20 @@ public class Pokemon
         return false;
     }
 
+    /*
     public LearnableMove GetLearnableMoveAtCurrLevel()
     {
         return Base.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();
     }
+    */
 
+    public string GetLearnableMoveAtCurrLevel()
+    {
+        var moveLearn = Base.LevelUpMoves.FirstOrDefault(x => x.Level == level);
+        return moveLearn?.Move; // returns null if none found
+    }
+
+    /*
     public void LearnMove(MoveBase moveToLearn)
     {
         if (Moves.Count > PokemonBase.MaxNumOfMoves)
@@ -120,6 +217,17 @@ public class Pokemon
         }
 
         Moves.Add(new Move(moveToLearn));
+    }
+    */
+
+    public void LearnMove(string moveToLearn)
+    {
+        if (pMoves.Count > PokemonBase.MaxNumOfMoves)
+        {
+            return;
+        }
+
+        pMoves.Add(moveToLearn);
     }
 
     public int Attack
@@ -202,9 +310,22 @@ public class Pokemon
         OnHPChanged?.Invoke();
     }
 
+    public void Heal()
+    {
+        HP = MaxHp;
+        CureStatus();
+    }
+
+    /*
     public bool HasMove(MoveBase moveToCheck)
     {
         return Moves.Count(m => m.Base == moveToCheck) > 0;
+    }
+    */
+
+    public bool HasMove(string moveToCheck)
+    {
+        return pMoves.Count(m => m == moveToCheck) > 0;
     }
 
     public Evolution CheckForEvolution()
@@ -214,14 +335,49 @@ public class Pokemon
 
     public void Evolve(Evolution evolution)
     {
-        _base = evolution.EvolvesInto;
-        Debug.LogWarning("Idk if the stats for the new pokemon are correct. - Evan");
+        var nameOfEvolution = PokemonDB.FixWeirdPokemonNames(evolution.EvolvesInto);
+        _base = PokemonDB.GetPokemonByName(nameOfEvolution);
+
+        float hpPercent = (float)HP / MaxHp;
+
+        HP = Mathf.RoundToInt(hpPercent * MaxHp);
+
+        foreach (var moveLearn in Base.LevelUpMoves)
+        {
+            if (moveLearn.Level <= Level && !pMoves.Contains(moveLearn.Move))
+            {
+                if (pMoves.Count < PokemonBase.MaxNumOfMoves)
+                {
+                    pMoves.Add(moveLearn.Move);
+                }
+            }
+        }
     }
 
+    /*
     public Move GetRandomMove()
     {
         int r = UnityEngine.Random.Range(0, Moves.Count);
         return Moves[r];
+    }
+    */
+
+    public string GetRandomMove()
+    {
+        int r = UnityEngine.Random.Range(0, pMoves.Count);
+        return pMoves[r];
+    }
+
+    public string DebugMoves()
+    {
+        string moveText = "Moves: ";
+        if (pMoves == null) return moveText;
+
+        foreach (string move in pMoves)
+        {
+            moveText += $"{move}, ";
+        }
+        return moveText;
     }
 
     public void SetStatus(ConditionID conditionId)
@@ -259,5 +415,37 @@ public class PokemonSaveData
     public int level;
     public int exp;
     public ConditionID? statusId;
-    public List<MoveSaveData> moves;
+    // public List<MoveSaveData> moves;
+    public List<string> moves;
+    public Natures nature;
+    public string ability;
+}
+
+public enum Natures
+{
+    adamant,
+    bashful,
+    bold,
+    brave,
+    calm,
+    careful,
+    docile,
+    gentle,
+    hardy,
+    hasty,
+    impish,
+    jolly,
+    lax,
+    lonely,
+    mild,
+    modest,
+    naive,
+    naughty,
+    quiet,
+    quirky,
+    rash,
+    relaxed,
+    sassy,
+    serious,
+    timid,
 }

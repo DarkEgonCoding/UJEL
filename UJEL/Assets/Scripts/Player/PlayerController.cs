@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
     // Components
     public Character character;
+    public MoneyHandler moneyHandler;
     private void Awake()
     {
         if (Instance == null)
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour, ISavable
         }
         character = GetComponent<Character>();
         controls = new PlayerControls();
+        moneyHandler = GetComponent<MoneyHandler>();
     }
 
     private void OnEnable(){
@@ -212,6 +214,25 @@ public class PlayerController : MonoBehaviour, ISavable
             bool hitWater = false;
             for (int i = 0; i < hits; i++)
             {
+                // Check for rocks first
+                var col = colliders[i];
+                RockManager rock = col.GetComponent<RockManager>();
+                if (rock != null)
+                {
+                    if (isBiking) return false;
+
+                    Vector2 direction = (targetPos - transform.position).normalized;
+                    if (rock.TryPush(direction)) {
+                        return true; // allow player to move because rock was pushed
+                    }
+                    else
+                    {
+                        animator.SetBool("isMoving", false);
+                        return false; // rock cannot move, block player
+                    }  
+                }
+
+                // Deal with water
                 if ((GameLayers.i.waterLayer & (1 << colliders[i].gameObject.layer)) != 0) hitWater = true;
                 else
                 {
@@ -250,6 +271,19 @@ public class PlayerController : MonoBehaviour, ISavable
             }
         }
         isSwimming = false;
+
+        // Check for lava
+        LavaManager lavaManager = FindObjectOfType<LavaManager>();
+        if (lavaManager != null)
+        {
+            Vector3Int gridPos = lavaManager.lavaMap.WorldToCell(targetPos);
+            if (lavaManager.IsLava(gridPos))
+            {
+                // Tile is still lava → not walkable
+                return false;
+            }
+        }
+
         return true; //return true if it doesn't collide with anything
     }
 

@@ -11,6 +11,12 @@ public class PokedexElementUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI numberText;
     [SerializeField] private string descriptionText;
     [SerializeField] private string locationText;
+    [SerializeField] private string heightm;
+    [SerializeField] private string weightkg;
+    [SerializeField] private string type1;
+    [SerializeField] private string type2;
+    [SerializeField] private string evolutionsText;
+    [SerializeField] private int expYield;
 
     RectTransform rectTransform;
 
@@ -25,6 +31,12 @@ public class PokedexElementUI : MonoBehaviour
     public TextMeshProUGUI NumberText => numberText;
     public string DescriptionText => descriptionText;
     public string LocationText => locationText;
+    public string Heightm => heightm;
+    public string Weightkg => weightkg;
+    public string Type1 => type1;
+    public string Type2 => type2;
+    public string EvolutionsText => evolutionsText;
+    public int ExpYield => expYield;
 
     public void SetData(PokedexEntry entry)
     {
@@ -32,10 +44,17 @@ public class PokedexElementUI : MonoBehaviour
         pokemonImage.sprite = entry.pokemon.FrontSprite;
         locationText = entry.pokemon.FoundLocations;
 
+        heightm = entry.heightm.ToString();
+        weightkg = entry.weightkg.ToString();
+        type1 = entry.type1.ToString();
+        type2 = entry.type2.ToString();
+        evolutionsText = entry.evolutionText;
+        expYield = entry.expYield;
+
         if (entry.haveCaught)
         {
             pokemonImage.color = Color.white;
-            nameText.text = entry.pokemon.Name;
+            nameText.text = entry.pokemon.PokemonName;
             descriptionText = entry.pokemon.Description;
         }
         else

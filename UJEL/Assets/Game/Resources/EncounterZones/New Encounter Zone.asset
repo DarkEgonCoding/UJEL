@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: New Encounter Zone
   m_EditorClassIdentifier: 
   wildEncounters:
-  - baseData: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+  - baseData:
+      pokemonEnum: 0
+      level: 0
+      moves: []
     minLevel: 16
     maxLevel: 30
     weight: 0
+  encounterRate: 0.077

@@ -50,8 +50,10 @@ namespace PsLib
             UnityEngine.Debug.Log(args.Data);
         }
 
-        private void OnError(object sender, DataReceivedEventArgs args) {
-            UnityEngine.Debug.Log(args.Data);
+        private void OnError(object sender, DataReceivedEventArgs args)
+        {
+            if (!string.IsNullOrEmpty(args.Data))
+                UnityEngine.Debug.LogError($"Node error: {args.Data}");
         }
 
         public void Start(string p1spec, string p2spec, string formatid) {
@@ -64,6 +66,7 @@ namespace PsLib
             _battle.StartInfo.RedirectStandardInput = true;
             _battle.StartInfo.RedirectStandardOutput = true;
             _battle.StartInfo.RedirectStandardError = true;
+            _battle.StartInfo.CreateNoWindow = true;
             _battle.Start();
             _battle.OutputDataReceived += OnData;
             _battle.ErrorDataReceived += OnError;
@@ -78,7 +81,19 @@ namespace PsLib
             _simStream = new ConcurrentQueue<string>();
         }
 
-        ~Battle() {
+        public void WriteLine(string line)
+        {
+            if (_battle == null || _battle.HasExited)
+            {
+                UnityEngine.Debug.LogWarning("Tried to write to battle process after it exited.");
+                return;
+            }
+
+            _battle.StandardInput.WriteLine(line);
+        }
+
+        ~Battle()
+        {
             if (_battle != null) { _battle.Kill(); }
         }
     }

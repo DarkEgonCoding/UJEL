@@ -5,16 +5,27 @@ using UnityEngine;
 
 public class TrainerController : MonoBehaviour, Interactable, ISavable
 {
+    [Header("Object Data")]
     [SerializeField] Sprite sprite;
     [SerializeField] string name;
     [SerializeField] GameObject exclamation;
+
+    [Header("Dialogs")]
+    [Tooltip("Dialog for before the battle begins.")]
     [SerializeField] Dialog dialog;
     [SerializeField] Dialog PostBattleDialog;
     [SerializeField] Dialog SecondPostBattleDialog;
     [SerializeField] bool DisableDialogWhenFinished = false;
+
+    [Header("Object Reference")]
     [SerializeField] GameObject fov;
+
+    [Header("Audio")]
     [SerializeField] AudioClip spottedMusic;
     [SerializeField] public AudioClip trainerBattleMusic;
+
+    [Header("Money")]
+    [SerializeField] public int MoneyForWin;
 
     bool AlreadyBattled = false;
     int DialogSelection = 1;

@@ -16,6 +16,12 @@ public class PokedexUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI largePokemonNameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private TextMeshProUGUI locationText;
+    [SerializeField] private TextMeshProUGUI type1text;
+    [SerializeField] private TextMeshProUGUI type2text;
+    [SerializeField] private TextMeshProUGUI heightTxt;
+    [SerializeField] private TextMeshProUGUI weightTxt;
+    [SerializeField] private TextMeshProUGUI evolutionsTxt;
+    [SerializeField] private TextMeshProUGUI expYieldTxt;
     [SerializeField] private GameObject upArrow;
     [SerializeField] private GameObject downArrow;
     [SerializeField] private RectTransform itemListRect;
@@ -203,6 +209,12 @@ public class PokedexUIManager : MonoBehaviour
         largePokemonNameText.text = $"{pokedexUIList[selectedItem].NameText.text}";
         descriptionText.text = $"{pokedexUIList[selectedItem].DescriptionText}";
         locationText.text = $"Locations: {pokedexUIList[selectedItem].LocationText}";
+        heightTxt.text = $"Height: {pokedexUIList[selectedItem].Heightm} m.";
+        weightTxt.text = $"Weight: {pokedexUIList[selectedItem].Weightkg} kg.";
+        type1text.text = pokedexUIList[selectedItem].Type1;
+        type2text.text = pokedexUIList[selectedItem].Type2;
+        evolutionsTxt.text = pokedexUIList[selectedItem].EvolutionsText;
+        expYieldTxt.text = $"Exp Yield: {pokedexUIList[selectedItem].ExpYield.ToString()}";
 
         HandleScrolling();
     }

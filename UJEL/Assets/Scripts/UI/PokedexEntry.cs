@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -15,6 +16,12 @@ public class PokedexEntry
     public bool haveCaught;
     public string description;
     public int entryNumber;
+    public PokemonType type1;
+    public PokemonType type2;
+    public double heightm;
+    public double weightkg;
+    public string evolutionText;
+    public int expYield;
 
     public void SetCaught(bool caught)
     {

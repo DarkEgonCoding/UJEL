@@ -528,11 +528,11 @@ public class PCBox : MonoBehaviour, ISavable
         switch (mode)
         {
             case SortMode.AZ:
-                sortedPokemon = storedPokemon.OrderBy(p => p.Base.Name).ToList();
+                sortedPokemon = storedPokemon.OrderBy(p => p.Base.PokemonName).ToList();
                 SetPokemonInBoxes(sortedPokemon);
                 break;
             case SortMode.ZA:
-                sortedPokemon = storedPokemon.OrderByDescending(p => p.Base.Name).ToList();
+                sortedPokemon = storedPokemon.OrderByDescending(p => p.Base.PokemonName).ToList();
                 SetPokemonInBoxes(sortedPokemon);
                 break;
             case SortMode.DexNumber:

@@ -25,19 +25,39 @@ public class PokedexManager : MonoBehaviour, ISavable
 
     public List<PokedexEntry> Pokedex => pokedex;
 
-    public void Start()
+    public void Init()
     {
         LoadAllPokemon();
         InitializePokedex();
+        Debug.Log("Pokedex Manager Initialized!");
     }
 
     public void LoadAllPokemon()
     {
         // Load all pokemon from the Resources/Pokemons folder
-        AllPokemonBase = Resources.LoadAll<PokemonBase>("Pokemons").OrderBy(p => p.PokedexNumber).ToList();
+        AllPokemonBase = new List<PokemonBase>();
+
+        if (PokemonDB.pokemonsByName == null || PokedexNumberLoader.PJEL_Pokedex_Pokemon == null)
+        {
+            Debug.LogError("PokemonDB.pokemonsByName or PJEL_Pokedex_Pokemon is null!");
+            return;
+        }
+
+        foreach (var kvp in PokemonDB.pokemonsByName)
+        {
+            string pokemonName = kvp.Key;
+            PokemonBase pokemonBase = kvp.Value;
+
+            // Check if this pokemon name is in PJEL_Pokedex_Pokemon
+            if (PokedexNumberLoader.PJEL_Pokedex_Pokemon.Contains(pokemonName))
+            {
+                AllPokemonBase.Add(pokemonBase);
+            }
+        }
+
         if (AllPokemonBase.Count == 0)
         {
-            Debug.LogError("No PokemonBase in Resources/Pokemons");
+            Debug.LogError("No Pokemon loaded for pokedex.");
         }
     }
 
@@ -51,14 +71,22 @@ public class PokedexManager : MonoBehaviour, ISavable
             {
                 // Assign the data in the PokedexEntry
                 pokemon = currPokemon,
-                pokemonName = currPokemon.Name,
+                pokemonName = currPokemon.PokemonName,
                 pokemonSprite = currPokemon.FrontSprite,
                 location = currPokemon.FoundLocations,
-                entryNumber = i + 1,
+                entryNumber = currPokemon.PokedexNumber,
                 description = currPokemon.Description,
-                haveCaught = false
+                type1 = currPokemon.type1,
+                type2 = currPokemon.type2,
+                heightm = currPokemon.Heightm,
+                weightkg = currPokemon.Weightkg,
+                evolutionText = currPokemon.GetEvolutionString(),
+                expYield = currPokemon.ExpYield,
+                haveCaught = true
             });
         }
+
+        pokedex = pokedex.OrderBy(entry => entry.entryNumber).ToList();
     }
 
     public void SetCaughtStatus(PokemonBase pokemon, bool caught)
@@ -100,8 +128,7 @@ public class PokedexManager : MonoBehaviour, ISavable
             return;
         }
 
-        LoadAllPokemon();
-        InitializePokedex();
+        Init();
 
         foreach (var entrySave in saveData.entries)
         {

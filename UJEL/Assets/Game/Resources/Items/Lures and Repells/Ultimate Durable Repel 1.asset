@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Ultimate Durable Repel
   description: Greatly decreases the chance of finding a pokemon in a region for
-    700 tiles.
+    1000 tiles.
   icon: {fileID: 0}
   encounterChance: 0.032
-  duration: 700
+  duration: 1000
   removeLure: 0
