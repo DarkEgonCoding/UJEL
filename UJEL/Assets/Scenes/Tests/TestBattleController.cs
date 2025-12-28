@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using PsLib;
-using PsLib.Sim;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
@@ -11,25 +9,22 @@ public class TestBattleController : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI battleLogText;
 
-    private Battle battle;
-    private Parser parser;
+    private PsLib.Battle battle;
+    private PsLib.Sim.Parser parser;
 
     void Start()
     {
-        //parser = new Parser();
-        battle = new Battle();
+        parser = new PsLib.Sim.Parser();
+        battle = new PsLib.Battle();
 
-        
-
-        // battle.Start();
+        battle.Start(null, null, "gen7randombattle");
     }
 
     private void OnRawMessage(string line)
     {
         battleLogText.text += line + "\n";
 
-        /*
-        if (parser.TryParseMessage(line, out Message msg))
+        if (parser.TryParseMessage(line, out PsLib.Sim.Messages.Message msg))
         {
             Debug.Log($"Parsed: {msg.GetType().Name}");
         }
@@ -37,7 +32,6 @@ public class TestBattleController : MonoBehaviour
         {
             Debug.Log($"Unparsed: {line}");
         }
-        */
     }
 
     public void ChooseMove1()

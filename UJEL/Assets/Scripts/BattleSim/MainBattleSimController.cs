@@ -164,7 +164,7 @@ public class MainBattleSimController : MonoBehaviour
     public void BattleStart()
     {
         battle = new PsLib.Battle();
-        battle.Start(PackedP1, PackedP2);
+        battle.Start(PackedP1, PackedP2, "gen7randombattle");
     }
 
     public void DoMove(int move, int player)
