@@ -20,8 +20,9 @@ public class TestBattleController : MonoBehaviour
     {
         parser = new PsLib.Sim.Parser();
         battle = new PsLib.Battle();
+        battleLogText.text = "";
 
-        battle.Start(null, null, null, "gen7randombattle");
+        battle.Start(OnData, null, null, "gen7randombattle");
     }
 
     private void OnData(object sender, DataReceivedEventArgs args)
@@ -38,13 +39,24 @@ public class TestBattleController : MonoBehaviour
         }
     }
 
-    public void ChooseMove1()
+    public void DoMoveP1(int move)
     {
         
     }
 
-    public void ChooseMove2()
+    public void DoMoveP2(int move)
     {
         
     }
+
+    public void DoSwitchP1(int num)
+    {
+        
+    }
+
+    public void DoSwitchP2(int num)
+    {
+        
+    }
+
 }

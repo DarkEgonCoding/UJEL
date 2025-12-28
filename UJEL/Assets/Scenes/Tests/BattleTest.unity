@@ -580,7 +580,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 197107725}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoMoveP2
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &197107725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,7 +847,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 262626765}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoSwitchP2
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &262626765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1556,7 +1580,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 411666535}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoSwitchP2
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &411666535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1945,7 +1981,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 593067071}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoSwitchP2
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &593067071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2066,7 +2114,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 624449985}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoMoveP1
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &624449985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2223,7 +2283,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 645378421}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoMoveP2
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &645378421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2478,7 +2550,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 714894784}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoSwitchP2
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &714894784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2599,7 +2683,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 752901091}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoMoveP1
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &752901091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2720,7 +2816,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 753056251}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoMoveP2
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &753056251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3061,7 +3169,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 922761095}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoSwitchP1
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &922761095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3590,7 +3710,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1074008457}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoSwitchP1
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1074008457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3837,7 +3969,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1184351378}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoMoveP1
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1184351378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3958,7 +4102,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1327190296}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoMoveP2
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1327190296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4758,7 +4914,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1940930445}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoSwitchP1
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1940930445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5013,7 +5181,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1995269873}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoMoveP1
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1995269873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5153,6 +5333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2073859426}
+  - component: {fileID: 2073859427}
   m_Layer: 0
   m_Name: BattleController
   m_TagString: Untagged
@@ -5175,6 +5356,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2073859427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073859425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572e29f16720ae1489c0258cd9918571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleLogText: {fileID: 360380665}
 --- !u!1 &2076732013
 GameObject:
   m_ObjectHideFlags: 0
@@ -5383,7 +5577,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2090128026}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2073859427}
+        m_TargetAssemblyTypeName: TestBattleController, Assembly-CSharp
+        m_MethodName: DoSwitchP1
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2090128026
 MonoBehaviour:
   m_ObjectHideFlags: 0
