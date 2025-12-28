@@ -1,3 +1,6 @@
+
+using System;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +12,7 @@ public class TestBattleController : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI battleLogText;
 
+    private string messageBuffer;
     private PsLib.Battle battle;
     private PsLib.Sim.Parser parser;
 
@@ -17,20 +21,20 @@ public class TestBattleController : MonoBehaviour
         parser = new PsLib.Sim.Parser();
         battle = new PsLib.Battle();
 
-        battle.Start(null, null, "gen7randombattle");
+        battle.Start(null, null, null, "gen7randombattle");
     }
 
-    private void OnRawMessage(string line)
+    private void OnData(object sender, DataReceivedEventArgs args)
     {
-        battleLogText.text += line + "\n";
-
-        if (parser.TryParseMessage(line, out PsLib.Sim.Messages.Message msg))
-        {
-            Debug.Log($"Parsed: {msg.GetType().Name}");
-        }
-        else
-        {
-            Debug.Log($"Unparsed: {line}");
+        messageBuffer += args.Data;
+        if (messageBuffer.Contains("\n")) {
+            string[] split = messageBuffer.Split("\n");
+            messageBuffer = split[1];
+            if (parser.TryParseMessage(split[0], out PsLib.Sim.Messages.Message msg)) {
+                UnityEngine.Debug.Log($"Parsed: {msg.GetType().Name}");
+            } else {
+                UnityEngine.Debug.Log($"Unparsed: {split[0]}");
+            }
         }
     }
 

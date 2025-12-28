@@ -1,6 +1,5 @@
 
 using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -22,32 +21,9 @@ namespace PsLib
             throw new Exception("Invalid platform! Can only be run on linux or windows!"));
         private static string _battlePath = _psRoot +
             "pokemon-showdown/node_modules/pokemon-showdown simulate-battle";
-        
-        // Event queue
-        private ConcurrentQueue<Sim.Messages.Message> _msgQ;
-        private ConcurrentQueue<string> _simStream;
 
-        public bool TryGetMessage(out Sim.Messages.Message msg)
+        public Battle()
         {
-            return _msgQ.TryDequeue(out msg);
-        }
-
-        public bool TryGetRaw(out string raw)
-        {
-            return _simStream.TryDequeue(out raw);
-        }
-
-        public Battle(
-            
-        ) {
-            // Initialize the queue semaphore.
-            _msgQ = new ConcurrentQueue<Sim.Messages.Message>();
-            UnityEngine.Debug.Log(Application.platform);
-        }
-
-        private void OnData(object sender, DataReceivedEventArgs args) {
-            _simStream.Enqueue(args.Data);
-            UnityEngine.Debug.Log(args.Data);
         }
 
         private void OnError(object sender, DataReceivedEventArgs args)
@@ -56,7 +32,8 @@ namespace PsLib
                 UnityEngine.Debug.LogError($"Node error: {args.Data}");
         }
 
-        public void Start(string p1spec, string p2spec, string formatid) {
+        public void Start(DataReceivedEventHandler dataHandler, string p1spec, string p2spec, string formatid)
+        {
             // Spawn the simulator.
             UnityEngine.Debug.Log($"Starting server using nodejs with path {_battlePath}");
             _battle = new Process();
@@ -68,7 +45,7 @@ namespace PsLib
             _battle.StartInfo.RedirectStandardError = true;
             _battle.StartInfo.CreateNoWindow = true;
             _battle.Start();
-            _battle.OutputDataReceived += OnData;
+            _battle.OutputDataReceived += dataHandler;
             _battle.ErrorDataReceived += OnError;
             _battle.BeginOutputReadLine();
             _battle.BeginErrorReadLine();
@@ -76,9 +53,6 @@ namespace PsLib
             _battle.StandardInput.WriteLine(">start {\"formatid\":\"" + formatid + "\"}");
             _battle.StandardInput.WriteLine(">player p1 " + "");
             _battle.StandardInput.WriteLine(">player p2 " + "");
-
-            _msgQ = new ConcurrentQueue<Sim.Messages.Message>();
-            _simStream = new ConcurrentQueue<string>();
         }
 
         public void WriteLine(string line)
