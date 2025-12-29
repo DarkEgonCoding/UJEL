@@ -51,8 +51,8 @@ namespace PsLib
             _battle.BeginErrorReadLine();
 
             _battle.StandardInput.WriteLine(">start {\"formatid\":\"" + formatid + "\"}");
-            _battle.StandardInput.WriteLine(">player p1 " + "");
-            _battle.StandardInput.WriteLine(">player p2 " + "");
+            _battle.StandardInput.WriteLine(">player p1 {" + p1spec + "}");
+            _battle.StandardInput.WriteLine(">player p2 {" + p2spec + "}");
         }
 
         public void WriteLine(string line)

@@ -9,8 +9,8 @@ namespace PsLib.Sim
     // A class that handles parsing data as defined by SimActions.cs.
     class Parser
     {
-        private const string majorActionNamespace = "PsLib.Sim.Messages.Major";
-        private const string minorActionNamespace = "PsLib.Sim.Messages.Minor";
+        private const string majorActionNamespace = "PsLib.Sim.Messages.Actions.Major";
+        private const string minorActionNamespace = "PsLib.Sim.Messages.Actions.Minor";
 
         private Type[] majorActionTypes;
         private Type[] minorActionTypes;
@@ -63,14 +63,21 @@ namespace PsLib.Sim
             // TODO: Fix me, don't want to assign null mesage.
             msg = null;
 
+            if (text[0] != '|' || split.Length < 2)
+            {
+                return false;
+            }
+
             // Handle major actions.
-            if (majorActionMapping.TryGetValue(split[0], out ev)) {
+            if (majorActionMapping.TryGetValue(split[1], out ev)) {
                 PropertyInfo[] properties = ev.GetProperties();
+                return true;
             }
 
             // Handle minor actions
-            if (minorActionMapping.TryGetValue(split[0], out ev)) {
+            if (minorActionMapping.TryGetValue(split[1], out ev)) {
                 PropertyInfo[] properties = ev.GetProperties();
+                return true;
             }
 
             // Return false on failed parse.
