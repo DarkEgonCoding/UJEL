@@ -37,6 +37,8 @@ namespace PsLib.Sim
                 majorActionNamespace, minorActionNamespace
             };
 
+            initMessageMapping = new Dictionary<string, Type>();
+            progMessageMapping = new Dictionary<string, Type>();
             majorActionMapping = new Dictionary<string, Type>();
             minorActionMapping = new Dictionary<string, Type>();
 
@@ -86,24 +88,6 @@ namespace PsLib.Sim
             string[] split = text.Split('|');
             Type eventType;
             msg = null;
-<<<<<<< HEAD
-
-            if (text[0] != '|' || split.Length < 2)
-            {
-                return false;
-            }
-
-            // Handle major actions.
-            if (majorActionMapping.TryGetValue(split[1], out ev)) {
-                PropertyInfo[] properties = ev.GetProperties();
-                return true;
-            }
-
-            // Handle minor actions
-            if (minorActionMapping.TryGetValue(split[1], out ev)) {
-                PropertyInfo[] properties = ev.GetProperties();
-                return true;
-=======
             
             // Handle all of the stream-updating messages.
             if (text == "update") {
@@ -134,10 +118,10 @@ namespace PsLib.Sim
                     {
                         ParseSingleProperty(action, split[j+2], properties[j]);
                     }
+                    msg.action = action;
 
                     return true;
                 }
->>>>>>> c1bca43c8 (A couple updates to parsing)
             }
 
             // Return false on failed parse.
