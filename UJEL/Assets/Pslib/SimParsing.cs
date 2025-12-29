@@ -11,8 +11,8 @@ namespace PsLib.Sim
     {
         private const string initMessageNamespace = "PsLib.Sim.Messages.Init";
         private const string progMessageNamespace = "PsLib.Sim.Messages.Progress";
-        private const string majorActionNamespace = "PsLib.Sim.Messages.Major";
-        private const string minorActionNamespace = "PsLib.Sim.Messages.Minor";
+        private const string majorActionNamespace = "PsLib.Sim.Messages.Actions.Major";
+        private const string minorActionNamespace = "PsLib.Sim.Messages.Actions.Minor";
         private PsLib.Sim.Messages.MessageGroup[] groups;
 
         private Type[] initMessageTypes;

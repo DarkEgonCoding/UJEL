@@ -46,7 +46,9 @@ public class PokemonFlavorTextLoader : MonoBehaviour
     public static string GetFlavorText(int speciesId)
     {
         if (flavorTexts != null && flavorTexts.TryGetValue(speciesId, out string text))
-            return text;
+            return text
+                .Replace("\r\n", "")
+                .Replace("\r","");
         return "";
     }
 
