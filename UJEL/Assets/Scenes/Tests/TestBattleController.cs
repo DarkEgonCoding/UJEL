@@ -22,13 +22,13 @@ public class TestBattleController : MonoBehaviour
         battle = new PsLib.Battle();
         battleLogText.text = "";
 
-        battle.Start(OnData, "", "", "gen7randombattle");
+        battle.Start(OnData, "{}", "{}", "gen7randombattle");
     }
 
     private void OnData(object sender, DataReceivedEventArgs args)
     {
         if (parser.TryParseMessage(args.Data, out PsLib.Sim.Messages.Message msg)) {
-            UnityEngine.Debug.Log($"Parsed: {msg.GetType().Name}");
+            UnityEngine.Debug.Log($"Parsed: {msg.stream}, {msg.group}, {msg.action.GetType().Name}");
         } else {
             UnityEngine.Debug.Log($"Unparsed: {args.Data}");
         }
@@ -53,5 +53,4 @@ public class TestBattleController : MonoBehaviour
     {
         
     }
-
 }
