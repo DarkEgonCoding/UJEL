@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Concurrent;
 
 public class TestBattleController : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class TestBattleController : MonoBehaviour
     private string messageBuffer;
     private PsLib.Battle battle;
     private PsLib.Sim.Parser parser;
-    private UnityEvent<string> updateLog;
+    private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
 
     void Start()
     {
@@ -24,18 +25,12 @@ public class TestBattleController : MonoBehaviour
         battle = new PsLib.Battle();
         battleLogText.text = "";
 
-        if (updateLog == null)
-        {
-            updateLog = new UnityEvent<string>();
-        }
-        updateLog.AddListener(UpdateLog);
-
         battle.Start(OnData, "{}", "{}", "gen7randombattle");
     }
 
     private void OnData(object sender, DataReceivedEventArgs args)
     {
-        updateLog.Invoke(args.Data);
+        logQueue.Enqueue(args.Data);
         if (parser.TryParseMessage(args.Data, out PsLib.Sim.Messages.Message msg)) {
             UnityEngine.Debug.Log($"Parsed: {msg.stream}, {msg.group}, {msg.action.GetType().Name}");
         } else {
@@ -43,9 +38,17 @@ public class TestBattleController : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        while (logQueue.TryDequeue(out string data))
+        {
+            UpdateLog(data);
+        }
+    }
+
     private void UpdateLog(string data)
     {
-        battleLogText.text += data;
+        battleLogText.text += data + "\n";
     }
 
     public void DoMoveP1(int move)
