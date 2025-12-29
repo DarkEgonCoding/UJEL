@@ -11,7 +11,7 @@ namespace PsLib
         private Process _dataServer;
 
         // Paths
-        private static string _psRoot = Application.dataPath + "/StreamingAssets/";
+        private static string _psRoot = Application.dataPath + "/StreamingAssets/ps/";
         private static string _dataPath = _psRoot + "ps-data-" +
             (Application.platform == RuntimePlatform.WindowsPlayer ? "win.exe" :
             Application.platform == RuntimePlatform.LinuxPlayer ? "linux" :
