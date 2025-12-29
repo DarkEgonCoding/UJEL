@@ -22,20 +22,15 @@ public class TestBattleController : MonoBehaviour
         battle = new PsLib.Battle();
         battleLogText.text = "";
 
-        battle.Start(OnData, null, null, "gen7randombattle");
+        battle.Start(OnData, "", "", "gen7randombattle");
     }
 
     private void OnData(object sender, DataReceivedEventArgs args)
     {
-        messageBuffer += args.Data;
-        if (messageBuffer.Contains("\n")) {
-            string[] split = messageBuffer.Split("\n");
-            messageBuffer = split[1];
-            if (parser.TryParseMessage(split[0], out PsLib.Sim.Messages.Message msg)) {
-                UnityEngine.Debug.Log($"Parsed: {msg.GetType().Name}");
-            } else {
-                UnityEngine.Debug.Log($"Unparsed: {split[0]}");
-            }
+        if (parser.TryParseMessage(args.Data, out PsLib.Sim.Messages.Message msg)) {
+            UnityEngine.Debug.Log($"Parsed: {msg.GetType().Name}");
+        } else {
+            UnityEngine.Debug.Log($"Unparsed: {args.Data}");
         }
     }
 
