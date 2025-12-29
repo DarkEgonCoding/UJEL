@@ -12,13 +12,12 @@ namespace PsLib
 
         // Paths
         private static string _psRoot = Application.dataPath + "/StreamingAssets/";
-        private static string _nodePath = _psRoot + "node/" +
-            (Application.platform == RuntimePlatform.WindowsPlayer ? "node-win-x64.exe" :
-            Application.platform == RuntimePlatform.LinuxPlayer ? "node-linux-x64" :
-            Application.platform == RuntimePlatform.WindowsEditor ? "node-win-x64.exe" :
-            Application.platform == RuntimePlatform.LinuxEditor ? "node-linux-x64" :
+        private static string _dataPath = _psRoot + "ps-data-" +
+            (Application.platform == RuntimePlatform.WindowsPlayer ? "win.exe" :
+            Application.platform == RuntimePlatform.LinuxPlayer ? "linux" :
+            Application.platform == RuntimePlatform.WindowsEditor ? "win.exe" :
+            Application.platform == RuntimePlatform.LinuxEditor ? "linux" :
             throw new Exception("Invalid platform! Can only be run on linux or windows!"));
-        private static string _dataServerPath = _psRoot + "pokemon-showdown/PokemonDataServer.js";
 
         // Event queue
         private ConcurrentQueue<string> _outputQueue;
@@ -51,10 +50,10 @@ namespace PsLib
 
         public void Start()
         {
-            UnityEngine.Debug.Log($"Starting Pokemon Data Server: {_dataServerPath}");
+            UnityEngine.Debug.Log($"Starting Pokemon Data Server: {_dataPath}");
             _dataServer = new Process();
-            _dataServer.StartInfo.FileName = _nodePath;
-            _dataServer.StartInfo.Arguments = _dataServerPath;
+            _dataServer.StartInfo.FileName = _dataPath;
+            _dataServer.StartInfo.Arguments = "";
             _dataServer.StartInfo.UseShellExecute = false;
             _dataServer.StartInfo.RedirectStandardInput = true;
             _dataServer.StartInfo.RedirectStandardOutput = true;
