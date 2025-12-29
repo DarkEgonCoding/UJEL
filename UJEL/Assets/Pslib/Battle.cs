@@ -12,15 +12,13 @@ namespace PsLib
         private string messageBuffer = "";
 
         // Paths
-        private static string _psRoot = Application.dataPath + "/StreamingAssets/";
-        private static string _nodePath = _psRoot + "node/" +
-            (Application.platform == RuntimePlatform.WindowsPlayer ? "node-win-x64.exe" :
-            Application.platform == RuntimePlatform.LinuxPlayer ? "node-linux-x64" :
-            Application.platform == RuntimePlatform.WindowsEditor ? "node-win-x64.exe" :
-            Application.platform == RuntimePlatform.LinuxEditor ? "node-linux-x64" :
+        private static string _psRoot = Application.dataPath + "/StreamingAssets/ps/";
+        private static string _battlePath = _psRoot + "ps-battle-" +
+            (Application.platform == RuntimePlatform.WindowsPlayer ? "win.exe" :
+            Application.platform == RuntimePlatform.LinuxPlayer ? "linux" :
+            Application.platform == RuntimePlatform.WindowsEditor ? "win.exe" :
+            Application.platform == RuntimePlatform.LinuxEditor ? "linux" :
             throw new Exception("Invalid platform! Can only be run on linux or windows!"));
-        private static string _battlePath = _psRoot +
-            "pokemon-showdown/node_modules/pokemon-showdown/pokemon-showdown simulate-battle";
 
         public Battle()
         {
@@ -37,23 +35,24 @@ namespace PsLib
             // Spawn the simulator.
             UnityEngine.Debug.Log($"Starting server using nodejs with path {_battlePath}");
             _battle = new Process();
-            _battle.StartInfo.FileName = _nodePath;
-            _battle.StartInfo.Arguments = _battlePath;
-            // _battle.StartInfo.UseShellExecute = false;
-            // _battle.StartInfo.RedirectStandardInput = true;
-            // _battle.StartInfo.RedirectStandardOutput = true;
-            // _battle.StartInfo.RedirectStandardError = true;
-            // _battle.StartInfo.CreateNoWindow = true;
+            _battle.StartInfo.FileName = _battlePath;
+            _battle.StartInfo.Arguments = "";
+            _battle.StartInfo.UseShellExecute = false;
+            _battle.StartInfo.RedirectStandardInput = true;
+            _battle.StartInfo.RedirectStandardOutput = true;
+            _battle.StartInfo.RedirectStandardError = true;
+            _battle.StartInfo.CreateNoWindow = true;
+
+            _battle.OutputDataReceived += dataHandler;
+            _battle.ErrorDataReceived += OnError;
+
             _battle.Start();
+            _battle.BeginOutputReadLine();
+            _battle.BeginErrorReadLine();
 
-            // _battle.OutputDataReceived += dataHandler;
-            // _battle.ErrorDataReceived += OnError;
-            // _battle.BeginOutputReadLine();
-            // _battle.BeginErrorReadLine();
-
-            // _battle.StandardInput.WriteLine(">start {\"formatid\":\"" + formatid + "\"}");
-            // _battle.StandardInput.WriteLine(">player p1 " + "");
-            // _battle.StandardInput.WriteLine(">player p2 " + "");
+            _battle.StandardInput.WriteLine(">start {\"formatid\":\"" + formatid + "\"}");
+            _battle.StandardInput.WriteLine(">player p1 {" + p1spec + "}");
+            _battle.StandardInput.WriteLine(">player p2 {" + p2spec + "}");
         }
 
         public void WriteLine(string line)

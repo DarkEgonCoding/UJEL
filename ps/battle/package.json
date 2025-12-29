@@ -1,0 +1,38 @@
+{
+    "name": "ps-battle",
+    "version": "1.0.0",
+    "description": "Pokemon Showdown Battle Simulator Wrapper",
+    "main": "battle.js",
+    "bin": "battle.js",
+    "pkg": {
+        "scripts": [
+            "node_modules/pokemon-showdown/dist/config/**/*.js",
+            "node_modules/pokemon-showdown/dist/config/*.js",
+            "node_modules/pokemon-showdown/dist/data/**/*.js",
+            "node_modules/pokemon-showdown/dist/data/*.js",
+            "node_modules/pokemon-showdown/dist/lib/**/*.js",
+            "node_modules/pokemon-showdown/dist/lib/*.js",
+            "node_modules/pokemon-showdown/dist/sim/**/*.js",
+            "node_modules/pokemon-showdown/dist/sim/*.js"
+        ],
+        "assets": [
+            "node_modules/pokemon-showdown/dist/config/**/*",
+            "node_modules/pokemon-showdown/dist/config/*",
+            "node_modules/pokemon-showdown/dist/data/**/*",
+            "node_modules/pokemon-showdown/dist/data/*",
+            "node_modules/pokemon-showdown/dist/lib/**/*",
+            "node_modules/pokemon-showdown/dist/lib/*",
+            "node_modules/pokemon-showdown/dist/sim/**/*",
+            "node_modules/pokemon-showdown/dist/sim/*"
+        ],
+        "targets": [
+            "node22-win-x64",
+            "node22-linux-x64",
+            "node22-macos-x64"
+        ],
+        "outputPath": "./dist"
+    },
+    "dependencies": {
+        "pokemon-showdown": "github:JoelKueh/pokemon-showdown"
+    }
+}
