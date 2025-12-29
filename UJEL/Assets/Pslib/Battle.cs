@@ -12,7 +12,7 @@ namespace PsLib
         private string messageBuffer = "";
 
         // Paths
-        private static string _psRoot = Application.dataPath + "/StreamingAssets/";
+        private static string _psRoot = Application.dataPath + "/StreamingAssets/ps/";
         private static string _battlePath = _psRoot + "ps-battle-" +
             (Application.platform == RuntimePlatform.WindowsPlayer ? "win.exe" :
             Application.platform == RuntimePlatform.LinuxPlayer ? "linux" :
