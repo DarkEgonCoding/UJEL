@@ -7,18 +7,26 @@ using System.Text.RegularExpressions;
 
 namespace PsLib.Sim.Messages
 {
-    public enum MessageTypes
+    public enum Stream
     {
         update,
-        sideupdate,
         p1,
         p2
     }
 
+    public enum MessageGroup
+    {
+        init,
+        progress,
+        major,
+        minor
+    }
+
     public class Message
     {
-        public MessageTypes type;
-        public List<Action> actions;
+        public Stream stream;
+        public MessageGroup group;
+        public Action action;
     }
 
     public abstract class Action {}
@@ -217,7 +225,7 @@ namespace PsLib.Sim.Messages.Init
     }
 
     public class TIER : Action
-    {
+{
         public string formatname;
     }
 
