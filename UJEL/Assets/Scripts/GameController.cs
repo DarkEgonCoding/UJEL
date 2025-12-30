@@ -223,7 +223,7 @@ public class GameController : MonoBehaviour
         if (!GameFlags.Instance.HasFlag("HasStarter"))
         {
             Debug.LogWarning("You don't have the first starter yet.");
-            return;
+            // return;
         }
 
         if (state == GameState.FreeRoam)
