@@ -65,6 +65,7 @@ public class Pokemon
     public event System.Action OnStatusChanged;
     public event System.Action OnHPChanged;
     public Natures Nature => nature;
+    public string Ability => ability;
 
     public void Init()
     {

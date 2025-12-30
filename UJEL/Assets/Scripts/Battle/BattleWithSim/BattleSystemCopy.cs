@@ -11,9 +11,9 @@ using DG.Tweening;
 using System.Linq;
 using UnityEngine.Analytics;
 
-// public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen, MoveForget, EndingBattle}
+public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen, MoveForget, EndingBattle}
 
-public class BattleSystem : MonoBehaviour
+public class BattleSystemCopy : MonoBehaviour
 {
     [SerializeField] BattleUnit playerUnit;
     [SerializeField] BattleUnit enemyUnit;
@@ -32,6 +32,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] MoveSelectionUI moveSelectionUI;
 
     PokeballItem templatePokeball;
+    BattleQueue battleQueue = new BattleQueue();
 
     BattleState state;
     int currentAction;
@@ -60,14 +61,14 @@ public class BattleSystem : MonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
-        //controls.Main.Interact.performed += ctx => dialogBox.TrySkipDialog();
     }
 
     private void OnDisable()
     {
         controls.Disable();
-        //controls.Main.Interact.performed -= ctx => dialogBox.TrySkipDialog();
     }
+
+// ---------------------------------------------- Battle Init -------------------------------------------------
 
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon)
     {
@@ -160,8 +161,13 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.StartDialog($"A wild {enemyUnit.Pokemon.Base.PokemonName} appeared!");
         yield return new WaitForSeconds(1f);
 
-        yield return StartCoroutine(ActionSelection());
+        // Note that the playerUnit and enemyUnit can be used to tell the server which pokemon are starting
+        string packedOne = PokemonPacker.Pack(playerUnit.Pokemon); // TODO: Use the entire party packer if possible
+        string packedTwo = PokemonPacker.Pack(enemyUnit.Pokemon);
+        //battleQueue.Init();
     }
+
+// ------------------------------------------------------------------------------------------------------
 
     private IEnumerator ActionSelection(bool overrideActive = false)
     {

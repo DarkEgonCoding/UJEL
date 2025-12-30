@@ -4,6 +4,8 @@ using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
+using Unity.Profiling;
 
 namespace PsLib.Sim.Messages
 {
@@ -29,7 +31,18 @@ namespace PsLib.Sim.Messages
         public Action action;
     }
 
-    public abstract class Action {}
+    public abstract class Action
+    {
+        public virtual string GetDesc()
+        {
+            return "";
+        }
+
+        public virtual List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>();
+        }
+    }
 
     public class StreamText : Attribute
     {
@@ -186,7 +199,7 @@ namespace PsLib.Sim.Messages.Parts
      */
     public class Request
     {
-        public List<List<Move>> moves;
+        public List<List<Move>> active;
         public Side side;
         public int rqid;
 
@@ -258,7 +271,7 @@ namespace PsLib.Sim.Messages.Init
 
     public class START : Action
     {
-
+        
     }
 }
 
@@ -272,7 +285,7 @@ namespace PsLib.Sim.Messages.Progress
 
     public class REQUEST : Action
     {
-        public string request;
+        public Parts.Request request;
     }
 
     public class INACTIVE : Action
@@ -327,7 +340,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         [Flag("[anim]")]
         public bool useAnim;
 
-        public string GetDesc() {
+        public override string GetDesc() {
             return pokemon.species + " used move " + move + " at " + target + ".";
         }
     }
@@ -338,7 +351,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         public Parts.Details details;
         public Parts.HpStatus hpStatus;
 
-        public string GetDesc() {
+        public override string GetDesc() {
             return pokemon.species + " was switched in.";
         }
     }
@@ -349,7 +362,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         public Parts.Details details;
         public Parts.HpStatus hpStatus;
 
-        public string GetDesc() {
+        public override string GetDesc() {
             return pokemon.species + " was dragged in.";
         }
     }
@@ -360,7 +373,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         public Parts.Details details;
         public Parts.HpStatus hpStatus;
 
-        public string GetDesc() {
+        public override string GetDesc() {
             return pokemon.species + " turned into " + details.species + ".";
         }
     }
@@ -372,7 +385,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         public string species;
         public Parts.HpStatus hpStatus;
 
-        public string GetDesc() {
+        public override string GetDesc() {
             return pokemon.species + " turned into " + species + ".";
         }
     }
@@ -383,7 +396,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         public Parts.Details details;
         public Parts.HpStatus hpStatus;
 
-        public string GetDesc() {
+        public override string GetDesc() {
             return "Illusion ended for " + pokemon.species;
         }
     }
@@ -401,7 +414,7 @@ namespace PsLib.Sim.Messages.Actions.Major
         [Optional]
         public string move;
 
-        public string GetDesc() {
+        public override string GetDesc() {
             if (move == null) {
                 return pokemon.species + " couldn't because of " + reason + ".";
             } else {
@@ -415,7 +428,7 @@ namespace PsLib.Sim.Messages.Actions.Major
     {
         public Parts.Pokemon pokemon;
 
-        public string GetDesc() {
+        public override string GetDesc() {
             return pokemon.species + " fainted.";
         }
     }
