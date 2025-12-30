@@ -286,6 +286,14 @@ namespace PsLib.Sim.Messages.Progress
     public class REQUEST : Action
     {
         public Parts.Request request;
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new ActionSelection(request)
+            };
+        }
     }
 
     public class INACTIVE : Action
@@ -301,16 +309,35 @@ namespace PsLib.Sim.Messages.Progress
     public class TURN : Action
     {
         public int number;
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>(){
+                new LogText($"New turn, number: {number}")
+            };
+        }
     }
 
     public class WIN : Action
     {
         public string user;
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>(){
+                new EndBattle(user)
+            };
+        }
     }
 
     public class TIE : Action
     {
-
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>(){
+                new EndBattle() // No parameter means LOSS
+            };
+        }
     }
 
     [StreamText("t:")]
