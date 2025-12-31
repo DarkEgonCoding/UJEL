@@ -370,6 +370,16 @@ namespace PsLib.Sim.Messages.Actions.Major
         public override string GetDesc() {
             return pokemon.species + " used move " + move + " at " + target + ".";
         }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc()),
+                new PlayMoveAnimation()
+            };
+        }
     }
 
     public class SWITCH : Action

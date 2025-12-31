@@ -66,3 +66,35 @@ public class EndBattle : BattleCommand
         yield return null;
     }
 }
+
+public class WriteDialog : BattleCommand
+{
+    public string text;
+    public float waitTime;
+    
+    public WriteDialog(string text, float waitTime)
+    {
+        this.text = text;
+        this.waitTime = waitTime;
+    }
+
+    public WriteDialog(string text)
+    {
+        this.text = text;
+        this.waitTime = 0.75f;
+    }
+
+    public override IEnumerator Execute()
+    {
+        yield return BattleSystemCopy.instance.DisplayDialog(text, waitTime);
+    }
+}
+
+public class PlayMoveAnimation : BattleCommand
+{
+    public override IEnumerator Execute()
+    {
+        // TODO: Play the animation
+        yield return null;
+    }
+}

@@ -48,8 +48,14 @@ public class BattleSystemCopy : MonoBehaviour
     MoveBase moveToLearn;
     public bool didLearnMove;
 
+    public static BattleSystemCopy instance;
+
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         controls = new PlayerControls();
     }
 
@@ -818,5 +824,11 @@ public class BattleSystemCopy : MonoBehaviour
 
             MoneyHandler.instance.ResetMoneyWager();
         }
+    }
+
+    public IEnumerator DisplayDialog(string dialog, float waitTime = 0)
+    {
+        yield return dialogBox.StartDialog(dialog);
+        yield return new WaitForSeconds(waitTime);
     }
 }
