@@ -86,7 +86,7 @@ public class WriteDialog : BattleCommand
 
     public override IEnumerator Execute()
     {
-        yield return BattleSystemCopy.instance.DisplayDialog(text, waitTime);
+        yield return BattleSystemUI.instance.DisplayDialog(text, waitTime);
     }
 }
 
@@ -94,7 +94,7 @@ public class PlayMoveAnimation : BattleCommand
 {
     public override IEnumerator Execute()
     {
-        // TODO: Play the animation
+        // TODO: Play the animation, needs to change based on who used it
         yield return null;
     }
 }

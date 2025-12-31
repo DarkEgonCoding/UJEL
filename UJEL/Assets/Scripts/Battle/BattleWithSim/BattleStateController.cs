@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using PsLib.Sim.Messages.Parts;
 using UnityEngine;
 
+public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen, MoveForget, EndingBattle}
+
 public class BattleStateController : MonoBehaviour
 {
     public static BattleStateController instance;
