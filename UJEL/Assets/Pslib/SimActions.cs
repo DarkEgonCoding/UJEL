@@ -124,6 +124,16 @@ namespace PsLib.Sim.Messages.Parts
 
             return p;
         }
+
+        /// <summary>
+        /// Helper function to determine whether a pokemon is the player pokemon
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <returns></returns>
+        public static bool IsPlayerPokemon(Parts.Pokemon pokemon)
+        {
+            return pokemon.pos.ToString().StartsWith("p1");
+        }
     }
 
     public class Details
@@ -373,11 +383,13 @@ namespace PsLib.Sim.Messages.Actions.Major
 
         public override List<BattleCommand> GetCommands(Stream stream)
         {
+            bool isPlayerUnit = Parts.Pokemon.IsPlayerPokemon(pokemon);
+
             return new List<BattleCommand>()
             {
                 new LogText(GetDesc()),
                 new WriteDialog(GetDesc()),
-                new PlayMoveAnimation()
+                new PlayMoveAnimation(isPlayerUnit)
             };
         }
     }
@@ -391,6 +403,16 @@ namespace PsLib.Sim.Messages.Actions.Major
         public override string GetDesc() {
             return pokemon.species + " was switched in.";
         }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc()),
+                // TODO: Switch
+            };
+        }
     }
 
     public class DRAG : Action
@@ -402,6 +424,8 @@ namespace PsLib.Sim.Messages.Actions.Major
         public override string GetDesc() {
             return pokemon.species + " was dragged in.";
         }
+
+        // TODO: DRAG (Switch but unintentionally such as whirlwind)
     }
 
     public class DETAILSCHANGE : Action
@@ -442,6 +466,14 @@ namespace PsLib.Sim.Messages.Actions.Major
     {
         public Parts.Pokemon pokemon;
         public int position;
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                // TODO: Swap pokemon into correct position
+            };
+        }
     }
 
     public class CANT : Action
@@ -459,6 +491,15 @@ namespace PsLib.Sim.Messages.Actions.Major
                     " but it couldn't because of " + reason + ".";
             }
         }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc()),
+            };
+        }
     }
 
     public class FAINT : Action
@@ -467,6 +508,16 @@ namespace PsLib.Sim.Messages.Actions.Major
 
         public override string GetDesc() {
             return pokemon.species + " fainted.";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc()),
+                new PlayFaintAnimtion(Parts.Pokemon.IsPlayerPokemon(pokemon))
+            };
         }
     }
 }
@@ -506,30 +557,113 @@ namespace PsLib.Sim.Messages.Actions.Minor
     {
         public Parts.Pokemon pokemon;
         public Parts.HpStatus hpStatus;
+
+        public override string GetDesc()
+        {
+            return $"{pokemon.species} is now at {hpStatus.hpCurrent} health.";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            bool isPlayerPokemon = Parts.Pokemon.IsPlayerPokemon(pokemon);
+
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new UpdateHP(isPlayerPokemon, hpStatus.hpCurrent),
+                new UpdateStatus(isPlayerPokemon, hpStatus.status),
+                new PlayHitAnimation(isPlayerPokemon)
+            };
+        }
     }
 
     public class HEAL : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.HpStatus hpStatus;
+
+        public override string GetDesc()
+        {
+            return $"{pokemon.species} is now at {hpStatus.hpCurrent} health.";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            bool isPlayerPokemon = Parts.Pokemon.IsPlayerPokemon(pokemon);
+
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new UpdateHP(isPlayerPokemon, hpStatus.hpCurrent),
+                new UpdateStatus(isPlayerPokemon, hpStatus.status, false),
+            };
+        }
     }
 
     public class SETHP : Action
     {
         public Parts.Pokemon pokemon;
         public int hp;
+
+        public override string GetDesc()
+        {
+            return $"{pokemon.species} is now at {hp} health.";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            bool isPlayerPokemon = Parts.Pokemon.IsPlayerPokemon(pokemon);
+
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new UpdateHP(isPlayerPokemon, hp)
+            };
+        }
     }
 
     public class STATUS : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Status status;
+
+        public override string GetDesc()
+        {
+            return $"{pokemon.species} has been inflicted with {status}";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            bool isPlayerPokemon = Parts.Pokemon.IsPlayerPokemon(pokemon);
+
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new UpdateStatus(isPlayerPokemon, status)
+            };
+        }
     }
 
     public class CURESTATUS : Action
     {
         public Parts.Pokemon pokemon;
         public Parts.Status status;
+
+        public override string GetDesc()
+        {
+            return $"{pokemon.species} has recovered from {status}";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            bool isPlayerPokemon = Parts.Pokemon.IsPlayerPokemon(pokemon);
+
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new UpdateStatus(isPlayerPokemon, status, true)
+            };
+        }
     }
 
     public class CURETEAM : Action
@@ -634,32 +768,116 @@ namespace PsLib.Sim.Messages.Actions.Minor
     {
         public Parts.Pokemon pokemon;
         public string effect;
+
+        public override string GetDesc()
+        {
+            return $"{pokemon.species} has been inflicted with {effect}";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class END : Action
     {
         public Parts.Pokemon pokemon;
         public string effect;
+
+        public override string GetDesc()
+        {
+            return $"The volatile status from {effect} inflicted on the {pokemon.species} has ended.";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class CRIT : Action
     {
         public Parts.Pokemon pokemon;
+
+        public override string GetDesc()
+        {
+            return $"It was a critical hit on {pokemon.species}!";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class SUPEREFFECTIVE : Action
     {
         public Parts.Pokemon pokemon;
+
+        public override string GetDesc()
+        {
+            return $"It was super effective against {pokemon.species}!";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class RESISTED : Action
     {
         public Parts.Pokemon pokemon;
+
+        public override string GetDesc()
+        {
+            return $"It was a resisted by {pokemon.species}...";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class IMMUNE : Action
     {
         public Parts.Pokemon pokemon;
+
+        public override string GetDesc()
+        {
+            return $"But {pokemon.species} is immune.";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class ITEM : Action
@@ -673,6 +891,20 @@ namespace PsLib.Sim.Messages.Actions.Minor
     {
         public Parts.Pokemon pokemon;
         public string item;
+
+        public override string GetDesc()
+        {
+            return $"The {item} held by the {pokemon.species} has been changed or revealed due to a move or ability.";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class ABILITY : Action
@@ -692,6 +924,20 @@ namespace PsLib.Sim.Messages.Actions.Minor
     {
         public Parts.Pokemon pokemon;
         public string species;
+
+        public override string GetDesc()
+        {
+            return $"The Pokemon {pokemon.species} has transformed into {species}.";
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class MEGA : Action
@@ -730,6 +976,20 @@ namespace PsLib.Sim.Messages.Actions.Minor
     public class HINT : Action
     {
         public string message;
+
+        public override string GetDesc()
+        {
+            return message;
+        }
+
+        public override List<BattleCommand> GetCommands(Stream stream)
+        {
+            return new List<BattleCommand>()
+            {
+                new LogText(GetDesc()),
+                new WriteDialog(GetDesc())
+            };
+        }
     }
 
     public class CENTER : Action

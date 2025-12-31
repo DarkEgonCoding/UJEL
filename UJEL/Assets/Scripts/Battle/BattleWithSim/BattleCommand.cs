@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PsLib.Sim.Messages.Actions.Minor;
 using PsLib.Sim.Messages.Parts;
 using UnityEngine;
 
@@ -92,9 +93,107 @@ public class WriteDialog : BattleCommand
 
 public class PlayMoveAnimation : BattleCommand
 {
+    private bool isPlayerUnit;
+
+    public PlayMoveAnimation(bool isPlayerUnit)
+    {
+        this.isPlayerUnit = isPlayerUnit;
+    }
+
     public override IEnumerator Execute()
     {
-        // TODO: Play the animation, needs to change based on who used it
+        BattleSystemUI.instance.PlayAttackAnimation(isPlayerUnit);
+        yield return null;
+    }
+}
+
+public class PlayFaintAnimtion : BattleCommand
+{
+    private bool isPlayerUnit;
+
+    public PlayFaintAnimtion(bool isPlayerUnit)
+    {
+        this.isPlayerUnit = isPlayerUnit;
+    }
+
+    public override IEnumerator Execute()
+    {
+        BattleSystemUI.instance.PlayFaintAnimation(isPlayerUnit);
+        yield return null;
+    }
+}
+
+public class PlayHitAnimation : BattleCommand
+{
+    private bool isPlayerUnit;
+
+    public PlayHitAnimation(bool isPlayerUnit)
+    {
+        this.isPlayerUnit = isPlayerUnit;
+    }
+
+    public override IEnumerator Execute()
+    {
+        BattleSystemUI.instance.PlayHitAnimation(isPlayerUnit);
+        yield return null;
+    }
+}
+
+public class UpdateHP : BattleCommand
+{
+    private bool isPlayerUnit;
+    private string newHP;
+    private int hp;
+
+    public UpdateHP(bool isPlayerUnit, string newHP)
+    {
+        this.isPlayerUnit = isPlayerUnit;
+        this.newHP = newHP;
+    }
+
+    public UpdateHP(bool isPlayerUnit, int hp)
+    {
+        this.isPlayerUnit = isPlayerUnit;
+        this.hp = hp;
+        this.newHP = "";
+    }
+
+    public override IEnumerator Execute()
+    {
+        if(newHP != "")
+        {
+            BattleSystemUI.instance.UpdateHP(isPlayerUnit, newHP);
+        }
+        else
+        {
+            BattleSystemUI.instance.UpdateHP(isPlayerUnit, hp);
+        }
+        yield return null;
+    }
+}
+
+public class UpdateStatus : BattleCommand
+{
+    private bool isPlayerUnit;
+    private Status status;
+    private bool cure;
+
+    public UpdateStatus(bool isPlayerUnit, Status status, bool cure = false)
+    {
+        this.isPlayerUnit = isPlayerUnit;
+        this.status = status;
+        this.cure = cure;
+    }
+
+    public override IEnumerator Execute()
+    {
+        if (cure)
+        {
+            BattleSystemUI.instance.UpdateStatus(isPlayerUnit, status, cure);
+        }
+        else {
+            BattleSystemUI.instance.UpdateStatus(isPlayerUnit, status);
+        }
         yield return null;
     }
 }

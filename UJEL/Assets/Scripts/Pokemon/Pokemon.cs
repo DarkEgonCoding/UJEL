@@ -317,6 +317,15 @@ public class Pokemon
         CureStatus();
     }
 
+    public void SetHP(int hp)
+    {
+        if(HP != hp)
+        {
+            HP = hp;
+            OnHPChanged.Invoke();
+        }
+    }
+
     /*
     public bool HasMove(MoveBase moveToCheck)
     {

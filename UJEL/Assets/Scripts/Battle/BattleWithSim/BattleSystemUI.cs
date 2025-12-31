@@ -10,6 +10,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
 using UnityEngine.Analytics;
+using TMPro;
+using PsLib.Sim.Messages.Parts;
 
 public class BattleSystemUI : MonoBehaviour
 {
@@ -51,6 +53,7 @@ public class BattleSystemUI : MonoBehaviour
     int escapeAttempts;
     MoveBase moveToLearn;
     public bool didLearnMove;
+    BattleState state;
     
     private void Awake()
     {
@@ -202,7 +205,99 @@ public class BattleSystemUI : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
     }
 
+    public void PlayAttackAnimation(bool isPlayerUnit)
+    {
+        if (isPlayerUnit)
+        {
+            playerUnit.PlayAttackAnimation();
+        }
+        else
+        {
+            enemyUnit.PlayAttackAnimation();
+        }
+    }
 
+    public void PlayFaintAnimation(bool isPlayerUnit)
+    {
+        if (isPlayerUnit)
+        {
+            playerUnit.PlayFaintAnimation();
+        }
+        else
+        {
+            enemyUnit.PlayFaintAnimation();
+        }
+    }
 
+    public void PlayHitAnimation(bool isPlayerUnit)
+    {
+        if (isPlayerUnit)
+        {
+            playerUnit.PlayHitAnimation();
+        }
+        else
+        {
+            enemyUnit.PlayHitAnimation();
+        }
+    }
 
+    public void UpdateHP(bool isPlayerUnit, string newHP)
+    {
+        int _newHP;
+        if (!Int32.TryParse(newHP, out _newHP))
+        {
+            UnityEngine.Debug.LogError("Parsing string to int failed.");
+            return;
+        }
+
+        if (isPlayerUnit)
+        {
+            playerUnit.Pokemon.SetHP(_newHP);
+            playerHud.UpdateHP();
+        }
+        else
+        {
+            enemyUnit.Pokemon.SetHP(_newHP);
+            enemyHud.UpdateHP();
+        }
+    }
+
+    public void UpdateHP(bool isPlayerUnit, int hp)
+    {
+        if (isPlayerUnit)
+        {
+            playerUnit.Pokemon.SetHP(hp);
+            playerHud.UpdateHP();
+        }
+        else
+        {
+            enemyUnit.Pokemon.SetHP(hp);
+            enemyHud.UpdateHP();
+        }
+    }
+
+    public void UpdateStatus(bool isPlayerUnit, Status newStatus, bool cure = false)
+    {
+        if (cure)
+        {
+            if (isPlayerUnit)
+                playerUnit.Pokemon.SetStatus(ConditionID.none);
+            else
+                enemyUnit.Pokemon.SetStatus(ConditionID.none);
+            return;
+        }
+
+        string statusName = newStatus.ToString();
+        if (!Enum.TryParse(statusName, out ConditionID conditionID))
+            return;
+
+        if (isPlayerUnit)
+        {
+            playerUnit.Pokemon.SetStatus(conditionID);
+        }
+        else
+        {
+            enemyUnit.Pokemon.SetStatus(conditionID);
+        }
+    }
 }
