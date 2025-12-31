@@ -25,7 +25,7 @@ public static class ConditionsDB
                 StartMessage = "has been poisoned",
                 OnAfterTurn = (Pokemon pokemon) =>
                 {
-                    pokemon.ReduceHP(pokemon.MaxHp / 8);
+                    // pokemon.ReduceHP(pokemon.MaxHp / 8);
                 }
             }
         },
@@ -37,7 +37,7 @@ public static class ConditionsDB
                 StartMessage = "has been burned",
                 OnAfterTurn = (Pokemon pokemon) =>
                 {
-                    pokemon.ReduceHP(pokemon.MaxHp / 16);
+                    // pokemon.ReduceHP(pokemon.MaxHp / 16);
                 }
             }
         }
@@ -46,5 +46,5 @@ public static class ConditionsDB
 
 public enum ConditionID
 {
-    none, psn, brn, slp, par, frz
+    none, psn, brn, slp, par, frz, hail, powder, prankster, sandstorm, trapped, tox
 }

@@ -11,7 +11,7 @@ using DG.Tweening;
 using System.Linq;
 using UnityEngine.Analytics;
 
-public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen, MoveForget, EndingBattle}
+// public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen, MoveForget, EndingBattle}
 
 public class BattleSystem : MonoBehaviour
 {
