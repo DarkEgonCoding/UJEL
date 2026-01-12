@@ -8,10 +8,12 @@ namespace PsLib.Sim
     [JsonConverter(typeof(StringEnumConverter))] 
     public enum MoveTarget {
         normal,
+        any,
         self,
         allySide,
         foeSide,
-        allAdjacent
+        allAdjacent,
+        allAdjacentFoes
     }
 
     public class Stats {

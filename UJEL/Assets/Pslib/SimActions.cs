@@ -52,6 +52,7 @@ namespace PsLib.Sim.Messages
 
     public class Flag : Attribute
     {
+        public string text;
         public Flag(string str) {}
     }
 

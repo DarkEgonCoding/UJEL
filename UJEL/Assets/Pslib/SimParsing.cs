@@ -121,8 +121,18 @@ namespace PsLib.Sim
                         for (int j = 0; j < fields.Length; j++)
                         {
                             FieldInfo field = fields[j];
-                            int loc = field.GetCustomAttribute<Messages.FieldLoc>().loc;
-                            ParseSingleField(action, split[loc+2], field);
+                            Messages.FieldLoc locAttr = field.GetCustomAttribute<Messages.FieldLoc>();
+                            Messages.Flag flagAttr = field.GetCustomAttribute<Messages.Flag>();
+
+                            if (locAttr != null) {
+                                if (locAttr.loc+2 < fields.Length) {
+                                    ParseSingleField(action, split[locAttr.loc+2], field);
+                                }
+                            } else if (flagAttr != null) {
+                                field.SetValue(action, split.Contains(flagAttr.text));
+                            } else {
+                                throw new Exception();
+                            }
                         }
                         msg.action = action;
     
@@ -149,7 +159,7 @@ namespace PsLib.Sim
             if (fieldType == typeof(string)) {
                 field.SetValue(action, text);
             } else {
-                 field.SetValue(action, field.FieldType.GetMethod("Parse", new [] {typeof(string)}).Invoke(null, new object[] {text}));
+                field.SetValue(action, field.FieldType.GetMethod("Parse", new [] {typeof(string)}).Invoke(null, new object[] {text}));
             }
         }
     }
