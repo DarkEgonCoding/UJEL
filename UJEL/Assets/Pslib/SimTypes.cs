@@ -8,43 +8,47 @@ namespace PsLib.Sim
     [JsonConverter(typeof(StringEnumConverter))] 
     public enum MoveTarget {
         normal,
+        any,
         self,
-        allySide
+        allySide,
+        foeSide,
+        allAdjacent,
+        allAdjacentFoes
     }
 
     public class Stats {
-        public int atk;
-        public int def;
-        public int spa;
-        public int spd;
-        public int spe;
+        public int atk { get; set; }
+        public int def { get; set; }
+        public int spa { get; set; }
+        public int spd { get; set; }
+        public int spe { get; set; }
     }
 
     public class Pokemon {
-        public string ident;
-        public string details;
-        public string condition;
-        public bool active;
-        public Stats stats;
-        public List<string> moves;
-        public string baseAbility;
-        public string item;
-        public string pokeball;
-        public string ability;
+        public string ident { get; set; }
+        public string details { get; set; }
+        public string condition { get; set; }
+        public bool active { get; set; }
+        public Stats stats { get; set; }
+        public List<string> moves { get; set; }
+        public string baseAbility { get; set; }
+        public string item { get; set; }
+        public string pokeball { get; set; }
+        public string ability { get; set; }
     }
 
     public class Move {
-        public string move;
-        public string id;
-        public int pp;
-        public int maxpp;
-        public MoveTarget target;
-        public bool disables;
+        public string move { get; set; }
+        public string id { get; set; }
+        public int pp { get; set; }
+        public int maxpp { get; set; }
+        public MoveTarget target { get; set; }
+        public bool disables { get; set; }
     }
 
     public class Side {
-        public string name;
-        public string id;
-        public Pokemon pokemon;
+        public string name { get; set; }
+        public string id { get; set; }
+        public Pokemon[] pokemon { get; set; }
     }
 }

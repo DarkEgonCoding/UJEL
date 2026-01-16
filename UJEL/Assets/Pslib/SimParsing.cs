@@ -85,52 +85,82 @@ namespace PsLib.Sim
         // Removes the message from lines if possible.
         public bool TryParseMessage(string text, out Messages.Message msg)
         {
-            string[] split = text.Split('|');
-            Type eventType;
-            msg = null;
-            
-            // Handle all of the stream-updating messages.
-            if (text == "update") {
-                currentStream = PsLib.Sim.Messages.Stream.update;
-                return false;
-            } else if (text == "p1") {
-                currentStream = PsLib.Sim.Messages.Stream.p1;
-                return false;
-            } else if (text == "p2") {
-                currentStream = PsLib.Sim.Messages.Stream.p2;
-                return false;
-            }
-
-            // Find the matching action for the input text.
-            for (int i = 0; i < groups.Length; i++)
+            try
             {
-                if (maps[i].TryGetValue(split[1], out eventType)) {
-                    // Start the new message.
-                    msg = new PsLib.Sim.Messages.Message();
-                    msg.stream = currentStream;
-                    msg.group = groups[i];
-
-                    // Parse all of the fields based on the properties.
-                    PsLib.Sim.Messages.Action action =
-                        (PsLib.Sim.Messages.Action)Activator.CreateInstance(eventType);
-                    PropertyInfo[] properties = eventType.GetProperties();
-                    for (int j = 0; j < properties.Length; j++)
-                    {
-                        ParseSingleProperty(action, split[j+2], properties[j]);
-                    }
-                    msg.action = action;
-
-                    return true;
+                string[] split = text.Split('|');
+                Type eventType;
+                msg = null;
+                
+                // Handle all of the stream-updating messages.
+                if (text == "sideupdate") {
+                    return false;
+                } else if (text == "update") {
+                    currentStream = PsLib.Sim.Messages.Stream.update;
+                    return false;
+                } else if (text == "p1") {
+                    currentStream = PsLib.Sim.Messages.Stream.p1;
+                    return false;
+                } else if (text == "p2") {
+                    currentStream = PsLib.Sim.Messages.Stream.p2;
+                    return false;
                 }
+    
+                // Find the matching action for the input text.
+                for (int i = 0; i < groups.Length; i++)
+                {
+                    if (maps[i].TryGetValue(split[1], out eventType)) {
+                        // Start the new message.
+                        msg = new PsLib.Sim.Messages.Message();
+                        msg.stream = currentStream;
+                        msg.group = groups[i];
+    
+                        // Parse all of the fields based on the properties.
+                        PsLib.Sim.Messages.Action action =
+                            (PsLib.Sim.Messages.Action)Activator.CreateInstance(eventType);
+                        FieldInfo[] fields = eventType.GetFields();
+                        for (int j = 0; j < fields.Length; j++)
+                        {
+                            FieldInfo field = fields[j];
+                            Messages.FieldLoc locAttr = field.GetCustomAttribute<Messages.FieldLoc>();
+                            Messages.Flag flagAttr = field.GetCustomAttribute<Messages.Flag>();
+
+                            if (locAttr != null) {
+                                if (locAttr.loc+2 < fields.Length) {
+                                    ParseSingleField(action, split[locAttr.loc+2], field);
+                                }
+                            } else if (flagAttr != null) {
+                                field.SetValue(action, split.Contains(flagAttr.text));
+                            } else {
+                                throw new Exception();
+                            }
+                        }
+                        msg.action = action;
+    
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError(ex);
+                UnityEngine.Debug.LogError($"Failed to parse: {text}");
             }
 
             // Return false on failed parse.
+            msg = null;
             return false;
         }
 
-        private void ParseSingleProperty(PsLib.Sim.Messages.Action action, string text, PropertyInfo prop)
+        private void ParseSingleField(PsLib.Sim.Messages.Action action, string text, FieldInfo field)
         {
-            prop.SetValue(action, prop.GetType().GetMethod("Parse").Invoke(null, new object[] {text}));
+            // Get the type of the property we are setting.
+            Type fieldType = field.FieldType;
+
+            if (fieldType == typeof(string)) {
+                field.SetValue(action, text);
+            } else {
+                field.SetValue(action, field.FieldType.GetMethod("Parse", new [] {typeof(string)}).Invoke(null, new object[] {text}));
+            }
         }
     }
 }

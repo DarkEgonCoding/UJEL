@@ -52,6 +52,7 @@ namespace PsLib.Sim.Messages
 
     public class Flag : Attribute
     {
+        public string text;
         public Flag(string str) {}
     }
 
@@ -59,11 +60,18 @@ namespace PsLib.Sim.Messages
     {
         public Optional() {}
     }
+
+    public class FieldLoc : Attribute
+    {
+        public int loc;
+        public FieldLoc(int n) { loc = n; }
+    }
 }
 
 namespace PsLib.Sim.Messages.Parts
 {
     public enum Status {
+        none,
         brn,
         frz,
         hail,
@@ -92,9 +100,9 @@ namespace PsLib.Sim.Messages.Parts
             p4
         }
 
-        public PlayerPos pos;
+        public PlayerPos pos { get; set; }
 
-        public Player Parse(string text)
+        public static Player Parse(string text)
         {
             Player p = new Player();
             p.pos = (PlayerPos) Enum.Parse(typeof(PlayerPos), text);
@@ -112,8 +120,8 @@ namespace PsLib.Sim.Messages.Parts
             p4a, p4b
         }
 
-        public PokePos pos;
-        public string species;
+        public PokePos pos { get; set; }
+        public string species { get; set; }
         
         public static Pokemon Parse(string text)
         {
@@ -138,11 +146,11 @@ namespace PsLib.Sim.Messages.Parts
 
     public class Details
     {
-        public string species;
-        public int level;
-        public string gender;
-        public bool isShiny;
-        public string teratype;
+        public string species { get; set; }
+        public int level { get; set; }
+        public string gender { get; set; }
+        public bool isShiny { get; set; }
+        public string teratype { get; set; }
 
         public const string LEVEL_REGEX = @"L\d\d";
 
@@ -171,9 +179,9 @@ namespace PsLib.Sim.Messages.Parts
 
     public class HpStatus
     {
-        public string hpCurrent;
-        public string hpMax;
-        public Status status;
+        public string hpCurrent { get; set; }
+        public string hpMax { get; set; }
+        public Status status { get; set; }
 
         public static HpStatus Parse(string text)
         {
@@ -181,14 +189,16 @@ namespace PsLib.Sim.Messages.Parts
             string[] details = text.Split(" ");
             hps.hpCurrent = details[0].Split("/")[0];
             hps.hpMax = details[0].Split("/")[0];
-            hps.status = (Status) Enum.Parse(typeof(Status), details[1]);
+            if (details.Length > 1) {
+                hps.status = (Status) Enum.Parse(typeof(Status), details[1]);
+            }
             return hps;
         }
     }
 
     public class Stats
     {
-        public Stat[] arr;
+        public Stat[] arr { get; set; }
 
         public static Stats Parse(string text)
         {
@@ -197,6 +207,11 @@ namespace PsLib.Sim.Messages.Parts
             stats.arr = statSplit.Select(x => (Stat) Enum.Parse(typeof(Stat), x.Trim())).ToArray();
             return stats;
         }
+    }
+
+    public class Active
+    {
+        public Move[] moves { get; set; }
     }
 
     /*
@@ -209,9 +224,9 @@ namespace PsLib.Sim.Messages.Parts
      */
     public class Request
     {
-        public List<List<Move>> active;
-        public Side side;
-        public int rqid;
+        public Active[] active { get; set; }
+        public Side side { get; set; }
+        public int rqid { get; set; }
 
         public static Request Parse(string text)
         {
@@ -224,41 +239,51 @@ namespace PsLib.Sim.Messages.Init
 {
     public class PLAYER : Action
     {
+        [FieldLoc(0)]
         public Parts.Player player;
+        [FieldLoc(1)]
         public string username;
+        [FieldLoc(2)]
         public string avatar;
+        [FieldLoc(3)]
         public string rating;
     }
 
     public class TEAMSIZE : Action
     {
+        [FieldLoc(0)]
         public Parts.Player player;
+        [FieldLoc(1)]
         public string number;
     }
 
     public class GAMETYPE : Action
     {
-        public Parts.Player player;
+        [FieldLoc(0)]
         public string number;
     }
 
     public class GEN : Action
     {
+        [FieldLoc(0)]
         public int gennum;
     }
 
     public class TIER : Action
-{
+    {
+        [FieldLoc(0)]
         public string formatname;
     }
 
     public class RATED : Action
     {
+        [FieldLoc(0)]
         public string message;
     }
 
     public class RULE : Action
     {
+        [FieldLoc(0)]
         public string rule;
     }
 
@@ -269,8 +294,11 @@ namespace PsLib.Sim.Messages.Init
 
     public class POKE : Action
     {
+        [FieldLoc(0)]
         public Parts.Player player;
+        [FieldLoc(1)]
         public string details;
+        [FieldLoc(2)]
         public string item;
     }
 
@@ -295,6 +323,7 @@ namespace PsLib.Sim.Messages.Progress
 
     public class REQUEST : Action
     {
+        [FieldLoc(0)]
         public Parts.Request request;
 
         public override List<BattleCommand> GetCommands(Stream stream)
@@ -308,6 +337,7 @@ namespace PsLib.Sim.Messages.Progress
 
     public class INACTIVE : Action
     {
+        [FieldLoc(0)]
         public string message;
     }
 
@@ -318,6 +348,7 @@ namespace PsLib.Sim.Messages.Progress
 
     public class TURN : Action
     {
+        [FieldLoc(0)]
         public int number;
 
         public override List<BattleCommand> GetCommands(Stream stream)
@@ -330,6 +361,7 @@ namespace PsLib.Sim.Messages.Progress
 
     public class WIN : Action
     {
+        [FieldLoc(0)]
         public string user;
 
         public override List<BattleCommand> GetCommands(Stream stream)
@@ -353,6 +385,7 @@ namespace PsLib.Sim.Messages.Progress
     [StreamText("t:")]
     public class TIMESTAMP : Action
     {
+        [FieldLoc(0)]
         public int timestamp;
     }
 }
@@ -361,8 +394,11 @@ namespace PsLib.Sim.Messages.Actions.Major
 {
     public class MOVE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string move;
+        [FieldLoc(2)]
         public Parts.Pokemon target;
 
         /* The move missed */
@@ -396,8 +432,11 @@ namespace PsLib.Sim.Messages.Actions.Major
 
     public class SWITCH : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Details details;
+        [FieldLoc(2)]
         public Parts.HpStatus hpStatus;
 
         public override string GetDesc() {
@@ -417,8 +456,11 @@ namespace PsLib.Sim.Messages.Actions.Major
 
     public class DRAG : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Details details;
+        [FieldLoc(2)]
         public Parts.HpStatus hpStatus;
 
         public override string GetDesc() {
@@ -430,8 +472,11 @@ namespace PsLib.Sim.Messages.Actions.Major
 
     public class DETAILSCHANGE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Details details;
+        [FieldLoc(2)]
         public Parts.HpStatus hpStatus;
 
         public override string GetDesc() {
@@ -442,8 +487,11 @@ namespace PsLib.Sim.Messages.Actions.Major
     [StreamText("-formechange")]
     public class FORMECHANGE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string species;
+        [FieldLoc(2)]
         public Parts.HpStatus hpStatus;
 
         public override string GetDesc() {
@@ -453,8 +501,11 @@ namespace PsLib.Sim.Messages.Actions.Major
 
     public class REPLACE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Details details;
+        [FieldLoc(2)]
         public Parts.HpStatus hpStatus;
 
         public override string GetDesc() {
@@ -464,7 +515,9 @@ namespace PsLib.Sim.Messages.Actions.Major
 
     public class SWAP : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public int position;
 
         public override List<BattleCommand> GetCommands(Stream stream)
@@ -478,8 +531,11 @@ namespace PsLib.Sim.Messages.Actions.Major
 
     public class CANT : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string reason;
+        [FieldLoc(2)]
         [Optional]
         public string move;
 
@@ -504,6 +560,7 @@ namespace PsLib.Sim.Messages.Actions.Major
 
     public class FAINT : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
 
         public override string GetDesc() {
@@ -527,35 +584,46 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class FAIL : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string action;
     }
 
     public class BLOCK : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string effect;
+        [FieldLoc(2)]
         [Optional]
         public string move;
+        [FieldLoc(3)]
         [Optional]
         public string action;
     }
 
     public class NOTARGET : Action
     {
+        [FieldLoc(0)]
         [Optional]
         public Parts.Pokemon pokemon;
     }
 
     public class MISS : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon source;
+        [FieldLoc(1)]
         public Parts.Pokemon target;
     }
 
     public class DAMAGE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.HpStatus hpStatus;
 
         public override string GetDesc()
@@ -579,7 +647,9 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class HEAL : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.HpStatus hpStatus;
 
         public override string GetDesc()
@@ -602,7 +672,9 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class SETHP : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public int hp;
 
         public override string GetDesc()
@@ -624,7 +696,9 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class STATUS : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Status status;
 
         public override string GetDesc()
@@ -646,7 +720,9 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class CURESTATUS : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Status status;
 
         public override string GetDesc()
@@ -668,44 +744,59 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class CURETEAM : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
     public class BOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Stat stat;
+        [FieldLoc(2)]
         public int amount;
     }
 
     public class UNBOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Stat stat;
+        [FieldLoc(2)]
         public int amount;
     }
 
     public class SETBOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public Parts.Stat stat;
+        [FieldLoc(2)]
         public int amount;
     }
 
     public class SWAPBOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon source;
+        [FieldLoc(1)]
         public Parts.Pokemon target;
+        [FieldLoc(2)]
         public Parts.Stats stats;
     }
 
     public class INVERTBOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
     public class CLEARBOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
@@ -716,46 +807,59 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class CLEARPOSITIVEBOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon target;
+        [FieldLoc(1)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(2)]
         public string effect;
     }
 
     public class CLEARNEGATIVEBOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
     public class COPYBOOST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon source;
+        [FieldLoc(1)]
         public Parts.Pokemon target;
     }
 
     public class WEATHER : Action
     {
+        [FieldLoc(0)]
         public string weather;
     }
 
     public class FIELDSTART : Action
     {
+        [FieldLoc(0)]
         public string condition;
     }
 
     public class FIELDEND : Action
     {
+        [FieldLoc(0)]
         public string condition;
     }
 
     public class SIDESTART : Action
     {
+        [FieldLoc(0)]
         public string side;
+        [FieldLoc(1)]
         public string condition;
     }
 
     public class SIDEEND : Action
     {
+        [FieldLoc(0)]
         public string side;
+        [FieldLoc(1)]
         public string condition;
     }
 
@@ -766,7 +870,9 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class START : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string effect;
 
         public override string GetDesc()
@@ -786,7 +892,9 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class END : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string effect;
 
         public override string GetDesc()
@@ -806,6 +914,7 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class CRIT : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
 
         public override string GetDesc()
@@ -825,6 +934,7 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class SUPEREFFECTIVE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
 
         public override string GetDesc()
@@ -844,6 +954,7 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class RESISTED : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
 
         public override string GetDesc()
@@ -863,6 +974,7 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class IMMUNE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
 
         public override string GetDesc()
@@ -882,14 +994,19 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class ITEM : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string item;
+        [FieldLoc(2)]
         public string effect;
     }
 
     public class ENDITEM : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string item;
 
         public override string GetDesc()
@@ -909,20 +1026,26 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class ABILITY : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string ability;
+        [FieldLoc(2)]
         [Optional]
         public string effect;
     }
 
     public class ENDABILITY : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
     public class TRANSFORM : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string species;
 
         public override string GetDesc()
@@ -942,39 +1065,49 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class MEGA : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string megastone;
     }
 
     public class PRIMAL : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
     public class BURST : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string species;
+        [FieldLoc(2)]
         public string item;
     }
 
     public class ZPOWER : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
     public class ZBROKEN : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
     public class ACTIVATE : Action
     {
+        [FieldLoc(0)]
         public string effect;
     }
 
     public class HINT : Action
     {
+        [FieldLoc(0)]
         public string message;
 
         public override string GetDesc()
@@ -999,6 +1132,7 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class MESSAGE : Action
     {
+        [FieldLoc(0)]
         public string message;
     }
 
@@ -1009,18 +1143,23 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class WAITING : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon source;
+        [FieldLoc(1)]
         public Parts.Pokemon target;
     }
 
     public class PERPARE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon attacker;
+        [FieldLoc(1)]
         public string move;
     }
 
     public class MUSTRECHARGE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
@@ -1031,18 +1170,23 @@ namespace PsLib.Sim.Messages.Actions.Minor
 
     public class HITCOUNT : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
     }
 
     public class SINGLEMOVE : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string move;
     }
 
     public class SINGLETURN : Action
     {
+        [FieldLoc(0)]
         public Parts.Pokemon pokemon;
+        [FieldLoc(1)]
         public string move;
     }
 }
