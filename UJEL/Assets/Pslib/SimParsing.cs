@@ -99,6 +99,9 @@ namespace PsLib.Sim
             } else if (text == "p2") {
                 currentStream = PsLib.Sim.Messages.Stream.p2;
                 return false;
+            } else if (text == "sideupdate") {
+                currentStream = PsLib.Sim.Messages.Stream.sideupdate;
+                return false;
             }
 
             // Find the matching action for the input text.

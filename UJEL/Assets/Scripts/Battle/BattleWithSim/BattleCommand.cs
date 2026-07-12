@@ -11,6 +11,28 @@ public abstract class BattleCommand
     /// </summary>
     /// <returns></returns>
     public abstract IEnumerator Execute();
+
+    protected bool CheckUI()
+    {
+        if (BattleSystemUI.instance == null)
+        {
+            Debug.LogWarning($"{GetType().Name} attempted to access BattleSystemUI, but instance is null.");
+            return false;
+        }
+
+        return true;
+    }
+
+    protected bool CheckBattleState()
+    {
+        if (BattleStateController.instance == null)
+        {
+            Debug.LogWarning($"{GetType().Name} attempted to access BattleStateController, but instance is null.");
+            return false;
+        }
+
+        return true;
+    }
 }
 
 public class LogText : BattleCommand
@@ -24,7 +46,7 @@ public class LogText : BattleCommand
 
     public override IEnumerator Execute()
     {
-        UnityEngine.Debug.Log(text);
+        UnityEngine.Debug.Log($"Battle Log: {text}");
         yield return null;
     }
 }
@@ -40,6 +62,15 @@ public class ActionSelection : BattleCommand
 
     public override IEnumerator Execute()
     {
+        if (!CheckBattleState())
+            yield break;
+
+        if (request == null)
+        {
+            UnityEngine.Debug.LogWarning("ActionSelection received null Request.");
+            yield break;
+        }
+
         BattleStateController.instance.SetCurrentRequest(request);
         // TODO: Get player feedback on move?
         yield return null;
@@ -62,6 +93,7 @@ public class EndBattle : BattleCommand
 
     public override IEnumerator Execute()
     {
+        UnityEngine.Debug.Log($"Battle ended. Result: {user}");
         // TODO: If user is the player, they won, if it is the enemy the enemy won.
         // If user is LOSE -> default to player loses
         yield return null;
@@ -87,6 +119,15 @@ public class WriteDialog : BattleCommand
 
     public override IEnumerator Execute()
     {
+        if (!CheckUI())
+            yield break;
+
+        if (string.IsNullOrEmpty(text))
+        {
+            Debug.LogWarning("WriteDialog received empty text.");
+            yield break;
+        }
+
         yield return BattleSystemUI.instance.DisplayDialog(text, waitTime);
     }
 }
@@ -102,6 +143,9 @@ public class PlayMoveAnimation : BattleCommand
 
     public override IEnumerator Execute()
     {
+        if (!CheckUI())
+            yield break;
+
         BattleSystemUI.instance.PlayAttackAnimation(isPlayerUnit);
         yield return null;
     }
@@ -118,6 +162,9 @@ public class PlayFaintAnimtion : BattleCommand
 
     public override IEnumerator Execute()
     {
+         if (!CheckUI())
+            yield break;
+
         BattleSystemUI.instance.PlayFaintAnimation(isPlayerUnit);
         yield return null;
     }
@@ -134,6 +181,9 @@ public class PlayHitAnimation : BattleCommand
 
     public override IEnumerator Execute()
     {
+        if (!CheckUI())
+            yield break;
+
         BattleSystemUI.instance.PlayHitAnimation(isPlayerUnit);
         yield return null;
     }
@@ -160,6 +210,9 @@ public class UpdateHP : BattleCommand
 
     public override IEnumerator Execute()
     {
+        if (!CheckUI())
+            yield break;
+
         if(newHP != "")
         {
             BattleSystemUI.instance.UpdateHP(isPlayerUnit, newHP);
@@ -187,6 +240,9 @@ public class UpdateStatus : BattleCommand
 
     public override IEnumerator Execute()
     {
+        if (!CheckUI())
+            yield break;
+
         if (cure)
         {
             BattleSystemUI.instance.UpdateStatus(isPlayerUnit, status, cure);

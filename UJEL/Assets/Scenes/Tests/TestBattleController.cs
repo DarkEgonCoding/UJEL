@@ -19,17 +19,25 @@ public class TestBattleController : MonoBehaviour
     private PsLib.Sim.Parser parser;
     private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
 
+
     void Start()
     {
         parser = new PsLib.Sim.Parser();
         battle = new PsLib.Battle();
         battleLogText.text = "";
 
-        battle.Start(OnData, "{}", "{}", "gen7randombattle");
+        battle.Start(
+            OnData,
+            "{\"name\":\"Player1\"}",
+            "{\"name\":\"Player2\"}",
+            "gen7randombattle"
+        );
     }
 
     private void OnData(object sender, DataReceivedEventArgs args)
     {
+        if (string.IsNullOrEmpty(args.Data)) return;
+
         logQueue.Enqueue(args.Data);
         if (parser.TryParseMessage(args.Data, out PsLib.Sim.Messages.Message msg)) {
             UnityEngine.Debug.Log($"Parsed: {msg.stream}, {msg.group}, {msg.action.GetType().Name}");
@@ -53,21 +61,25 @@ public class TestBattleController : MonoBehaviour
 
     public void DoMoveP1(int move)
     {
+        UnityEngine.Debug.Log($"DoMoveP1 called with move {move}");
         battle.WriteLine($">p1 move {move}");
     }
 
     public void DoMoveP2(int move)
     {
+        UnityEngine.Debug.Log($"DoMoveP2 called with move {move}");
         battle.WriteLine($">p2 move {move}");
     }
 
     public void DoSwitchP1(int num)
     {
+        UnityEngine.Debug.Log($"DoSwitchP1 called with num {num}");
         battle.WriteLine($">p1 switch {num}");
     }
 
     public void DoSwitchP2(int num)
     {
+        UnityEngine.Debug.Log($"DoSwitchP2 called with num {num}");
         battle.WriteLine($">p2 switch {num}");
 
     }

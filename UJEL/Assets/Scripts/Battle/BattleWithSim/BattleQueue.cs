@@ -45,6 +45,7 @@ public class BattleQueue : MonoBehaviour
     /// <returns></returns>
     IEnumerator ExecuteCommand(BattleCommand cmd)
     {
+        UnityEngine.Debug.Log($"Executing {cmd.GetType().Name}");
         isExecutingCommand = true;
         yield return cmd.Execute();
         isExecutingCommand = false;
@@ -59,17 +60,28 @@ public class BattleQueue : MonoBehaviour
     /// <param name="args"></param>
     private void OnData(object sender, DataReceivedEventArgs args)
     {
-        if (parser.TryParseMessage(args.Data, out PsLib.Sim.Messages.Message msg)) {
-            UnityEngine.Debug.Log($"Parsed: {msg.stream}, {msg.group}, {msg.action.GetType().Name}");
-            
-            // Add every command to the ConcurrentQueue
-            var commands = msg.action.GetCommands(msg.stream);
-            foreach (var cmd in commands)
+        if (parser.TryParseMessage(args.Data, out PsLib.Sim.Messages.Message msg))
+        {
+            UnityEngine.Debug.Log(
+                $"Parsed: {msg.stream}, {msg.group}, {msg.action.GetType().Name}"
+            );
+
+            try
             {
-                commandQueue.Enqueue(cmd);
+                var commands = msg.action.GetCommands(msg.stream);
+
+                UnityEngine.Debug.Log($"Generated Commands: {commands.Count}");
+
+                foreach (var cmd in commands)
+                {
+                    UnityEngine.Debug.Log($"Queued Command: {cmd.GetType().Name}");
+                    commandQueue.Enqueue(cmd);
+                }
             }
-        } else {
-            UnityEngine.Debug.Log($"Unparsed: {args.Data}");
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError($"Command generation failed for {msg.action.GetType().Name}\n{e}");
+            }
         }
     }
 
@@ -80,8 +92,9 @@ public class BattleQueue : MonoBehaviour
     /// <param name="move"></param>
     public void DoMove(int player, int move)
     {
-        if (player >= 1 && player <= 2)
+        if (player >= 1 && player <= 2){
             battle.WriteLine($">p{player} move {move}");
+        }
         else
             UnityEngine.Debug.LogWarning($"Player input: {player} is invalid");
     }

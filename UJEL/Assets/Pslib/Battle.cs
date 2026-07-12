@@ -53,6 +53,7 @@ namespace PsLib
             _battle.StandardInput.WriteLine(">start {\"formatid\":\"" + formatid + "\"}");
             _battle.StandardInput.WriteLine(">player p1 " + p1spec);
             _battle.StandardInput.WriteLine(">player p2 " + p2spec);
+            _battle.StandardInput.Flush();
         }
 
         public void WriteLine(string line)
@@ -63,7 +64,10 @@ namespace PsLib
                 return;
             }
 
+            UnityEngine.Debug.Log($"Sending to server: {line}");
+
             _battle.StandardInput.WriteLine(line);
+            _battle.StandardInput.Flush();
         }
 
         ~Battle()
