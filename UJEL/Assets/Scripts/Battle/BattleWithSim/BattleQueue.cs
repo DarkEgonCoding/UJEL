@@ -24,7 +24,7 @@ public class BattleQueue : MonoBehaviour
         battle = new PsLib.Battle();
 
         // TODO: Change gen7randombattle to gen9custombattle or something similar
-        battle.Start(OnData, "{}", "{}", "gen7randombattle");
+        battle.Start(OnData, packedTeamOne, packedTeamTwo, "gen9custombattle");
     }
 
     /// <summary>

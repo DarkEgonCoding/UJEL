@@ -40,7 +40,7 @@ public class BattleSystemUI : MonoBehaviour
     public PlayerControls controls;
     public UnityEvent<bool> OnBattleOver;
 
-    BattleQueue battleQueue = new BattleQueue();
+    [SerializeField] private BattleQueue battleQueue = new BattleQueue();
     
     int currentAction;
     int currentMove;

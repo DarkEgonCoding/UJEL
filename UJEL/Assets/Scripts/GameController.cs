@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
     [SerializeField] BattleSystem battleSystem;
+    [SerializeField] BattleSystemUI battleSystemUI;
     [SerializeField] Camera worldCamera;
     [SerializeField] Camera battleCamera;
     [SerializeField] AudioClip wildBattleMusic;
@@ -159,11 +160,7 @@ public class GameController : MonoBehaviour
         worldCamera.gameObject.SetActive(false);
 
         var playerParty = playerController.GetComponent<PokemonParty>();
-
         var wildPokemonCopy = currentEncounterZone.GetRandomWildPokemon();
-        //var wildPokemon = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildPokemon();
-
-        //var wildPokemonCopy = new Pokemon(wildPokemon.Base, wildPokemon.Level);
 
         battleSystem.StartBattle(playerParty, wildPokemonCopy);
 

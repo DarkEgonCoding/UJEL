@@ -10,6 +10,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
 using UnityEngine.Analytics;
+using UnityEditor.DeviceSimulation;
+using PsLib.Sim;
 
 // public enum BattleState { Start, ActionSelection, MoveSelection, PerformMove, Busy, PartyScreen, MoveForget, EndingBattle}
 
