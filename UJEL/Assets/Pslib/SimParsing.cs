@@ -85,6 +85,27 @@ namespace PsLib.Sim
         // Removes the message from lines if possible.
         public bool TryParseMessage(string text, out Messages.Message msg)
         {
+            string[] split = text.Split('|');
+            Type eventType;
+            msg = null;
+            
+            // Handle all of the stream-updating messages.
+            if (text == "update") {
+                currentStream = PsLib.Sim.Messages.Stream.update;
+                return false;
+            } else if (text == "p1") {
+                currentStream = PsLib.Sim.Messages.Stream.p1;
+                return false;
+            } else if (text == "p2") {
+                currentStream = PsLib.Sim.Messages.Stream.p2;
+                return false;
+            } else if (text == "sideupdate") {
+                currentStream = PsLib.Sim.Messages.Stream.sideupdate;
+                return false;
+            }
+
+            // Find the matching action for the input text.
+            for (int i = 0; i < groups.Length; i++)
             try
             {
                 string[] split = text.Split('|');

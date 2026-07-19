@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: Test2
   m_EditorClassIdentifier: 
   wildEncounters:
-  - baseData: {fileID: 11400000, guid: 87ff29144260b2b4da2f19970a4492a5, type: 2}
+  - baseData:
+      pokemonEnum: 0
+      level: 0
+      moves: []
     minLevel: 5
     maxLevel: 8
     weight: 0.5
-  - baseData: {fileID: 11400000, guid: 642cceb48024d5f4d996d4f3d1a25d64, type: 2}
+  - baseData:
+      pokemonEnum: 0
+      level: 0
+      moves: []
     minLevel: 5
     maxLevel: 8
     weight: 0.5
+  encounterRate: 0.077

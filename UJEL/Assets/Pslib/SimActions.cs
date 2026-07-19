@@ -13,7 +13,8 @@ namespace PsLib.Sim.Messages
     {
         update,
         p1,
-        p2
+        p2,
+        sideupdate
     }
 
     public enum MessageGroup
@@ -127,8 +128,25 @@ namespace PsLib.Sim.Messages.Parts
         {
             Pokemon p = new Pokemon();
 
-            string posStr = text.Split(": ")[0];
-            string species = text.Split(": ")[1];
+            string[] split = text.Split(": ");
+
+            if (split.Length < 2)
+            {
+                UnityEngine.Debug.LogWarning($"Could not parse Pokemon: {text}");
+                return p;
+            }
+
+            if (!Enum.TryParse(split[0], out PokePos pos))
+            {
+                UnityEngine.Debug.LogWarning($"Could not parse position: {split[0]}");
+            }
+
+            p.pos = pos;
+
+            // Handles "Deoxys, L50"
+            p.species = split[1].Split(',')[0];
+
+            UnityEngine.Debug.Log($"Parsed Pokemon: {p.pos} {p.species}");
 
             return p;
         }
@@ -440,6 +458,12 @@ namespace PsLib.Sim.Messages.Actions.Major
         public Parts.HpStatus hpStatus;
 
         public override string GetDesc() {
+            if (pokemon == null)
+            {
+                UnityEngine.Debug.LogError("Pokemon is null for switching in");
+                return "Unknown pokemon was switched in.";
+            }
+
             return pokemon.species + " was switched in.";
         }
 

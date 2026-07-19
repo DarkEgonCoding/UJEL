@@ -1225,6 +1225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4457096823413243020}
   - component: {fileID: 7416825755846713842}
+  - component: {fileID: 9174050947393631244}
   m_Layer: 0
   m_Name: BattleSystem
   m_TagString: Untagged
@@ -1278,6 +1279,35 @@ MonoBehaviour:
   moveSelectionUI: {fileID: 6776317186331000214}
   didLearnMove: 0
   learnedMove: {fileID: 0}
+--- !u!114 &9174050947393631244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2810030213095350740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721241f96dd87a84ab374f72f37b4feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerUnit: {fileID: 5378428891090142329}
+  enemyUnit: {fileID: 4022792260699234576}
+  playerHud: {fileID: 9052100869611989298}
+  enemyHud: {fileID: 4910865786340227}
+  dialogBox: {fileID: 1567663389311684241}
+  partyScreen: {fileID: 3611465849775807333}
+  pokeballSprite: {fileID: 5141495524530228643, guid: 106ce86cca52b8a469a99a761ea98a32, type: 3}
+  moveSelectionUI: {fileID: 6776317186331000214}
+  trainerBattleMusic: {fileID: 8300000, guid: ee8427fe622a95b44aeab90ebaec07e2, type: 3}
+  battleVictoryMusic: {fileID: 0}
+  playerImage: {fileID: 2899855110680730989}
+  trainerImage: {fileID: 5751123785572202909}
+  OnBattleOver:
+    m_PersistentCalls:
+      m_Calls: []
+  battleQueue: {fileID: 0}
+  didLearnMove: 0
 --- !u!1 &2959708154564711569
 GameObject:
   m_ObjectHideFlags: 0
@@ -2924,6 +2954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 5910214389247273340}
   battleSystem: {fileID: 7416825755846713842}
+  battleSystemUI: {fileID: 9174050947393631244}
   worldCamera: {fileID: 7996305377751016373}
   battleCamera: {fileID: 6245236278213933204}
   wildBattleMusic: {fileID: 8300000, guid: ee8427fe622a95b44aeab90ebaec07e2, type: 3}
